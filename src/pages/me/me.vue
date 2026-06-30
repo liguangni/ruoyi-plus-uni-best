@@ -15,6 +15,7 @@ const tokenStore = useTokenStore()
 // 使用storeToRefs解构userInfo
 const { userInfo } = storeToRefs(userStore)
 console.log(userInfo.value)
+const userHasLogin = ref(tokenStore.updateNowTime().hasLogin)
 
 // 微信小程序下登录
 async function handleLogin() {
@@ -82,10 +83,10 @@ function toAboutPage() {
         <view class="bg-radius" />
         <view class="user-info-container">
           <image class="avatar-img" :src="userInfo.user.avatar" />
-          <text class="uer-name">{{ userInfo.user.nickName }}</text>
+          <text v-if="userHasLogin" class="uer-name">{{ userInfo.user.nickName }}</text>
         </view>
-        <view class="header-bottom center">
-          <view v-if="!tokenStore.updateNowTime().hasLogin">
+        <view class="header-bottom position-relative center">
+          <view v-if="!userHasLogin">
             <view class="login-btn" @click="handleLogin">
               立即登录
             </view>
