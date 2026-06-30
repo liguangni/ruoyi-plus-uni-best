@@ -1,20 +1,15 @@
-import { useUserStore } from '@/store/user'
-
 /**
  * 权限控制 Hook
  * @description 提供基于角色和权限码的权限判断方法
  */
 function useAccess() {
-  const userStore = useUserStore()
-
   /**
    * 基于角色判断是否有权限
    * @description 通过用户的角色列表判断是否具有指定角色
    * @param roles 需要判断的角色列表
    * @returns 是否具有指定角色中的任意一个
    */
-  function hasAccessByRoles(roles: string[]): boolean {
-    const userRoleSet = new Set(userStore.userInfo.roles)
+  function hasAccessByRoles(userRoleSet: Set<string> = new Set(), roles: string[]): boolean {
     if (!userRoleSet.size) {
       return false
     }
@@ -31,8 +26,8 @@ function useAccess() {
    * @param permission 需要判断的权限码
    * @returns 是否具有指定权限码
    */
-  function hasAccessByPermission(permission: string): boolean {
-    const userCodesSet = new Set(userStore.userInfo.permissions)
+  function hasAccessByPermission(userCodesSet: Set<string> = new Set(), permission: string): boolean {
+    console.log('userCodesSet:', userCodesSet)
     if (!userCodesSet.size) {
       return false
     }

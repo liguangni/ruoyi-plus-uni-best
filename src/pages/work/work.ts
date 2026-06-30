@@ -1,5 +1,6 @@
 import { useAccess } from '@/hooks/useAccess'
 import type { MenuGroupItem, QuickEntranceItem } from '@/types/work/work'
+import { useUserStore } from '@/store/user'
 
 const { hasAccessByPermission, hasAccessByRoles } = useAccess()
 
@@ -142,11 +143,14 @@ export function getQuickEntrances() {
 }
 
 export function getMenuGroups() {
+  const userStore = useUserStore()
+  const userRoleSet = new Set(userStore.userInfo.roles)
+  const userCodesSet = new Set(userStore.userInfo.permissions)
   return menuGroups
     .map((group) => {
       // 1. 过滤当前分组下的子菜单
       const filteredChildren = group.children.filter(item =>
-        hasAccessByPermission(item.permission) || hasAccessByRoles(item.roles),
+        hasAccessByPermission(userCodesSet, item.permission) || hasAccessByRoles(userRoleSet, item.roles),
       )
 
       // 2. 返回一个新的分组对象，更新其 children
@@ -165,6 +169,9 @@ export function getMenusByGroupKey(groupKey: string) {
   if (!children.length) {
     return []
   }
-  const filteredChildren = children.filter(item => hasAccessByPermission(item.permission) || hasAccessByRoles(item.roles))
+  const userStore = useUserStore()
+  const userRoleSet = new Set(userStore.userInfo.roles)
+  const userCodesSet = new Set(userStore.userInfo.permissions)
+  const filteredChildren = children.filter(item => hasAccessByPermission(userCodesSet, item.permission) || hasAccessByRoles(userRoleSet, item.roles))
   return filteredChildren
 }
