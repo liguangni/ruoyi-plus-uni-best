@@ -2,6 +2,8 @@ import type { CustomRequestOptions } from '@/http/types'
 import { useTokenStore } from '@/store'
 import { getEnvBaseUrl } from '@/utils'
 import { stringifyQuery } from './tools/queryString'
+import { getErrorMsg, showToastMsg } from '@/utils/common'
+import { toLoginPage } from '@/utils/toLoginPage'
 import { decrypt, decryptBase64, decryptWithAes, encrypt, encryptBase64, encryptWithAes, generateAesKey } from '@/utils/api-encrypt'
 
 // 请求基准地址
@@ -58,7 +60,7 @@ const httpInterceptor = {
       const tokenStore = useTokenStore()
       const token = tokenStore.updateNowTime().validToken
       options.header.Authorization = `Bearer ${token}`
-      options.header.clientid = clientId
+      options.header.clientId = clientId
     }
 
     // 是否需要加密
@@ -97,8 +99,34 @@ const httpInterceptor = {
       // 将结果 (得到的是 JSON 字符串) 转为 JSON
       args.data = JSON.parse(decryptData)
     }
+
+    // 2. 业务状态码拦截
+    const responseData = typeof args.data === 'string' ? JSON.parse(args.data) : args.data
+    const { code } = responseData || {}
+
+    if (code === 200) {
+      return
+    }
+
+    // 3. 处理 401 未授权
+    if (args.statusCode === 401 || code === 401) {
+      useTokenStore().logout().then(() => {
+        toLoginPage()
+      })
+      throw new Error('无效的会话，或者会话已过期，请重新登录。')
+    }
+
+    // 4. 处理其他业务错误
+    const msg = responseData?.msg || responseData?.message || getErrorMsg(code)
+    // 支持静默模式：如果调用方传了 showError: false，则不弹 Toast
+    if (args.config?.showError !== false) {
+      showToastMsg(msg)
+    }
+    throw new Error(msg)
   },
   fail(err) {
+    // 网络级错误（断网、超时等）
+    showToastMsg('网络错误，换个网络试试')
     console.log('interceptor-fail', err)
   },
   complete(res) {

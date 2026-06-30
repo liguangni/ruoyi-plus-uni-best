@@ -13,28 +13,12 @@ export function request<T>(config: CustomRequestOptions) {
       // 响应成功
       success: (response) => {
         const responseData = response.data as IResponse<T>
-        console.log('responseData', responseData)
-        const { code } = responseData
 
-        const msg: string = responseData?.msg || responseData?.message || getErrorMsg(code)
-        if (code === 200) {
-          resolve(responseData.data)
-        }
-        else if (code === 401) {
-          useTokenStore().logout().then((res) => {
-            toLoginPage()
-          })
-
-          reject(new Error('无效的会话，或者会话已过期，请重新登录。'))
-        }
-        else {
-          showToastMsg(msg)
-          reject(new Error(msg))
-        }
+        // ✅ 这里调用了 resolve，将真正的数据传递给外部的 .then()
+        resolve(responseData.data)
       },
       // 响应失败
       fail: (error) => {
-        showToastMsg('网络错误，换个网络试试')
         reject(error)
       },
     })
@@ -46,28 +30,21 @@ export function upload<T>(config: RequestUploadConfig) {
     uni.uploadFile({
       ...config,
       success: (response) => {
-      // const { code } = responseData
-        console.log('response----->', response, response.data)
-        const responseData = response.data as unknown as IResponse<T>
-        const { code } = responseData
-        if (code === 200) {
+        try {
+          const responseData
+            = typeof response.data === 'string'
+              ? JSON.parse(response.data) as IResponse<T>
+              : (response.data as unknown as IResponse<T>)
+
           resolve(responseData.data)
         }
-        else if (code === 401) {
-          useTokenStore().logout().then((res) => {
-            toLoginPage()
-          })
-
-          reject(new Error('无效的会话，或者会话已过期，请重新登录。'))
-        }
-        else {
-          const msg = responseData?.msg || responseData?.message || getErrorMsg(code)
-          showToastMsg(msg)
-          reject(new Error(msg))
+        catch (e) {
+          // 防止后端返回非 JSON 格式导致前端崩溃
+          console.error('Upload response parse error:', e)
+          reject(new Error('响应数据解析失败'))
         }
       },
       fail: (error) => {
-        showToastMsg('网络错误，换个网络试试')
         reject(error)
       },
     })
