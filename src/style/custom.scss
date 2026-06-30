@@ -1,0 +1,68 @@
+// 公共列表样式
+.wy-cell-list-group {
+  background-color: #ffffff;
+  margin: 0 auto 20rpx;
+  width: 100%;
+  border-radius: 0;
+
+  .wy-cell-list-item {
+    height: 90rpx;
+    display: flex;
+    align-items: center;
+    padding: 0 20rpx;
+    box-sizing: border-box;
+    transition: background-color 0.2s;
+
+    &:active {
+      background-color: #f5f5f5;
+    }
+
+    .list-icon {
+      width: 40rpx;
+      font-size: 45rpx;
+      text-align: center;
+      margin-right: 20rpx;
+    }
+
+    .list-text {
+      flex: 1;
+      font-size: 26rpx;
+      color: #555;
+    }
+
+    .list-arrow {
+      width: 40rpx;
+      font-size: 30rpx;
+      color: #999;
+      text-align: right;
+    }
+
+    // 左侧包含图标和文本的容器
+    .list-left {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  // 底部边框
+  .border-bottom {
+    border-bottom: 1rpx solid #efefef;
+  }
+}
+
+// 列表图标颜色
+.list-icon.color-1 {
+  color: #09a137;
+} // green
+.list-icon.color-2 {
+  color: #4cd964;
+} // light green
+.list-icon.color-3 {
+  color: #f0ad4e;
+} // yellow
+.list-icon.color-4 {
+  color: #dd524d;
+} // red
+.list-icon.color-5 {
+  color: #007aff;
+} // blue
