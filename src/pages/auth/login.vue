@@ -53,7 +53,7 @@ async function handleLogin() {
 };
 
 async function pwdLogin() {
-  if (tokenStore.hasLogin) {
+  if (tokenStore.updateNowTime().hasLogin) {
     uni.navigateBack()
     return
   }

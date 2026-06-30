@@ -64,7 +64,7 @@ export const navigateToInterceptor = {
       return true // 明确表示允许路由继续执行
     }
 
-    const tokenStore = useTokenStore()
+    const tokenStore = useTokenStore().updateNowTime()
     FG_LOG_ENABLE && console.log('tokenStore.hasLogin:', tokenStore.hasLogin)
 
     // 不管黑白名单，登录了就直接去吧（但是当前不能是登录页）
