@@ -271,7 +271,6 @@ export const useTokenStore = defineStore(
      * 建议这样使用tokenStore.updateNowTime().hasLogin
      */
     const hasValidLogin = computed(() => {
-      console.log('hasValidLogin', hasLoginInfo.value, !isTokenExpired.value)
       return hasLoginInfo.value && !isTokenExpired.value
     })
 
