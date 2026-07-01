@@ -1,7 +1,4 @@
 import type { CustomRequestOptions, IResponse, RequestUploadConfig } from '@/http/types'
-import { useTokenStore } from '@/store/token'
-import { getErrorMsg, showToastMsg } from '@/utils/common'
-import { toLoginPage } from '@/utils/toLoginPage'
 
 export function request<T>(config: CustomRequestOptions) {
   return new Promise<T>((resolve, reject) => {
@@ -13,8 +10,6 @@ export function request<T>(config: CustomRequestOptions) {
       // 响应成功
       success: (response) => {
         const responseData = response.data as IResponse<T>
-
-        // ✅ 这里调用了 resolve，将真正的数据传递给外部的 .then()
         resolve(responseData.data)
       },
       // 响应失败

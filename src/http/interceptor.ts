@@ -5,6 +5,7 @@ import { stringifyQuery } from './tools/queryString'
 import { getErrorMsg, showToastMsg } from '@/utils/common'
 import { toLoginPage } from '@/utils/toLoginPage'
 import { decrypt, decryptBase64, decryptWithAes, encrypt, encryptBase64, encryptWithAes, generateAesKey } from '@/utils/api-encrypt'
+import { ResultEnum } from './tools/enum'
 
 // 请求基准地址
 const baseUrl = getEnvBaseUrl()
@@ -104,25 +105,22 @@ const httpInterceptor = {
     const responseData = typeof args.data === 'string' ? JSON.parse(args.data) : args.data
     const { code } = responseData || {}
 
-    if (code === 200) {
-      return
-    }
-
     // 3. 处理 401 未授权
-    if (args.statusCode === 401 || code === 401) {
+    if (args.statusCode === ResultEnum.Unauthorized || code === ResultEnum.Unauthorized) {
       useTokenStore().logout().then(() => {
         toLoginPage()
       })
-      throw new Error('无效的会话，或者会话已过期，请重新登录。')
+      return Promise.reject(new Error('无效的会话，或者会话已过期，请重新登录。'))
     }
-
+    if (code !== ResultEnum.Success200) {
     // 4. 处理其他业务错误
-    const msg = responseData?.msg || responseData?.message || getErrorMsg(code)
-    // 支持静默模式：如果调用方传了 showError: false，则不弹 Toast
-    if (args.config?.showError !== false) {
-      showToastMsg(msg)
+      const msg = responseData?.msg || responseData?.message || getErrorMsg(code)
+      // 支持静默模式：如果调用方传了 showError: false，则不弹 Toast
+      if (args.config?.showError !== false) {
+        showToastMsg(msg)
+      }
+      return Promise.reject(new Error(msg))
     }
-    throw new Error(msg)
   },
   fail(err) {
     // 网络级错误（断网、超时等）
