@@ -22,7 +22,7 @@
 | 6.X        | 只包含基础功能(首页\登录页\个人中心\工作台框架) | 6.X          |
 
 
-> - RuoYi-Cloud-Plus` /`RuoYi-Vue-Plus
+> **RuoYi-Cloud-Plus` /`RuoYi-Vue-Plus**
 >   开源地址：[RuoYi-Cloud-Plus](https://gitee.com/dromara/RuoYi-Cloud-Plus) | [RuoYi-Vue-Plus](https://gitee.com/dromara/RuoYi-Vue-Plus)
 >   项目文档：[Plus Doc](https://plus-doc.dromara.org/#/)
 
@@ -143,5 +143,7 @@
       <br />
       <b align="center">关于</b>
     </td>
+    <td></td>
+    <td></td>
   </tr>
 </table>
