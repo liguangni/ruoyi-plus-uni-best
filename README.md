@@ -23,16 +23,18 @@
 
 
 > **RuoYi-Cloud-Plus` /`RuoYi-Vue-Plus**
->   开源地址：[RuoYi-Cloud-Plus](https://gitee.com/dromara/RuoYi-Cloud-Plus) | [RuoYi-Vue-Plus](https://gitee.com/dromara/RuoYi-Vue-Plus)
->   项目文档：[Plus Doc](https://plus-doc.dromara.org/#/)
+>
+> 开源地址：[RuoYi-Cloud-Plus](https://gitee.com/dromara/RuoYi-Cloud-Plus) | [RuoYi-Vue-Plus](https://gitee.com/dromara/RuoYi-Vue-Plus)
+>
+> 项目文档：[Plus Doc](https://plus-doc.dromara.org/#/)
 
 ### 2. 本项目基于unibest二次修改构建，对部分代码及逻辑进行微调
 
-> - unibest 简介
+> **unibest 简介**
 >
->   开源地址：[Gitee](https://gitee.com/feige996/unibest) | [Github](https://github.com/feige996/unibest)
+> 开源地址：[Gitee](https://gitee.com/feige996/unibest) | [Github](https://github.com/feige996/unibest)
 >
->   项目文档：[unibest文档](https://unibest.tech/)
+> 项目文档：[unibest文档](https://unibest.tech/)
 
 ## UI 框架选型说明
 ### 1. 基础模块：原生实现，零依赖
@@ -143,7 +145,5 @@
       <br />
       <b align="center">关于</b>
     </td>
-    <td></td>
-    <td></td>
   </tr>
 </table>
