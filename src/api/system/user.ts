@@ -16,6 +16,10 @@ export function updateUserPwd(oldPassword: string, newPassword: string) {
       oldPassword,
       newPassword,
     },
+    custom: {
+      isToken: true,
+      isEncrypt: true,
+    },
   })
 }
 

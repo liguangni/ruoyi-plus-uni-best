@@ -104,7 +104,7 @@ const DRAFG_MOVE_RATIO = 1 // 移动时候的比例,
 let INIT_DRAG_POSITION = 100 // 初始化屏幕宽度和裁剪区域的宽度之差，用于设置初始化裁剪的宽度
 const DRAW_IMAGE_W = SCREEN_WIDTH // 设置生成的图片宽度
 
-const imageSrc = ref(userInfo.value.user.avatar)
+const imageSrc = ref(userInfo.value.user.avatarUrl)
 const isShowImg = ref(false)
 const cropperInitW = ref(SCREEN_WIDTH)
 const cropperInitH = ref(SCREEN_WIDTH)
