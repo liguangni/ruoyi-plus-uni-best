@@ -6,21 +6,22 @@ import {
 } from '@/api/auth/login'
 
 // 初始化状态
+const defaultUserInfo = {
+  userId: -1,
+  tenantId: '',
+  deptId: -1,
+  deptName: '',
+  userName: '',
+  nickName: '',
+  userType: '',
+  email: '',
+  phoneNumber: '',
+  avatar: '',
+  avatarUrl: '',
+}
 const userInfoState: IUserInfoRes = {
-  user: {
-    userId: -1,
-    tenantId: '',
-    deptId: -1,
-    deptName: '',
-    userName: '',
-    nickName: '',
-    userType: '',
-    email: '',
-    phoneNumber: '',
-    avatar: '',
-    avatarUrl: '',
-  },
-  roles: ['ROLE_DEFAULT'],
+  user: { ...defaultUserInfo },
+  roles: [],
   permissions: [],
 }
 
@@ -45,7 +46,8 @@ export const useUserStore = defineStore(
     }
     // 删除用户信息
     const clearUserInfo = () => {
-      userInfo.value = { ...userInfoState }
+      userInfoState.user = { ...defaultUserInfo }
+      userInfo.value = JSON.parse(JSON.stringify(userInfoState))
       uni.removeStorageSync('user')
     }
 
