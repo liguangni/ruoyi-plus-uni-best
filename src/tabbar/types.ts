@@ -1,5 +1,5 @@
 import type { TabBar } from '@uni-helper/vite-plugin-uni-pages'
-import type { UserRole } from '@/types/auth/login.types'
+import type { UserRole } from '@/api/auth/types/login'
 import type { RemoveLeadingSlashFromUnion } from '@/typings'
 
 /**

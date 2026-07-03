@@ -1,5 +1,5 @@
 import request from '@/http/luch-request'
-import type { SysOssUploadVo } from '@/types/system/oss.types'
+import type { SysOssUploadVo } from '@/api/system/types/oss'
 
 // 上传OSS对象存储
 export function uploadOss({ filePath, name }: { filePath: string, name?: string }) {

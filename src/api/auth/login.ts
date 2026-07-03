@@ -1,5 +1,5 @@
 import request from '@/http/luch-request'
-import type { IAuthLoginRes, IDoubleTokenRes, ILoginForm, IUserInfoRes, loginInfo } from '@/types/auth/login.types'
+import type { IAuthLoginRes, IDoubleTokenRes, ILoginForm, IUserInfoRes, loginInfo } from '@/api/auth/types/login'
 
 /**
  * 用户登录

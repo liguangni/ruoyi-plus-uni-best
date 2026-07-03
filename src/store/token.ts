@@ -1,4 +1,4 @@
-import type { IAuthLoginRes, ILoginForm } from '@/types/auth/login.types'
+import type { IAuthLoginRes, ILoginForm } from '@/api/auth/types/login'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue' // 修复：导入 computed
 import {
@@ -8,7 +8,7 @@ import {
   wxLogin as _wxLogin,
   getWxCode,
 } from '@/api/auth/login'
-import { isDoubleTokenRes, isSingleTokenRes } from '@/types/auth/login.types'
+import { isDoubleTokenRes, isSingleTokenRes } from '@/api/auth/types/login'
 import { isDoubleTokenMode } from '@/utils'
 import { useUserStore } from './user'
 

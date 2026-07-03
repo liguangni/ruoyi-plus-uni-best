@@ -1,5 +1,4 @@
 import { useAuth } from '@/composables/useAuth'
-import type { MenuGroupItem, QuickEntranceItem } from '@/types/work/work.types'
 import { useUserStore } from '@/store/user'
 
 const { hasPermission, hasRole } = useAuth()
@@ -15,6 +14,54 @@ const backgroundColors = [
   'linear-gradient(135deg, #ffcc00, #ff9900)',
   'linear-gradient(135deg, #f8b500, #f57c00)',
 ]
+
+/**
+ * 快捷入口项类型定义
+ */
+export interface QuickEntranceItem {
+  /** 菜单名称 */
+  name: string
+  /** 副标题描述 */
+  subtitle: string
+  /** 路由跳转路径 */
+  path: string
+  /** 图标类名 (如 Iconify 类名) */
+  icon: string
+  /** 图标颜色 */
+  iconColor: string
+}
+
+/**
+ * 菜单分组子项类型定义
+ */
+export interface MenuGroupChildItem {
+  /** 菜单名称 */
+  name: string
+  /** 菜单唯一标识 */
+  key: string
+  /** 图标类名 */
+  icon: string
+  /** 路由跳转路径 */
+  path: string
+  /** 权限标识 */
+  permission: string
+  /** 允许访问的角色列表 */
+  roles: string[]
+  /** 图标背景色 (支持纯色或渐变色) */
+  iconBg: string
+}
+
+/**
+ * 菜单分组类型定义
+ */
+export interface MenuGroupItem {
+  /** 分组名称 */
+  name: string
+  /** 分组唯一标识 */
+  key: string
+  /** 分组下的子菜单列表 */
+  children: MenuGroupChildItem[]
+}
 
 const quickEntrances: QuickEntranceItem[] = [
   {

@@ -1,5 +1,3 @@
-import type { HttpRequestConfig } from 'luch-request'
-
 /**
  * 在 uniapp 的 RequestOptions 和 IUniUploadFileOptions 基础上，添加自定义参数
  */
@@ -9,7 +7,7 @@ export type CustomRequestOptions = UniApp.RequestOptions & {
   query?: Record<string, any>
   /** 出错时是否隐藏错误提示 */
   hideErrorToast?: boolean
-  headers?: {
+  custom?: {
     /** 是否在请求头中添加token 默认是 */
     isToken?: boolean
     /** 请求是否需要加密 默认否 */
@@ -17,18 +15,6 @@ export type CustomRequestOptions = UniApp.RequestOptions & {
   }
   baseUrl?: string
 } & IUniUploadFileOptions
-export type CustomHttpOptions = HttpRequestConfig & {
-  query?: Record<string, any>
-  /** 出错时是否隐藏错误提示 */
-  hideErrorToast?: boolean
-  headers?: {
-    /** 是否在请求头中添加token 默认是 */
-    isToken?: boolean
-    /** 请求是否需要加密 默认否 */
-    isEncrypt?: boolean
-  }
-  baseUrl?: string
-}
 
 /** 主要提供给 openapi-ts-request 生成的代码使用 */
 export type CustomRequestOptions_ = Omit<CustomRequestOptions, 'url'>

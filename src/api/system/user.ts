@@ -1,4 +1,4 @@
-import type { UserProfile, UserProfileForm } from '@/types/system/user.types'
+import type { UserProfile, UserProfileForm } from '@/api/system/types/user'
 import request from '@/http/luch-request'
 
 // 查询用户个人信息

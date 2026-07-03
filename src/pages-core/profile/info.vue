@@ -68,7 +68,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { UserInfo, UserProfile } from '@/types/system/user.types'
+import type { UserInfo, UserProfile } from '@/api/system/types/user'
 import { getUserProfile } from '@/api/system/user'
 import DEFAULT_AVATAR from '@/static/images/avatar.png'
 import { useUserStore } from '@/store/user'

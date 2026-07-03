@@ -1,4 +1,4 @@
-import type { IUserInfoRes } from '@/types/auth/login.types'
+import type { IUserInfoRes } from '@/api/auth/types/login'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import {

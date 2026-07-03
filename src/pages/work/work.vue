@@ -2,7 +2,7 @@
 import { reactive } from 'vue'
 import { getMenuGroups, getQuickEntrances } from './work'
 import { useUserStore } from '@/store/user'
-import type { MenuGroupChildItem, QuickEntranceItem } from '@/types/work/work.types'
+import type { MenuGroupChildItem, QuickEntranceItem } from './work'
 
 definePage({
   style: {
