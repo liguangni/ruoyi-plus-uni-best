@@ -62,3 +62,70 @@
 .list-icon.color-5 {
   color: #007aff;
 }
+
+// ====================== 页面容器 ======================
+// 全局变量
+$tabbar-height: 50px;
+$h5-nav-height: 44px;
+
+// 根容器基础样式
+.page-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  // 顶部导航padding（仅顶部，底部无padding）
+  /* #ifndef H5 */
+  padding-top: var(--window-top);
+  /* #endif */
+  /* #ifdef H5 */
+  padding-top: $h5-nav-height;
+  /* #endif */
+
+  // 沉浸式无导航栏
+  &.pg-no-navbar {
+    padding-top: 0;
+    /* #ifndef H5 */
+    padding-top: var(--status-bar-height);
+    /* #endif */
+    /* #ifdef H5 */
+    padding-top: 0;
+    /* #endif */
+  }
+
+  // 内容区域：完全移除底部padding
+  .page-content {
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    // padding: 20rpx;
+  }
+}
+
+// ====================== 带tabbar pc-tabbar 高度裁剪核心 ======================
+// 小程序/APP：高度 = 100% - tab高度 - 系统底部安全区safe-area-inset-bottom
+/* #ifndef H5 */
+.page-container.pc-tabbar {
+  // 兼容ios11.2前constant，新标准env
+  height: calc(100% - #{$tabbar-height} - constant(safe-area-inset-bottom));
+  height: calc(100% - #{$tabbar-height} - env(safe-area-inset-bottom, 0px));
+}
+/* #endif */
+
+// H5端：无系统安全区变量，仅扣除tabbar高度
+/* #ifdef H5 */
+.page-container.pc-tabbar {
+  height: calc(100% - #{$tabbar-height});
+}
+/* #endif */
