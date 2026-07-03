@@ -102,6 +102,7 @@ http.interceptors.response.use((response) => {
     const aesKey = decryptBase64(base64Str.toString())
     const decryptData = decryptWithAes(respData as string, aesKey)
     respData = JSON.parse(decryptData)
+    console.log('响应解密------------>respData:', respData)
   }
 
   // 2. 业务状态码拦截

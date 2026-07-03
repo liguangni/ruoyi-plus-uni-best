@@ -8,6 +8,7 @@ export interface UserInfo {
   phoneNumber: string
   gender: string
   avatar: string | null
+  avatarUrl: string | null
   loginIp: string
   loginDate: string
   deptName: string
@@ -20,9 +21,9 @@ export interface UserProfile {
 }
 
 export interface UserProfileForm {
-  nickName?: string;
-  phoneNumber?: string;
-  email?: string;
-  gender?: string;
-  avatar?: string | number;
+  nickName?: string
+  phoneNumber?: string
+  email?: string
+  gender?: string
+  avatar?: string | number
 }

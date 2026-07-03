@@ -55,7 +55,7 @@ function getDisplayItems(groupKey: string, children: any[]) {
     <view class="page-content">
       <view class="bg">
         <view class="user-header">
-          <image class="avatar" :src="userStore.userInfo.user.avatar" mode="aspectFill" />
+          <Avatar class="user-avatar" width="64rpx" height="64rpx" round />
           <text class="nickname">{{ userStore.userInfo.user.nickName || '用户' }}</text>
         </view>
         <view class="swiper-container">
@@ -168,10 +168,7 @@ $text-light: #999999;
     margin-top: calc(10px + env(safe-area-inset-top));
     padding-left: 40rpx;
 
-    .avatar {
-      width: 64rpx;
-      height: 64rpx;
-      border-radius: 50%;
+    .user-avatar {
       border: 3rpx solid rgba(255, 255, 255, 0.3);
     }
 

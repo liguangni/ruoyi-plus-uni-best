@@ -37,6 +37,7 @@ export interface IUserInfoRes {
     email: string
     phoneNumber: string
     avatar?: string
+    avatarUrl?: string
   }
   role?: UserRole
   roles?: UserRole[]
@@ -114,12 +115,11 @@ export interface ILoginForm {
   clientId?: string
 }
 
-
 /**
  * 登录返回的信息
  */
 export interface loginInfo {
-  access_token: string,
+  access_token: string
   client_id: string
   expire_in: number
   openid: string

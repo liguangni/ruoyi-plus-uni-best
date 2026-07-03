@@ -17,7 +17,8 @@ const userInfoState: IUserInfoRes = {
     userType: '',
     email: '',
     phoneNumber: '',
-    avatar: '/static/images/default-avatar.png',
+    avatar: '',
+    avatarUrl: '',
   },
   roles: ['ROLE_DEFAULT'],
   permissions: [],
@@ -32,14 +33,14 @@ export const useUserStore = defineStore(
     const setUserInfo = (val: IUserInfoRes) => {
       console.log('设置用户信息', val)
       // 若头像为空 则使用默认头像
-      if (!val.avatar) {
-        val.user.avatar = userInfoState.user.avatar
+      if (!val.user.avatarUrl) {
+        val.user.avatarUrl = userInfoState.user.avatarUrl
       }
       userInfo.value = val
     }
-    const setUserAvatar = (avatar: string) => {
-      userInfo.value.user.avatar = avatar
-      console.log('设置用户头像', avatar)
+    const setUserAvatar = (avatarUrl: string) => {
+      userInfo.value.user.avatarUrl = avatarUrl
+      console.log('设置用户头像', avatarUrl)
       console.log('userInfo', userInfo.value)
     }
     // 删除用户信息

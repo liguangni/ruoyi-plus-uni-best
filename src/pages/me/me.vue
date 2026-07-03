@@ -82,7 +82,7 @@ function toAboutPage() {
         <view class="bg">
           <view class="bg-radius" />
           <view class="user-info-container">
-            <image class="avatar-img" :src="userInfo.user.avatar" />
+            <Avatar class="avatar-img" width="140rpx" height="140rpx" round />
             <text class="uer-name">{{ userInfo.user.nickName }}</text>
           </view>
           <view class="header-bottom position-relative center">
@@ -217,9 +217,6 @@ $list-margin: 20rpx;
     z-index: 10;
 
     .avatar-img {
-      width: 140rpx;
-      height: 140rpx;
-      border-radius: 50%;
       border: solid 6rpx #fff;
       background-color: #f5f5f5;
     }

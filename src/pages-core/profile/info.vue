@@ -5,7 +5,7 @@
       <view class="custom-list-item avatar-item">
         <view class="my-4 center">
           <view class="avatar-wrapper" @click="toAvatarPage">
-            <image :src="userProfile.user.avatar" mode="aspectFill" class="h-full w-full" />
+            <Avatar :src="userProfile.user.avatarUrl" width="180rpx" height="180rpx" round />
           </view>
         </view>
       </view>
@@ -109,9 +109,9 @@ function getUserInfo() {
   })
   getUserProfile().then((data) => {
     userProfile.value = data
-    if (!userProfile.value.user.avatar)
-      userProfile.value.user.avatar = DEFAULT_AVATAR
-    userStore.setUserAvatar(userProfile.value.user.avatar)
+    if (!userProfile.value.user.avatarUrl)
+      userProfile.value.user.avatarUrl = DEFAULT_AVATAR
+    userStore.setUserAvatar(userProfile.value.user.avatarUrl)
   }).finally(() => {
     loading.value = false
     uni.hideLoading()
