@@ -1,0 +1,38 @@
+<template>
+  <view v-if="params.url">
+    <web-view :webview-styles="webviewStyles" :src="params.url" />
+  </view>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { onLoad } from '@dcloudio/uni-app'
+
+// 1. 定义 Props 类型并使用 defineProps
+interface Props {
+  src?: string | null
+}
+const props = withDefaults(defineProps<Props>(), {
+  src: null,
+})
+
+// 2. 定义响应式数据 (替代 data)
+const params = ref<Record<string, any>>({})
+const webviewStyles = ref({
+  progress: {
+    color: '#FF3333',
+  },
+})
+
+// 3. 使用 uni-app 的页面生命周期钩子
+onLoad((event) => {
+  if (event) {
+    params.value = event // 注意：在 script 中访问 ref 需要 .value
+    if (event.title) {
+      uni.setNavigationBarTitle({
+        title: event.title,
+      })
+    }
+  }
+})
+</script>

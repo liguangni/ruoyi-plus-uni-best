@@ -45,7 +45,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import UserApi from '@/api/system/user'
+import { updateUserPwd } from '@/api/system/user'
 import { showToastMsg } from '@/utils/common'
 
 definePage({
@@ -116,7 +116,7 @@ function validateForm() {
 
 function handleSubmit() {
   if (validateForm()) {
-    UserApi.updateUserPwd(formData.oldPassword, formData.newPassword).then(() => {
+    updateUserPwd(formData.oldPassword, formData.newPassword).then(() => {
       uni.showToast({
         title: '修改成功',
         mask: false,

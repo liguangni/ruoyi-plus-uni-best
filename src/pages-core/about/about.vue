@@ -13,39 +13,48 @@ onLoad(() => {
   const info = uni.getAppBaseInfo()
   version.value = info?.appVersion ?? ''
 })
+
+// 隐私协议
+function handlePrivacy() {
+  const site = {
+    title: '隐私政策',
+    url: 'https://ruoyi.vip/protocol.html',
+  }
+  uni.navigateTo({ url: `/pages-core/webview/webview?title=${site.title}&url=${site.url}` })
+}
+// 用户协议
+function handleUserAgrement() {
+  const site = {
+    title: '用户协议',
+    url: 'https://ruoyi.vip/protocol.html',
+  }
+  uni.navigateTo({ url: `/pages-core/webview/webview?title=${site.title}&url=${site.url}` })
+}
 </script>
 
 <template>
-  <view class="about-container">
+  <view class="page-container">
     <view class="header-section">
       <image class="logo" src="@/static/logo.svg" mode="widthFix" />
       <text class="title mt-2 text-2xl">Ruoyi-Plus-Uni-Best</text>
-      <text class="subtitle mt-4">{{ version }}</text>
+      <text class="subtitle mt-2">{{ version }}</text>
     </view>
 
-    <view class="content-section">
+    <view class="content-section mt-3">
       <view class="menu-list">
-        <view class="list-cell list-cell-arrow">
-          <view class="menu-item-box">
-            <text>检查更新</text>
-            <view class="text-right">
-              <text class="arrow"> > </text>
-            </view>
-          </view>
-        </view>
-        <view class="list-cell list-cell-arrow">
+        <view class="list-cell list-cell-arrow" @click="handleUserAgrement">
           <view class="menu-item-box">
             <text>用户协议</text>
             <view class="text-right">
-              <text class="arrow"> > </text>
+              <view class="i-carbon-chevron-right" />
             </view>
           </view>
         </view>
-        <view class="list-cell list-cell-arrow">
+        <view class="list-cell list-cell-arrow" @click="handlePrivacy">
           <view class="menu-item-box">
             <text>隐私政策</text>
             <view class="text-right">
-              <text class="arrow"> > </text>
+              <view class="i-carbon-chevron-right" />
             </view>
           </view>
         </view>
@@ -53,13 +62,13 @@ onLoad(() => {
           <view class="menu-item-box">
             <text>联系我们</text>
             <view class="text-right">
-              <text class="arrow"> > </text>
+              <view class="i-carbon-chevron-right" />
             </view>
           </view>
         </view>
       </view>
     </view>
-    <view class="copyright">
+    <view class="copyright pos-fixed bottom-10 left-0 right-0">
       <view>Copyright &copy; 2026 Ruoyi-Plus-Uni-Best</view>
       <view>All Rights Reserved.</view>
     </view>
@@ -67,12 +76,10 @@ onLoad(() => {
 </template>
 
 <style lang="scss" scoped>
-page {
-  background-color: #f8f8f8;
-}
-
 .about-container {
   background-color: #f8f8f8;
+  padding-top: var(--window-top);
+  min-height: calc(100vh - var(--window-top));
 }
 
 .header-section {

@@ -1,4 +1,4 @@
-import type { IUserInfoRes } from '@/types/auth/login'
+import type { IUserInfoRes } from '@/types/auth/login.types'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import {
@@ -32,7 +32,7 @@ export const useUserStore = defineStore(
     const setUserInfo = (val: IUserInfoRes) => {
       console.log('设置用户信息', val)
       // 若头像为空 则使用默认头像
-      if (!val.user.avatar) {
+      if (!val.avatar) {
         val.user.avatar = userInfoState.user.avatar
       }
       userInfo.value = val

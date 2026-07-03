@@ -30,9 +30,9 @@
           性别
         </view>
         <view class="form-control">
-          <radio-group class="sex-radio-group" @change="handleSexChange">
-            <label v-for="item in sexColumns" :key="item.value" class="radio-item">
-              <radio :value="item.value" :checked="userProfile.sex === item.value" color="#2979ff" />
+          <radio-group class="gender-radio-group" @change="handleGenderChange">
+            <label v-for="item in genderColumns" :key="item.value" class="radio-item">
+              <radio :value="item.value" :checked="userProfile.gender === item.value" color="#2979ff" />
               <text class="radio-text">{{ item.label }}</text>
             </label>
           </radio-group>
@@ -49,9 +49,9 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import UserApi from '@/api/system/user'
-import { useUserStore } from '@/store/user'
+import { getUserProfile, updateUserProfile } from '@/api/system/user'
 import { showToastMsg } from '@/utils/common'
+import type { UserProfileForm } from '@/types/system/user.types'
 
 definePage({
   style: {
@@ -59,24 +59,41 @@ definePage({
   },
 })
 
-const userStore = useUserStore()
-const sexColumns = ref([{ label: '男', value: '0' }, { label: '女', value: '1' }])
+const genderColumns = ref([{ label: '男', value: '0' }, { label: '女', value: '1' }])
+
+const userProfile = ref<UserProfileForm>({
+  nickName: '',
+  phoneNumber: '',
+  email: '',
+  gender: '',
+})
 
 onLoad((options) => {
   getUserData()
 })
 
-const userProfile = ref<{
-  nickName: string
-  phoneNumber: string
-  email: string
-  sex: string
-}>({
-  nickName: '',
-  phoneNumber: '',
-  email: '',
-  sex: '',
-})
+function getUserData() {
+  getUserProfile().then((data) => {
+    const userData = data.user
+    userProfile.value.nickName = userData.nickName || ''
+    userProfile.value.phoneNumber = userData.phoneNumber || ''
+    userProfile.value.email = userData.email || ''
+    userProfile.value.gender = userData.gender.trim()
+  })
+}
+
+// 提交表单
+function handleSubmit() {
+  if (validateForm()) {
+    updateUserProfile(userProfile.value).then(() => {
+      showToastMsg('修改成功')
+      // 触发刷新用户信息事件
+      uni.$emit('refreshUserInfo')
+      // 返回上一个页面（info页面）
+      uni.navigateBack()
+    })
+  }
+}
 
 // 表单验证函数
 function validateForm() {
@@ -115,7 +132,7 @@ function validateForm() {
   }
 
   // 性别非空校验
-  if (!userProfile.value.sex) {
+  if (!userProfile.value.gender) {
     showToastMsg('请选择性别')
     return false
   }
@@ -124,32 +141,8 @@ function validateForm() {
 }
 
 // 性别选择变化事件处理
-function handleSexChange(e) {
-  userProfile.value.sex = e.detail.value
-}
-
-// 提交表单
-function handleSubmit() {
-  if (validateForm()) {
-    UserApi.updateUserProfile(userProfile.value).then(() => {
-      showToastMsg('修改成功')
-      // 返回上一个页面（info页面）
-      uni.navigateBack()
-    })
-  }
-}
-
-function getUserData() {
-  UserApi.getUserProfile().then((data) => {
-    // 明确设置每个字段，确保类型正确
-    const userData = data.user
-    userProfile.value.nickName = userData.nickName || ''
-    userProfile.value.phoneNumber = userData.phoneNumber || ''
-    userProfile.value.email = userData.email || ''
-
-    // 确保sex字段被正确转换为字符串类型，以便与sexColumns中的值类型匹配
-    userProfile.value.sex = String(userData.sex).trim()
-  })
+function handleGenderChange(e) {
+  userProfile.value.gender = e.detail.value
 }
 </script>
 
@@ -217,7 +210,7 @@ function getUserData() {
       }
 
       /* 性别单选组专用样式 */
-      .sex-radio-group {
+      .gender-radio-group {
         display: flex;
         align-items: center;
         width: 100%;

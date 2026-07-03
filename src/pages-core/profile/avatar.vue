@@ -66,8 +66,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
-import { uploadOss } from '@/api/oss/oss'
-import DEFAULT_AVATAR from '@/static/images/avatar.png'
+import { uploadOss } from '@/api/system/oss'
+import { updateUserProfile } from '@/api/system/user'
 import { useUserStore } from '@/store'
 import { showToastMsg } from '@/utils/common'
 
@@ -104,7 +104,7 @@ const DRAFG_MOVE_RATIO = 1 // 移动时候的比例,
 let INIT_DRAG_POSITION = 100 // 初始化屏幕宽度和裁剪区域的宽度之差，用于设置初始化裁剪的宽度
 const DRAW_IMAGE_W = SCREEN_WIDTH // 设置生成的图片宽度
 
-const imageSrc = ref(userInfo.value.avatar || DEFAULT_AVATAR)
+const imageSrc = ref(userInfo.value.user.avatar)
 const isShowImg = ref(false)
 const cropperInitW = ref(SCREEN_WIDTH)
 const cropperInitH = ref(SCREEN_WIDTH)
@@ -340,15 +340,13 @@ async function getImageInfo() {
       success: async (res) => {
         uni.hideLoading()
         try {
-          console.log('=================================22222222222')
-          //       const formData = { name: 'avatarfile', filePath: res.tempFilePath }
-          //       console.log(formData)
           const data = await uploadOss({ filePath: res.tempFilePath, name: 'file' })
           console.log('sccg------>', data)
-
-          //       userStore.setUserAvatar(data.imgUrl)
-          //       showToastMsg('修改成功')
-          //       uni.navigateBack()
+          await updateUserProfile({ avatar: data.ossId })
+          userStore.setUserAvatar(data.url)
+          uni.$emit('refreshUserInfo')
+          showToastMsg('修改成功')
+          uni.navigateBack()
         }
         catch (error) {
           uni.showToast({ title: '上传失败', icon: 'none' })
@@ -362,7 +360,7 @@ async function getImageInfo() {
   })
 }
 
-onMounted(() => {
+onLoad(async () => {
   if (imageSrc.value) {
     loadImage()
   }

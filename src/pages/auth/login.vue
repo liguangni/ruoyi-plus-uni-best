@@ -1,11 +1,14 @@
 <script lang="ts" setup>
 import { tabbarList } from '@/tabbar/config'
-import { ensureDecodeURIComponent, redirectAfterLogin } from '@/utils'
+import { isPageTabbar } from '@/tabbar/store'
+// import { ensureDecodeURIComponent } from '@/utils'
 import { getCodeImg } from '@/api/auth/login'
 import { useTokenStore } from '@/store/token'
 import { showToastMsg } from '@/utils/common'
+import { parseUrlToObj } from '@/utils/index'
 
 definePage({
+  name: 'Login',
   style: {
     navigationBarTitleText: '登录',
     navigationStyle: 'custom',
@@ -20,17 +23,17 @@ const captchaEnabled = ref(true)
 
 onLoad((options) => {
   console.log('login options: ', options)
-  if (options.redirect) {
-    redirectUrl.value = ensureDecodeURIComponent(options.redirect)
-  }
-  else {
-    redirectUrl.value = tabbarList[0].pagePath
-  }
-  console.log('redirectUrl.value: ', redirectUrl.value)
+  // 李广妮: 由于redirectUrl可能会遇到各种各样的页面问题。这个地方暂时安装若依官方，跳转首页了
+  // 如有需要，可自行修改
+  // if (options.redirect) {
+  //   redirectUrl.value = ensureDecodeURIComponent(options.redirect)
+  // }
+  // else {
+  redirectUrl.value = tabbarList[0].pagePath
+  // }
 })
 
 const loginForm = ref({
-  tenantId: '000000',
   username: 'admin',
   password: 'admin123',
   code: '',
@@ -53,17 +56,13 @@ async function handleLogin() {
 };
 
 async function pwdLogin() {
-  if (tokenStore.updateNowTime().hasLogin) {
-    uni.navigateBack()
-    return
-  }
   try {
     // 调用登录接口
     uni.showLoading({
       title: '登录中...',
     })
     await tokenStore.login(loginForm.value)
-    redirectAfterLogin(redirectUrl.value)
+    loginSuccess()
   }
   catch (error) {
     if (captchaEnabled.value) {
@@ -75,9 +74,38 @@ async function pwdLogin() {
   }
 }
 
+function loginSuccess() {
+  uni.showToast({
+    title: '登录成功',
+    icon: 'success',
+  })
+  let path = redirectUrl.value
+  if (!path.startsWith('/')) {
+    path = `/${path}`
+  }
+  const { path: _path, query } = parseUrlToObj(path)
+
+  if (isPageTabbar(_path)) {
+    // 经过我的测试 switchTab 不能带 query 参数, 不管是放到 url  还是放到 query ,
+    // 最后跳转过去的时候都会丢失 query 信息
+    uni.switchTab({
+      url: path,
+    })
+  }
+  else {
+    // 自己决定是 redirectTo 还是 navigateBack
+    uni.redirectTo({
+      url: path,
+    })
+    // uni.navigateBack()
+  }
+}
+
 // 获取图形验证码
 function getCode() {
+  loginForm.value.code = ''
   getCodeImg().then((res) => {
+    console.log('getCode res====>', res)
     captchaEnabled.value = res.captchaEnabled === undefined ? true : res.captchaEnabled
     //  captchaEnabled.value = res.captchaEnabled === undefined ? true : res.captchaEnabled
     if (captchaEnabled.value) {
@@ -91,16 +119,6 @@ const showPassword = ref(false)
 function changePassword() {
   showPassword.value = !showPassword.value
 }
-
-// 隐私协议
-function handlePrivacy() {
-
-};
-
-// 用户协议
-function handleUserAgrement() {
-
-};
 
 onLoad(() => {
   getCode()
@@ -137,12 +155,6 @@ onLoad(() => {
       <view @click="handleLogin">
         登录
       </view>
-    </view>
-
-    <view class="xieyi text-center">
-      <text class="text-grey1">登录即代表同意</text>
-      <text class="text-blue" @click="handleUserAgrement">《用户协议》</text>
-      <text class="text-blue" @click="handlePrivacy">《隐私协议》</text>
     </view>
   </view>
 </template>
@@ -226,12 +238,6 @@ onLoad(() => {
       font-size: 32rpx;
       background: linear-gradient(90deg, rgba(255, 222, 102, 1) 0%, rgba(202, 245, 253, 1) 100%);
     }
-  }
-
-  .xieyi {
-    color: #333;
-    margin-top: 20px;
-    font-size: 24rpx;
   }
 }
 </style>

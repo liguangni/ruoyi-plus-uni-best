@@ -9,6 +9,7 @@ import UniLayouts from '@uni-helper/vite-plugin-uni-layouts'
 import UniManifest from '@uni-helper/vite-plugin-uni-manifest'
 // @see https://uni-helper.js.org/vite-plugin-uni-pages
 import UniPages from '@uni-helper/vite-plugin-uni-pages'
+import { WotResolver } from './wot-ui-resolver'
 // @see https://github.com/uni-helper/vite-plugin-uni-platform
 // 需要与 @uni-helper/vite-plugin-uni-pages 插件一起使用
 import UniPlatform from '@uni-helper/vite-plugin-uni-platform'
@@ -80,13 +81,14 @@ export default defineConfig(({ command, mode }) => {
         deep: true, // 是否递归扫描子目录，
         directoryAsNamespace: false, // 是否把目录名作为命名空间前缀，true 时组件名为 目录名+组件名，
         dts: 'src/types/components.d.ts', // 自动生成的组件类型声明文件路径（用于 TypeScript 支持）
+        resolvers: [WotResolver()],
       }),
       UniPages({
         exclude: ['**/components/**/**.*', '**/sections/**/**.*'],
         // pages 目录为 src/pages，分包目录不能配置在pages目录下！！
         // 是个数组，可以配置多个，但是不能为pages里面的目录！！
         // "src/pages-demo" 是unibest demo 预留的，方便后续插入demo示例
-        subPackages: ['src/pages-core', 'src/pages-workflow'],
+        subPackages: ['src/pages-core', 'src/pages-workflow', 'src/pages-demo'],
         dts: 'src/types/uni-pages.d.ts',
       }),
       // UniOptimization 插件需要 page.json 文件，故应在 UniPages 插件之后执行
@@ -200,6 +202,10 @@ export default defineConfig(({ command, mode }) => {
     },
     esbuild: {
       drop: VITE_DELETE_CONSOLE === 'true' ? ['console', 'debugger'] : [],
+    },
+    // 核心配置：将 luch-request 加入 Vite 的预构建依赖
+    optimizeDeps: {
+      include: ['luch-request'],
     },
     build: {
       sourcemap: false,

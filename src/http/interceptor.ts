@@ -3,7 +3,6 @@ import { useTokenStore } from '@/store'
 import { getEnvBaseUrl } from '@/utils'
 import { stringifyQuery } from './tools/queryString'
 import { getErrorMsg, showToastMsg } from '@/utils/common'
-import { toLoginPage } from '@/utils/toLoginPage'
 import { decrypt, decryptBase64, decryptWithAes, encrypt, encryptBase64, encryptWithAes, generateAesKey } from '@/utils/api-encrypt'
 import { ResultEnum } from './tools/enum'
 
@@ -19,7 +18,7 @@ const httpInterceptor = {
   invoke(options: CustomRequestOptions) {
     // 如果您使用了alova，则请把下面的代码放开注释
     // alova 执行流程：alova beforeRequest --> 本拦截器 --> alova responded
-    // return options
+    return options
 
     // 非 alova 请求，正常执行
     // 接口请求支持通过 query 参数配置 queryString
@@ -83,6 +82,7 @@ const httpInterceptor = {
     return options
   },
   success(args) {
+    return
     const respHeader = { [encryptHeader]: '', ...(args.header ?? {}) }
     console.log('Interceptor success respHeader', respHeader)
     // 加密后的 AES 秘钥
@@ -105,21 +105,11 @@ const httpInterceptor = {
     const responseData = typeof args.data === 'string' ? JSON.parse(args.data) : args.data
     const { code } = responseData || {}
 
-    // 3. 处理 401 未授权
-    if (args.statusCode === ResultEnum.Unauthorized || code === ResultEnum.Unauthorized) {
-      useTokenStore().logout().then(() => {
-        toLoginPage()
-      })
-      return Promise.reject(new Error('无效的会话，或者会话已过期，请重新登录。'))
-    }
-    if (code !== ResultEnum.Success200) {
-    // 4. 处理其他业务错误
-      const msg = responseData?.msg || responseData?.message || getErrorMsg(code)
-      // 支持静默模式：如果调用方传了 showError: false，则不弹 Toast
-      if (args.config?.showError !== false) {
+    if (code !== ResultEnum.Success0 && code !== ResultEnum.Success200) {
+      const msg = responseData.msg || responseData.message || getErrorMsg(code)
+      if (!args.config.hideErrorToast) {
         showToastMsg(msg)
       }
-      return Promise.reject(new Error(msg))
     }
   },
   fail(err) {
@@ -134,9 +124,9 @@ const httpInterceptor = {
 
 export const requestInterceptor = {
   install() {
-    // 拦截 request 请求
-    uni.addInterceptor('request', httpInterceptor)
-    // 拦截 uploadFile 文件上传
-    uni.addInterceptor('uploadFile', httpInterceptor)
+    // // 拦截 request 请求
+    // uni.addInterceptor('request', httpInterceptor)
+    // // 拦截 uploadFile 文件上传
+    // uni.addInterceptor('uploadFile', httpInterceptor)
   },
 }

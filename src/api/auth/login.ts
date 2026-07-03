@@ -1,10 +1,5 @@
-import type { IAuthLoginRes, IDoubleTokenRes, ILoginForm, IUserInfoRes } from '@/types/auth/login'
-import { request } from '@/http/request'
-
-export interface IAuthLoginResp {
-  access_token?: string // 访问令牌
-  expire_in?: number // 有效期(秒)
-}
+import request from '@/http/luch-request'
+import type { IAuthLoginRes, IDoubleTokenRes, ILoginForm, IUserInfoRes, loginInfo } from '@/types/auth/login.types'
 
 /**
  * 用户登录
@@ -14,9 +9,9 @@ export function login(loginForm: ILoginForm) {
   loginForm.clientId = loginForm.clientId || import.meta.env.VITE_APP_CLIENT_ID
   loginForm.grantType = loginForm.grantType || 'password'
 
-  return request.post<IAuthLoginResp>({
+  return request.post<loginInfo>({
     url: '/auth/login',
-    headers: {
+    custom: {
       isToken: false,
       isEncrypt: true,
     },
@@ -30,7 +25,7 @@ export function login(loginForm: ILoginForm) {
 export function getCodeImg() {
   return request.get<any>({
     url: '/auth/code',
-    headers: {
+    custom: {
       isToken: false,
     },
   })

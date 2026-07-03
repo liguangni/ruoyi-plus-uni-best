@@ -2,12 +2,11 @@
 import { reactive } from 'vue'
 import { getMenuGroups, getQuickEntrances } from './work'
 import { useUserStore } from '@/store/user'
-import type { MenuGroupChildItem, QuickEntranceItem } from '@/types/work/work'
+import type { MenuGroupChildItem, QuickEntranceItem } from '@/types/work/work.types'
 
 definePage({
   style: {
     navigationBarTitleText: '工作台',
-    navigationStyle: 'custom',
   },
 })
 
@@ -52,72 +51,76 @@ function getDisplayItems(groupKey: string, children: any[]) {
 </script>
 
 <template>
-  <view class="work-container">
-    <view class="bg">
-      <view class="user-header">
-        <image class="avatar" :src="userStore.userInfo.user.avatar" mode="aspectFill" />
-        <text class="nickname">{{ userStore.userInfo.user.nickName || '用户' }}</text>
-      </view>
-      <swiper class="swiper" circular :indicator-dots="false" :autoplay="true" :interval="4000" :duration="500">
-        <swiper-item>
-          <view class="banner">
-            <image src="@/static/work/work.png" mode="widthFix" />
-          </view>
-        </swiper-item>
-        <swiper-item>
-          <view class="banner">
-            <image src="@/static/work/work.png" mode="widthFix" />
-          </view>
-        </swiper-item>
-        <swiper-item>
-          <view class="banner">
-            <image src="@/static/work/work.png" mode="widthFix" />
-          </view>
-        </swiper-item>
-      </swiper>
-    </view>
-
-    <view class="quick-entrances">
-      <view
-        v-for="item in quickEntrances"
-        :key="item.name"
-        class="entrance-card"
-        @click="handleQuickClick(item)"
-      >
-        <view class="entrance-icon">
-          <view :class="[item.icon]" :style="{ color: item.iconColor }" />
+  <view class="page-container pc-tabbar">
+    <view class="page-content">
+      <view class="bg">
+        <view class="user-header">
+          <image class="avatar" :src="userStore.userInfo.user.avatar" mode="aspectFill" />
+          <text class="nickname">{{ userStore.userInfo.user.nickName || '用户' }}</text>
         </view>
-        <view class="entrance-info">
-          <text class="entrance-name">{{ item.name }}</text>
-          <text class="entrance-subtitle">{{ item.subtitle }}</text>
-        </view>
-      </view>
-    </view>
-
-    <view class="menu-section">
-      <view
-        v-for="group in menuGroups"
-        :key="group.key"
-        class="menu-group"
-      >
-        <view class="group-header" @click="toggleGroup(group.key)">
-          <text class="group-title">{{ group.name }}</text>
-          <view v-if="group.children.length > maxMenuItems" class="expand-arrow" :class="{ rotated: expandedGroups[group.key] }">
-            <view class="i-carbon-chevron-right text-gray-500" />
-          </view>
-        </view>
-        <view class="group-content">
-          <view class="menu-grid">
-            <view
-              v-for="item in getDisplayItems(group.key, group.children)"
-              :key="item.key"
-              class="menu-item"
-              @click="handleMenuClick(item)"
-            >
-              <view class="menu-icon" :style="{ 'background-image': item.iconBg }">
-                <view class="text-white" :class="[item.icon] " />
+        <view class="swiper-container">
+          <swiper class="swiper" circular :indicator-dots="false" :autoplay="true" :interval="4000" :duration="500">
+            <swiper-item>
+              <view class="banner">
+                <image src="@/static/work/work.png" mode="widthFix" />
               </view>
-              <text class="menu-name">{{ item.name }}</text>
+            </swiper-item>
+            <swiper-item>
+              <view class="banner">
+                <image src="@/static/work/work.png" mode="widthFix" />
+              </view>
+            </swiper-item>
+            <swiper-item>
+              <view class="banner">
+                <image src="@/static/work/work.png" mode="widthFix" />
+              </view>
+            </swiper-item>
+          </swiper>
+        </view>
+      </view>
+
+      <view class="quick-entrances">
+        <view
+          v-for="item in quickEntrances"
+          :key="item.name"
+          class="entrance-card"
+          @click="handleQuickClick(item)"
+        >
+          <view class="entrance-icon">
+            <view :class="[item.icon]" :style="{ color: item.iconColor }" />
+          </view>
+          <view class="entrance-info">
+            <text class="entrance-name">{{ item.name }}</text>
+            <text class="entrance-subtitle">{{ item.subtitle }}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="menu-section mb-2">
+        <view
+          v-for="group in menuGroups"
+          :key="group.key"
+          class="menu-group"
+        >
+          <view class="group-header" @click="toggleGroup(group.key)">
+            <text class="group-title">{{ group.name }}</text>
+            <view v-if="group.children.length > maxMenuItems" class="expand-arrow" :class="{ rotated: expandedGroups[group.key] }">
+              <view class="i-carbon-chevron-right text-gray-500" />
+            </view>
+          </view>
+          <view class="group-content">
+            <view class="menu-grid">
+              <view
+                v-for="item in getDisplayItems(group.key, group.children)"
+                :key="item.key"
+                class="menu-item"
+                @click="handleMenuClick(item)"
+              >
+                <view class="menu-icon" :style="{ 'background-image': item.iconBg }">
+                  <view class="text-white" :class="[item.icon] " />
+                </view>
+                <text class="menu-name">{{ item.name }}</text>
+              </view>
             </view>
           </view>
         </view>
@@ -152,16 +155,17 @@ $text-light: #999999;
 .bg {
   background-image: linear-gradient($head-color, #4194fc);
   min-height: 500rpx;
-  border-bottom-left-radius: 30%;
-  border-bottom-right-radius: 30%;
+  border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 
   .user-header {
     display: flex;
     align-items: center;
     gap: 16rpx;
-    margin-top: calc(20px + env(safe-area-inset-top));
+    margin-top: calc(10px + env(safe-area-inset-top));
     padding-left: 40rpx;
 
     .avatar {

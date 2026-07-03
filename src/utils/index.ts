@@ -2,7 +2,6 @@
 import type { PageMetaDatum, SubPackages } from '@uni-helper/vite-plugin-uni-pages'
 /** 如果是运行抖音小程序，就不引入 @uni-helper/uni-env，否则运行报错（找不到process) */
 import { isMpWeixin } from '@uni-helper/uni-env'
-import { isPageTabbar } from '@/tabbar/store'
 
 import { pages, subPackages } from '@/pages.json'
 
@@ -150,22 +149,3 @@ export const isDoubleTokenMode = import.meta.env.VITE_AUTH_MODE === 'double'
  * 通常为 /pages/index/index
  */
 export const HOME_PAGE = `/${(pages as PageMetaDatum[]).find(page => page.type === 'home')?.path || (pages as PageMetaDatum[])[0].path}`
-
-/**
- * 登录成功后跳转
- *
- * @param redirectUrl 重定向地址，为空则跳转到默认首页（HOME_PAGE）
- */
-export function redirectAfterLogin(redirectUrl?: string) {
-  let path = redirectUrl || HOME_PAGE
-  if (!path.startsWith('/')) {
-    path = `/${path}`
-  }
-  const { path: _path, query } = parseUrlToObj(path)
-  if (isPageTabbar(_path)) {
-    uni.switchTab({ url: path })
-  }
- else {
-    uni.reLaunch({ url: path })
-  }
-}

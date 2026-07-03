@@ -75,96 +75,97 @@ function toAboutPage() {
 </script>
 
 <template>
-  <view>
-    <view class="fullpage-overlay" />
-    <view class="profile-container">
-      <!-- 用户信息区域 -->
-      <view class="bg">
-        <view class="bg-radius" />
-        <view class="user-info-container">
-          <image class="avatar-img" :src="userInfo.user.avatar" />
-          <text v-if="userHasLogin" class="uer-name">{{ userInfo.user.nickName }}</text>
-        </view>
-        <view class="header-bottom position-relative center">
-          <view v-if="!userHasLogin">
-            <view class="login-btn" @click="handleLogin">
-              立即登录
-            </view>
+  <view class="page-container pc-tabbar bg-light">
+    <view class="page-content">
+      <view class="profile-container">
+        <!-- 用户信息区域 -->
+        <view class="bg">
+          <view class="bg-radius" />
+          <view class="user-info-container">
+            <image class="avatar-img" :src="userInfo.user.avatar" />
+            <text class="uer-name">{{ userInfo.user.nickName }}</text>
           </view>
-          <view v-else class="logo-title">
-            <view class="count">
-              <view class="count-item">
-                <text class="count-item-num">0</text>
-                <text class="count-item-text">消息通知</text>
-              </view>
-              <view class="count-item">
-                <text class="count-item-num">0</text>
-                <text class="count-item-text">我的审批</text>
-              </view>
-              <view class="count-item">
-                <text class="count-item-num">0</text>
-                <text class="count-item-text">消息通知</text>
+          <view class="header-bottom position-relative center">
+            <view v-if="!userHasLogin">
+              <view class="login-btn" @click="handleLogin">
+                立即登录
               </view>
             </view>
-          </view>
-        </view>
-      </view>
-
-      <view class="content-section">
-        <view class="center-nav">
-          <view class="center-nav-title">
-            <text>常用服务</text>
-          </view>
-          <view class="center-nav-content">
-            <view class="center-nav-item">
-              <view class="center-nav-item-icon i-carbon-group text-pink" />
-              <text class="center-nav-item-text">交流群</text>
-            </view>
-            <view class="center-nav-item">
-              <text class="center-nav-item-icon i-carbon-headset text-blue" />
-              <text class="center-nav-item-text">在线客服</text>
-            </view>
-            <view class="center-nav-item">
-              <text class="center-nav-item-icon i-carbon-chat-bot text-yellow" />
-              <text class="center-nav-item-text">反馈社区</text>
-            </view>
-            <view class="center-nav-item">
-              <text class="center-nav-item-icon i-carbon-thumbs-up text-green" />
-              <text class="center-nav-item-text">点赞我们</text>
+            <view v-else class="logo-title">
+              <view class="count">
+                <view class="count-item">
+                  <text class="count-item-num">0</text>
+                  <text class="count-item-text">消息通知</text>
+                </view>
+                <view class="count-item">
+                  <text class="count-item-num">0</text>
+                  <text class="count-item-text">我的审批</text>
+                </view>
+                <view class="count-item">
+                  <text class="count-item-num">0</text>
+                  <text class="count-item-text">消息通知</text>
+                </view>
+              </view>
             </view>
           </view>
         </view>
 
-        <view class="wy-cell-list-group">
-          <view class="wy-cell-list-item border-bottom" @click="handleToInfo">
-            <view class="list-icon color-5 i-carbon:identification" />
-            <text class="list-text">个人信息</text>
-            <view class="list-arrow i-carbon:chevron-right" />
+        <view class="content-section bg-light">
+          <view class="center-nav">
+            <view class="center-nav-title">
+              <text>常用服务</text>
+            </view>
+            <view class="center-nav-content">
+              <view class="center-nav-item">
+                <view class="center-nav-item-icon i-carbon-group text-pink" />
+                <text class="center-nav-item-text">交流群</text>
+              </view>
+              <view class="center-nav-item">
+                <text class="center-nav-item-icon i-carbon-headset text-blue" />
+                <text class="center-nav-item-text">在线客服</text>
+              </view>
+              <view class="center-nav-item">
+                <text class="center-nav-item-icon i-carbon-chat-bot text-yellow" />
+                <text class="center-nav-item-text">反馈社区</text>
+              </view>
+              <view class="center-nav-item">
+                <text class="center-nav-item-icon i-carbon-thumbs-up text-green" />
+                <text class="center-nav-item-text">点赞我们</text>
+              </view>
+            </view>
           </view>
-          <view class="wy-cell-list-item border-bottom" @click="toSettingPage">
-            <view class="list-icon color-2 i-carbon:settings" />
-            <text class="list-text">应用设置</text>
-            <view class="list-arrow i-carbon:chevron-right" />
-          </view>
-        </view>
-        <view class="wy-cell-list-group">
-          <view class="wy-cell-list-item border-bottom">
-            <view class="list-icon color-3 i-carbon:help" />
-            <text class="list-text">帮助与反馈</text>
-            <view class="list-arrow i-carbon:chevron-right" />
-          </view>
-          <view class="wy-cell-list-item">
-            <text class="list-icon color-4 i-carbon:book" />
-            <text class="list-text">服务条款及隐私</text>
-            <view class="list-arrow i-carbon:chevron-right" />
-          </view>
-        </view>
 
-        <view class="wy-cell-list-group">
-          <view class="wy-cell-list-item" @click="toAboutPage">
-            <view class="list-icon color-1 i-carbon:favorite" />
-            <text class="list-text">关于应用</text>
-            <view class="list-arrow i-carbon:chevron-right" />
+          <view class="wy-cell-list-group">
+            <view class="wy-cell-list-item border-bottom" @click="handleToInfo">
+              <view class="list-icon color-5 i-carbon:identification" />
+              <text class="list-text">个人信息</text>
+              <view class="list-arrow i-carbon:chevron-right" />
+            </view>
+            <view class="wy-cell-list-item border-bottom" @click="toSettingPage">
+              <view class="list-icon color-2 i-carbon:settings" />
+              <text class="list-text">应用设置</text>
+              <view class="list-arrow i-carbon:chevron-right" />
+            </view>
+          </view>
+          <view class="wy-cell-list-group">
+            <view class="wy-cell-list-item border-bottom">
+              <view class="list-icon color-3 i-carbon:help" />
+              <text class="list-text">帮助与反馈</text>
+              <view class="list-arrow i-carbon:chevron-right" />
+            </view>
+            <view class="wy-cell-list-item">
+              <text class="list-icon color-4 i-carbon:book" />
+              <text class="list-text">服务条款及隐私</text>
+              <view class="list-arrow i-carbon:chevron-right" />
+            </view>
+          </view>
+
+          <view class="wy-cell-list-group">
+            <view class="wy-cell-list-item" @click="toAboutPage">
+              <view class="list-icon color-1 i-carbon:favorite" />
+              <text class="list-text">关于应用</text>
+              <view class="list-arrow i-carbon:chevron-right" />
+            </view>
           </view>
         </view>
       </view>
@@ -279,21 +280,9 @@ $list-margin: 20rpx;
 }
 
 .content-section {
-  background-color: #f4f4f4;
   position: relative;
   z-index: 300;
   padding: 20rpx 0;
-}
-
-.fullpage-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: #f4f4f4;
-  pointer-events: none;
-  z-index: -1;
 }
 
 .center-nav {

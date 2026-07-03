@@ -1,6 +1,10 @@
+import type { HttpRequestConfig } from 'luch-request'
+
 /**
  * 在 uniapp 的 RequestOptions 和 IUniUploadFileOptions 基础上，添加自定义参数
  */
+// 添加uni.uploadFile参数类型
+
 export type CustomRequestOptions = UniApp.RequestOptions & {
   query?: Record<string, any>
   /** 出错时是否隐藏错误提示 */
@@ -12,7 +16,19 @@ export type CustomRequestOptions = UniApp.RequestOptions & {
     isEncrypt?: boolean
   }
   baseUrl?: string
-} & IUniUploadFileOptions // 添加uni.uploadFile参数类型
+} & IUniUploadFileOptions
+export type CustomHttpOptions = HttpRequestConfig & {
+  query?: Record<string, any>
+  /** 出错时是否隐藏错误提示 */
+  hideErrorToast?: boolean
+  headers?: {
+    /** 是否在请求头中添加token 默认是 */
+    isToken?: boolean
+    /** 请求是否需要加密 默认否 */
+    isEncrypt?: boolean
+  }
+  baseUrl?: string
+}
 
 /** 主要提供给 openapi-ts-request 生成的代码使用 */
 export type CustomRequestOptions_ = Omit<CustomRequestOptions, 'url'>
@@ -48,45 +64,4 @@ export interface PageResult<T> {
   total: number
   page: number
   pageSize: number
-}
-
-interface BaseRequestConfig {
-  headers?: {
-    /** 是否在请求头中添加token 默认是 */
-    isToken: boolean
-    /** 请求是否需要加密 默认否 */
-    isEncrypt?: boolean
-  }
-  /** 请求头配置 */
-  header?: any
-  /** 接口路径 */
-  url: string
-  /** 请求参数 */
-  params?: any
-  /** 超时事件 */
-  timeout?: number | undefined
-}
-
-export interface RequestUploadConfig extends BaseRequestConfig {
-  /** 文件路径 */
-  filePath: string
-  /** 文件对应变量名 默认file */
-  name?: string
-  /** 其他表单参数 */
-  formData?: any
-}
-
-export interface ResponseData<T> {
-  /** 响应码 */
-  code: number
-  /** 响应数据 */
-  data: any
-  /** 响应信息 */
-  msg: string
-  /** 图片路径 */
-  imgUrl: string
-  /** 数据总数 */
-  total: number
-  /** 表格数据 */
-  rows: Array<T>
 }

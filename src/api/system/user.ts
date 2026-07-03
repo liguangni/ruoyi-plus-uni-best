@@ -1,31 +1,28 @@
-import type { UserAvatarUpdateVo, UserProfile } from '@/types/system/user'
-import { request } from '@/http/request'
+import type { UserProfile, UserProfileForm } from '@/types/system/user.types'
+import request from '@/http/luch-request'
 
-export default {
-  // 查询用户个人信息
-  getUserProfile: () => request.get<UserProfile>({
+// 查询用户个人信息
+export function getUserProfile() {
+  return request.get<UserProfile>({
     url: '/system/user/profile',
-  }),
+  })
+}
 
-  // 用户密码重置
-  updateUserPwd: (oldPassword: string, newPassword: string) => request.put({
+// 用户密码重置
+export function updateUserPwd(oldPassword: string, newPassword: string) {
+  return request.put({
     url: '/system/user/profile/updatePwd',
     data: {
       oldPassword,
       newPassword,
     },
-  }),
+  })
+}
 
-  // 修改用户个人信息
-  updateUserProfile: (data: any) => request.put({
+// 修改用户个人信息
+export function updateUserProfile(data: UserProfileForm) {
+  return request.put({
     url: '/system/user/profile',
     data,
-  }),
-
-  // 用户头像上传
-  uploadAvatar: (data: { name: string, filePath: string }) => request.upload<UserAvatarUpdateVo>({
-    url: '/system/user/profile/avatar',
-    name: data.name,
-    filePath: data.filePath,
-  }),
+  })
 }

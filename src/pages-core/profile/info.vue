@@ -4,22 +4,9 @@
     <view class="custom-list">
       <view class="custom-list-item avatar-item">
         <view class="my-4 center">
-          <!-- #ifdef MP-WEIXIN -->
-          <!--
-
-          <button v-if="false" class="avatar-button" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
-            <image :src="userStore.userInfo.avatar" mode="aspectFill" class="h-full w-full" />
-          </button>
-          -->
-          <button class="avatar-button" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
-            <image :src="userStore.userInfo.user.avatar" mode="aspectFill" class="h-full w-full" />
-          </button>
-          <!-- #endif -->
-          <!-- #ifndef MP-WEIXIN -->
           <view class="avatar-wrapper" @click="toAvatarPage">
-            <image :src="userStore.userInfo.user.avatar" mode="aspectFill" class="h-full w-full" />
+            <image :src="userProfile.user.avatar" mode="aspectFill" class="h-full w-full" />
           </view>
-          <!-- #endif -->
         </view>
       </view>
       <view class="custom-list-item">
@@ -44,6 +31,14 @@
         </view>
         <view class="item-value">
           {{ userProfile.user.email }}
+        </view>
+      </view>
+      <view class="custom-list-item">
+        <view class="item-label">
+          部门
+        </view>
+        <view class="item-value">
+          {{ userProfile.user.deptName }}
         </view>
       </view>
       <view class="custom-list-item">
@@ -73,8 +68,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { UserInfo, UserProfile } from '@/types/system/user'
-import UserApi from '@/api/system/user'
+import type { UserInfo, UserProfile } from '@/types/system/user.types'
+import { getUserProfile } from '@/api/system/user'
 import DEFAULT_AVATAR from '@/static/images/avatar.png'
 import { useUserStore } from '@/store/user'
 
@@ -96,17 +91,30 @@ const userProfile = ref<UserProfile>({
 
 onLoad((options) => {
   getUserInfo()
+  // 监听事件
+  uni.$on('refreshUserInfo', () => {
+    getUserInfo()
+  })
+})
+
+onUnload(() => {
+  console.log('onUnload')
+  uni.$off('refreshUserInfo')
 })
 
 // 获取用户信息
 function getUserInfo() {
-  UserApi.getUserProfile().then((data) => {
+  uni.showLoading({
+    title: '加载中...',
+  })
+  getUserProfile().then((data) => {
     userProfile.value = data
     if (!userProfile.value.user.avatar)
       userProfile.value.user.avatar = DEFAULT_AVATAR
     userStore.setUserAvatar(userProfile.value.user.avatar)
   }).finally(() => {
     loading.value = false
+    uni.hideLoading()
   })
 };
 
@@ -116,41 +124,12 @@ function handleToEditInfo() {
   })
 };
 
-// #ifndef MP-WEIXIN
-// 上传头像
 function toAvatarPage() {
   console.log('toAvatarPage')
   uni.navigateTo({
     url: '/pages-core/profile/avatar',
   })
 }
-// #endif
-
-// #ifdef MP-WEIXIN
-// 微信小程序下选择头像事件
-function onChooseAvatar(e: any) {
-  console.log('选择头像', e.detail)
-  // const { avatarUrl } = e.detail
-  // const { run } = useUpload<IUploadSuccessInfo>(
-  //   '/system/user/profile/avatar',
-  //   {},
-  //   {
-  //     onSuccess: (res) => {
-  //       console.log('wx头像上传成功', res)
-  //       userStore.setUserAvatar(res.url)
-  //       // 更新本地用户头像
-  //       userProfile.value.user.avatar = res.url
-  //     },
-  //   },
-  //   avatarUrl,
-  // )
-  // run()
-
-  uni.navigateTo({
-    url: '/pages-core/profile/avatar',
-  })
-}
-// #endif
 </script>
 
 <style lang="scss" scoped>

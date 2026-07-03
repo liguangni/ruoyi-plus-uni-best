@@ -1,4 +1,4 @@
-import type { IAuthLoginRes, ILoginForm } from '@/types/auth/login'
+import type { IAuthLoginRes, ILoginForm } from '@/types/auth/login.types'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue' // 修复：导入 computed
 import {
@@ -8,7 +8,7 @@ import {
   wxLogin as _wxLogin,
   getWxCode,
 } from '@/api/auth/login'
-import { isDoubleTokenRes, isSingleTokenRes } from '@/types/auth/login'
+import { isDoubleTokenRes, isSingleTokenRes } from '@/types/auth/login.types'
 import { isDoubleTokenMode } from '@/utils'
 import { useUserStore } from './user'
 
@@ -122,18 +122,10 @@ export const useTokenStore = defineStore(
           expiresIn: res.expire_in,
         }
         await _postLogin(tokenData)
-        uni.showToast({
-          title: '登录成功',
-          icon: 'success',
-        })
         return res
       }
       catch (error) {
         console.error('登录失败:', error)
-        uni.showToast({
-          title: '登录失败，请重试',
-          icon: 'error',
-        })
         throw error
       }
       finally {
@@ -163,10 +155,6 @@ export const useTokenStore = defineStore(
       }
       catch (error) {
         console.error('微信登录失败:', error)
-        uni.showToast({
-          title: '微信登录失败，请重试',
-          icon: 'error',
-        })
         throw error
       }
       finally {
@@ -271,6 +259,7 @@ export const useTokenStore = defineStore(
      * 建议这样使用tokenStore.updateNowTime().hasLogin
      */
     const hasValidLogin = computed(() => {
+      console.log('hasValidLogin', hasLoginInfo.value, !isTokenExpired.value)
       return hasLoginInfo.value && !isTokenExpired.value
     })
 
