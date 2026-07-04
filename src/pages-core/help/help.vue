@@ -17,29 +17,55 @@
               placeholder="请输入您遇到的问题"
               placeholder-class="placeholder"
               confirm-type="search"
+              @input="handleSearch"
             >
           </view>
         </view>
 
-        <view v-for="group in faqGroups" :key="group.title" class="section">
-          <view class="section-header">
-            <view class="section-icon" :style="{ backgroundColor: group.bgColor }">
-              <view :class="group.icon" :style="{ color: group.iconColor }" />
+        <template v-if="isSearching">
+          <view class="section">
+            <view class="section-header">
+              <text class="section-title">搜索结果</text>
+              <text class="search-count">找到 {{ searchResults.length }} 个相关问题</text>
             </view>
-            <text class="section-title">{{ group.title }}</text>
-          </view>
-          <view class="faq-list">
-            <view
-              v-for="(faq, idx) in group.items"
-              :key="idx"
-              class="faq-item"
-              @click="handleFaqClick(faq)"
-            >
-              <text class="faq-text">{{ faq.question }}</text>
-              <view class="i-carbon-chevron-right text-gray-400" />
+            <view class="faq-list">
+              <view
+                v-for="faq in searchResults"
+                :key="faq.id"
+                class="faq-item"
+                @click="handleFaqClick(faq)"
+              >
+                <text class="faq-text">{{ faq.question }}</text>
+                <view class="i-carbon-chevron-right text-gray-400" />
+              </view>
+              <view v-if="searchResults.length === 0" class="empty-result">
+                <text class="empty-text">未找到相关问题</text>
+              </view>
             </view>
           </view>
-        </view>
+        </template>
+
+        <template v-else>
+          <view v-for="group in faqGroups" :key="group.title" class="section">
+            <view class="section-header">
+              <view class="section-icon" :style="{ backgroundColor: group.bgColor }">
+                <view :class="group.icon" :style="{ color: group.iconColor }" />
+              </view>
+              <text class="section-title">{{ group.title }}</text>
+            </view>
+            <view class="faq-list">
+              <view
+                v-for="faq in group.items"
+                :key="faq.id"
+                class="faq-item"
+                @click="handleFaqClick(faq)"
+              >
+                <text class="faq-text">{{ faq.question }}</text>
+                <view class="i-carbon-chevron-right text-gray-400" />
+              </view>
+            </view>
+          </view>
+        </template>
 
         <view class="footer">
           <text class="footer-text">找不到答案？</text>
@@ -51,6 +77,9 @@
 </template>
 
 <script lang="ts" setup>
+import type { FaqItem } from './help.config'
+import { faqGroups, searchFaq } from './help.config'
+
 definePage({
   style: {
     navigationBarTitleText: '帮助中心',
@@ -58,36 +87,21 @@ definePage({
 })
 
 const searchKey = ref('')
+const searchResults = ref<FaqItem[]>([])
+const isSearching = computed(() => searchKey.value.trim().length > 0)
 
-const faqGroups = [
-  {
-    title: '若依问题',
-    icon: 'iconfont icon-github',
-    bgColor: '#f0f4ff',
-    iconColor: '#5b8cff',
-    items: [
-      { question: '若依开源吗？', answer: '开源' },
-      { question: '若依可以商用吗？', answer: '可以' },
-      { question: '若依官网地址多少？', answer: 'http://ruoyi.vip' },
-      { question: '若依文档地址多少？', answer: 'http://doc.ruoyi.vip' },
-    ],
-  },
-  {
-    title: '其他问题',
-    icon: 'iconfont icon-help',
-    bgColor: '#fff4e6',
-    iconColor: '#f5a623',
-    items: [
-      { question: '如何退出登录？', answer: '请点击[我的] - [应用设置] - [退出登录]即可退出登录' },
-      { question: '如何修改用户头像？', answer: '请点击[我的] - [选择头像] - [点击提交]即可更换用户头像' },
-      { question: '如何修改登录密码？', answer: '请点击[我的] - [应用设置] - [修改密码]即可修改登录密码' },
-    ],
-  },
-]
+function handleSearch() {
+  if (searchKey.value.trim()) {
+    searchResults.value = searchFaq(searchKey.value)
+  }
+  else {
+    searchResults.value = []
+  }
+}
 
-function handleFaqClick(faq: { question: string, answer: string }) {
+function handleFaqClick(faq: FaqItem) {
   uni.navigateTo({
-    url: `/pages-core/common/textview/textview?title=${faq.question}&content=${faq.answer}`,
+    url: `/pages-core/help/detail?id=${faq.id}`,
   })
 }
 
@@ -187,6 +201,12 @@ function handleContact() {
     font-weight: bold;
     color: #333;
   }
+
+  .search-count {
+    margin-left: auto;
+    font-size: 24rpx;
+    color: #999;
+  }
 }
 
 .faq-list {
@@ -206,6 +226,16 @@ function handleContact() {
       font-size: 28rpx;
       color: #333;
       line-height: 1.5;
+    }
+  }
+
+  .empty-result {
+    padding: 60rpx 0;
+    text-align: center;
+
+    .empty-text {
+      font-size: 28rpx;
+      color: #999;
     }
   }
 }
