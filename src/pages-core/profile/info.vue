@@ -68,7 +68,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { UserInfo, UserProfile } from '@/api/system/types/user'
+import type { IUserInfo, UserProfile } from '@/api/system/types/user'
 import { getUserProfile } from '@/api/system/user'
 import DEFAULT_AVATAR from '@/static/images/avatar.png'
 import { useUserStore } from '@/store/user'
@@ -84,7 +84,7 @@ definePage({
 const loading = ref <boolean>(true)
 
 const userProfile = ref<UserProfile>({
-  user: {} as UserInfo,
+  user: {} as IUserInfo,
   roleGroup: '',
   postGroup: '',
 })
@@ -111,7 +111,11 @@ function getUserInfo() {
     userProfile.value = data
     if (!userProfile.value.user.avatarUrl)
       userProfile.value.user.avatarUrl = DEFAULT_AVATAR
-    userStore.setUserAvatar(userProfile.value.user.avatarUrl)
+    // 获取现有store中的用户信息，更新user部分后重新设置，保留roles和permissions
+    userStore.setUserInfo({
+      ...userStore.userInfo,
+      user: userProfile.value.user,
+    })
   }).finally(() => {
     loading.value = false
     uni.hideLoading()

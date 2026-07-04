@@ -51,7 +51,7 @@ function getDisplayItems(groupKey: string, children: any[]) {
 </script>
 
 <template>
-  <view class="page-container pc-tabbar">
+  <view class="page-container pc-tabbar bg-light">
     <view class="page-content">
       <view class="bg">
         <view class="user-header">

@@ -1,3 +1,5 @@
+import type { IUserInfo } from '@/api/system/types/user'
+
 // 认证模式类型
 export type AuthMode = 'single' | 'double'
 
@@ -26,19 +28,7 @@ export type IAuthLoginRes = ISingleTokenRes | IDoubleTokenRes
 export type UserRole = string
 
 export interface IUserInfoRes {
-  user: {
-    userId: number
-    userName: string
-    nickName: string
-    tenantId: string
-    deptId: number
-    deptName: string
-    userType: string
-    email: string
-    phoneNumber: string
-    avatar?: string
-    avatarUrl?: string
-  }
+  user: IUserInfo
   role?: UserRole
   roles?: UserRole[]
   permissions: string[]

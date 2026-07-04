@@ -1,4 +1,4 @@
-export interface UserInfo {
+export interface IUserInfo {
   userId: number
   userName: string
   deptId: number
@@ -9,13 +9,13 @@ export interface UserInfo {
   gender: string
   avatar: string | null
   avatarUrl: string | null
-  loginIp: string
-  loginDate: string
   deptName: string
+  loginIp?: string
+  loginDate?: string
 }
 
 export interface UserProfile {
-  user: UserInfo
+  user: IUserInfo
   roleGroup: string
   postGroup: string
 }

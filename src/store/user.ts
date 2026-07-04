@@ -1,3 +1,4 @@
+import type { IUserInfo } from '@/api/system/types/user'
 import type { IUserInfoRes } from '@/api/auth/types/login'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
@@ -6,13 +7,13 @@ import {
 } from '@/api/auth/login'
 
 // 初始化状态
-const defaultUserInfo = {
+const defaultUserInfo: IUserInfo = {
   userId: -1,
-  tenantId: '',
   deptId: -1,
   deptName: '',
   userName: '',
   nickName: '',
+  gender: '',
   userType: '',
   email: '',
   phoneNumber: '',
