@@ -67,6 +67,11 @@ function toSettingPage() {
     url: '/pages-core/setting/setting',
   })
 }
+function toHelpPage() {
+  uni.navigateTo({
+    url: '/pages-core/help/help',
+  })
+}
 function toAboutPage() {
   uni.navigateTo({
     url: '/pages-core/about/about',
@@ -137,34 +142,34 @@ function toAboutPage() {
 
           <view class="wy-cell-list-group">
             <view class="wy-cell-list-item border-bottom" @click="handleToInfo">
-              <view class="list-icon color-5 i-carbon:identification" />
+              <view class="list-icon color-5 i-carbon-identification" />
               <text class="list-text">个人信息</text>
-              <view class="list-arrow i-carbon:chevron-right" />
+              <view class="list-arrow i-carbon-chevron-right" />
             </view>
             <view class="wy-cell-list-item border-bottom" @click="toSettingPage">
-              <view class="list-icon color-2 i-carbon:settings" />
+              <view class="list-icon color-2 i-carbon-settings" />
               <text class="list-text">应用设置</text>
-              <view class="list-arrow i-carbon:chevron-right" />
+              <view class="list-arrow i-carbon-chevron-right" />
             </view>
           </view>
           <view class="wy-cell-list-group">
-            <view class="wy-cell-list-item border-bottom">
-              <view class="list-icon color-3 i-carbon:help" />
-              <text class="list-text">帮助与反馈</text>
-              <view class="list-arrow i-carbon:chevron-right" />
+            <view class="wy-cell-list-item border-bottom" @click="toHelpPage">
+              <view class="list-icon color-3 i-carbon-help" />
+              <text class="list-text">帮助中心</text>
+              <view class="list-arrow i-carbon-chevron-right" />
             </view>
             <view class="wy-cell-list-item">
-              <text class="list-icon color-4 i-carbon:book" />
-              <text class="list-text">服务条款及隐私</text>
-              <view class="list-arrow i-carbon:chevron-right" />
+              <text class="list-icon color-4 i-carbon-user-feedback" />
+              <text class="list-text">问题反馈</text>
+              <view class="list-arrow i-carbon-chevron-right" />
             </view>
           </view>
 
           <view class="wy-cell-list-group">
             <view class="wy-cell-list-item" @click="toAboutPage">
-              <view class="list-icon color-1 i-carbon:favorite" />
+              <view class="list-icon color-1 i-carbon-favorite" />
               <text class="list-text">关于应用</text>
-              <view class="list-arrow i-carbon:chevron-right" />
+              <view class="list-arrow i-carbon-chevron-right" />
             </view>
           </view>
         </view>

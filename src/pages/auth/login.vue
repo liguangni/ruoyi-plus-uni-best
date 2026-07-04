@@ -133,18 +133,18 @@ onLoad(() => {
     <view class="login-form-content">
       <view class="wy-form">
         <view name="username" class="wy-form-item">
-          <view class="pre-icon i-carbon:user text-coolgray" />
+          <view class="pre-icon i-carbon-user text-coolgray" />
           <input v-model="loginForm.username" class="form-input uni-input" placeholder="请输入账号">
           <view v-show="loginForm.username" class="pre-icon i-carbon-close text-coolgray" @click="loginForm.username = ''" />
         </view>
         <view name="password" class="wy-form-item">
-          <view class="pre-icon i-carbon:password text-coolgray" />
+          <view class="pre-icon i-carbon-password text-coolgray" />
           <input v-model="loginForm.password" :password="!showPassword" class="form-input uni-input" placeholder="请输入密码">
           <text v-show="loginForm.password" class="pre-icon uni-icon text-coolgray" :class="[showPassword ? 'i-carbon-view' : 'i-carbon-view-off']" @click="changePassword" />
         </view>
         <view class="flex gap-3">
           <view name="code" class="wy-form-item">
-            <view class="pre-icon i-carbon:security text-coolgray" />
+            <view class="pre-icon i-carbon-security text-coolgray" />
             <input v-model="loginForm.code" class="form-input uni-input" placeholder="请输入验证码">
           </view>
           <image :src="codeUrl" style="width: 280rpx; height: 70rpx;" @click="getCode" />

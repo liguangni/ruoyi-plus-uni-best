@@ -102,6 +102,7 @@ export default defineConfig({
     'i-carbon-chat-bot',
     'i-carbon-thumbs-up',
     'i-carbon-close',
+    'i-carbon-user-feedback',
   ],
   rules: [
     [

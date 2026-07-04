@@ -20,7 +20,7 @@ function handlePrivacy() {
     title: '隐私政策',
     url: 'https://ruoyi.vip/protocol.html',
   }
-  uni.navigateTo({ url: `/pages-core/webview/webview?title=${site.title}&url=${site.url}` })
+  uni.navigateTo({ url: `/pages-core/common/webview/webview?title=${site.title}&url=${site.url}` })
 }
 // 用户协议
 function handleUserAgrement() {
@@ -28,7 +28,7 @@ function handleUserAgrement() {
     title: '用户协议',
     url: 'https://ruoyi.vip/protocol.html',
   }
-  uni.navigateTo({ url: `/pages-core/webview/webview?title=${site.title}&url=${site.url}` })
+  uni.navigateTo({ url: `/pages-core/common/webview/webview?title=${site.title}&url=${site.url}` })
 }
 </script>
 

@@ -59,9 +59,9 @@
 
    操作指引：如需进行 UI 库替换，请参考 Unibest 官方文档：[UI库替换篇](https://unibest.tech/base/7-ui "UI库替换篇")。
 
-4. **部分页面/代码样式来源于网络**
+4. **部分页面/代码的实现借鉴了优秀的开源作品**
 
-   本项目部分页面和代码样式的实现借鉴了优秀的开源作品。衷心感谢各位开发者的无私奉献。若有任何版权问题，敬请告知，我将立即处理。
+   衷心感谢各位开发者的无私奉献。若有任何版权问题，敬请告知，我将立即处理。
 
 
 
@@ -157,6 +157,11 @@
       <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/about.png" alt="关于" width="230" style="border: 1px solid #ddd; border-radius: 8px;" />
       <br />
       <b align="center">关于</b>
+    </td>
+    <td align="center" style="padding: 10px;">
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/help.png" alt="帮助中心" width="230" style="border: 1px solid #ddd; border-radius: 8px;" />
+      <br />
+      <b align="center">帮助中心</b>
     </td>
   </tr>
 </table>
