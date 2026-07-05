@@ -69,8 +69,6 @@ const httpInterceptor = {
     if (appEncrypt) {
       isNeedEncrypt = options?.custom?.isEncrypt === true
     }
-    console.log('options', options)
-    console.log('isNeedEncrypt', isNeedEncrypt, appEncrypt, options?.custom?.isEncrypt === true, options?.custom?.isEncrypt)
     if (isNeedEncrypt) {
       // 当开启参数加密
       if (options.method === 'POST' || options.method === 'PUT') {
@@ -88,7 +86,6 @@ const httpInterceptor = {
     // return
 
     const respHeader = { [encryptHeader]: '', ...(args.header ?? {}) }
-    console.log('Interceptor success respHeader', respHeader)
     // 加密后的 AES 秘钥
     const keyStr = respHeader[encryptHeader] || ''
     // 加密

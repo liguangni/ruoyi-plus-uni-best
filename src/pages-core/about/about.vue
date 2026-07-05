@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { toPrivacyPage, toUserAgreementPage } from '@/utils/common'
 
 definePage({
   style: {
@@ -13,23 +14,6 @@ onLoad(() => {
   const info = uni.getAppBaseInfo()
   version.value = info?.appVersion ?? ''
 })
-
-// 隐私协议
-function handlePrivacy() {
-  const site = {
-    title: '隐私政策',
-    url: 'https://ruoyi.vip/protocol.html',
-  }
-  uni.navigateTo({ url: `/pages-core/common/webview/webview?title=${site.title}&url=${site.url}` })
-}
-// 用户协议
-function handleUserAgrement() {
-  const site = {
-    title: '用户协议',
-    url: 'https://ruoyi.vip/protocol.html',
-  }
-  uni.navigateTo({ url: `/pages-core/common/webview/webview?title=${site.title}&url=${site.url}` })
-}
 </script>
 
 <template>
@@ -42,7 +26,7 @@ function handleUserAgrement() {
 
     <view class="content-section mt-3">
       <view class="menu-list">
-        <view class="list-cell list-cell-arrow" @click="handleUserAgrement">
+        <view class="list-cell list-cell-arrow" @click="toUserAgreementPage">
           <view class="menu-item-box">
             <text>用户协议</text>
             <view class="text-right">
@@ -50,7 +34,7 @@ function handleUserAgrement() {
             </view>
           </view>
         </view>
-        <view class="list-cell list-cell-arrow" @click="handlePrivacy">
+        <view class="list-cell list-cell-arrow" @click="toPrivacyPage">
           <view class="menu-item-box">
             <text>隐私政策</text>
             <view class="text-right">

@@ -105,7 +105,6 @@ function loginSuccess() {
 function getCode() {
   loginForm.value.code = ''
   getCodeImg().then((res) => {
-    console.log('getCode res====>', res)
     captchaEnabled.value = res.captchaEnabled === undefined ? true : res.captchaEnabled
     //  captchaEnabled.value = res.captchaEnabled === undefined ? true : res.captchaEnabled
     if (captchaEnabled.value) {

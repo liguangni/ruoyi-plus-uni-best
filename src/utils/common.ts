@@ -13,8 +13,9 @@ export function showToastMsg(content: string) {
  * 显示成功消息提示框
  * @param content 提示的标题
  */
-export function showSuccesssMsg(content: string) {
+export function showSuccessMsg(content: string) {
   uni.showToast({
+    icon: 'success',
     title: content,
   })
 }
@@ -114,4 +115,33 @@ export function getErrorMsg(code: any) {
     default:
       return '系统未知错误，请反馈给管理员'
   }
+}
+
+// 隐私协议
+export function toPrivacyPage() {
+  const site = {
+    title: '隐私政策',
+    url: 'https://ruoyi.vip/protocol.html',
+  }
+  toWebviewPage(site.url, site.title)
+}
+// 用户协议
+export function toUserAgreementPage() {
+  const site = {
+    title: '用户协议',
+    url: 'https://ruoyi.vip/protocol.html',
+  }
+  toWebviewPage(site.url, site.title)
+}
+
+export function toWebviewPage(url: string, title: string) {
+  uni.navigateTo({
+    url: `/pages-core/common/webview/webview?title=${title}&url=${url}`,
+  })
+}
+
+export function toTextViewPage(url: string, title: string) {
+  uni.navigateTo({
+    url: `/pages-core/common/text-view/text-view?title=${title}&url=${url}`,
+  })
 }

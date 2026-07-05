@@ -98,7 +98,6 @@ onLoad((options) => {
 })
 
 onUnload(() => {
-  console.log('onUnload')
   uni.$off('refreshUserInfo')
 })
 
@@ -129,7 +128,6 @@ function handleToEditInfo() {
 };
 
 function toAvatarPage() {
-  console.log('toAvatarPage')
   uni.navigateTo({
     url: '/pages-core/profile/avatar',
   })

@@ -1,18 +1,3 @@
-<template>
-  <view class="page-container">
-    <view class="page-content">
-      <view v-if="faq" class="detail-page">
-        <text class="question-text">{{ faq.question }}</text>
-        <view class="divider" />
-        <rich-text class="answer-text" :nodes="faq.answer" />
-      </view>
-      <view v-else class="empty-state">
-        <text class="empty-text">问题不存在</text>
-      </view>
-    </view>
-  </view>
-</template>
-
 <script lang="ts" setup>
 import type { FaqItem } from './help.config'
 import { getFaqById } from './help.config'
@@ -38,6 +23,21 @@ onLoad((options) => {
   }
 })
 </script>
+
+<template>
+  <view class="page-container">
+    <view class="page-content">
+      <view v-if="faq" class="detail-page">
+        <text class="question-text">{{ faq.question }}</text>
+        <view class="divider" />
+        <rich-text class="answer-text" :nodes="faq.answer" />
+      </view>
+      <view v-else class="empty-state">
+        <text class="empty-text">问题不存在</text>
+      </view>
+    </view>
+  </view>
+</template>
 
 <style lang="scss" scoped>
 .detail-page {

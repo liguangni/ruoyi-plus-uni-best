@@ -32,16 +32,6 @@ onLoad(() => {
           基于unibest构建，适配Ruoyi-Vue-Plus/Ruoyi-Cloud-Plus的uniapp快速开发模板。
         </p>
       </view>
-      <view class="mt-8 flex items-center justify-center gap-3 text-center">
-        作者：
-        <text class="text-green-500">
-          李广妮
-        </text>
-      </view>
-      <view class="mt-4 flex items-center justify-center gap-3 text-center">
-        开源地址:
-        <a href="https://gitee.com/liguangni/ruoyi-plus-uni-best" class="text-green-500 no-underline">gitee</a>
-      </view>
     </view>
   </view>
 </template>

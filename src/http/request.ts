@@ -1,6 +1,6 @@
 import type { CustomRequestOptions, IResponse } from '@/http/types'
 
-export function request<T>(config: CustomRequestOptions) {
+export function request<T>(config: CustomRequestOptions): Promise<T> {
   return new Promise<T>((resolve, reject) => {
     uni.request({
       // #ifdef MP-ALIPAY
@@ -20,7 +20,7 @@ export function request<T>(config: CustomRequestOptions) {
   })
 }
 
-export function upload<T>(config: CustomRequestOptions) {
+export function upload<T>(config: CustomRequestOptions): Promise<T> {
   return new Promise<T>((resolve, reject) => {
     uni.uploadFile({
       ...config,
@@ -102,9 +102,17 @@ export function httpUpload<T>(config: CustomRequestOptions) {
   return upload<T>(config)
 }
 
+/**
+ * DOWNLOAD 请求
+ */
+export function httpDownload<T>(config: CustomRequestOptions) {
+  return upload<T>(config)
+}
+
 // 支持与 axios 类似的API调用
 request.get = httpGet
 request.post = httpPost
 request.put = httpPut
 request.delete = httpDelete
 request.upload = httpUpload
+request.download = httpDownload

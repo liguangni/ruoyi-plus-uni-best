@@ -341,7 +341,6 @@ async function getImageInfo() {
         uni.hideLoading()
         try {
           const data = await uploadOss({ filePath: res.tempFilePath, name: 'file' })
-          console.log('sccg------>', data)
           await updateUserProfile({ avatar: data.ossId })
           userStore.setUserAvatar(data.url)
           uni.$emit('refreshUserInfo')

@@ -14,7 +14,6 @@ const userStore = useUserStore()
 const tokenStore = useTokenStore()
 // 使用storeToRefs解构userInfo
 const { userInfo } = storeToRefs(userStore)
-console.log(userInfo.value)
 const userHasLogin = ref(tokenStore.updateNowTime().hasLogin)
 
 // 微信小程序下登录

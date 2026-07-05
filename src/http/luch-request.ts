@@ -12,6 +12,18 @@ const encryptHeader = 'encrypt-key'
 const clientId = import.meta.env.VITE_APP_CLIENT_ID
 const appEncrypt = Boolean(import.meta.env.VITE_APP_ENCRYPT)
 
+export type CustomRequestOptions = HttpRequestConfig & {
+  /** 出错时是否隐藏错误提示 */
+  hideErrorToast?: boolean
+  custom?: {
+    /** 是否在请求头中添加token 默认是 */
+    isToken?: boolean
+    /** 请求是否需要加密 默认否 */
+    isEncrypt?: boolean
+  }
+  baseUrl?: string
+}
+
 const http = new Request({
 //   baseURL: baseUrl,
   timeout: 60000,
@@ -59,7 +71,6 @@ http.interceptors.request.use((config) => {
 
   // 3. Token 注入 (推荐使用 Storage 兜底，避免 Store 未初始化的时序问题)
   const isNeedToken = config.custom?.isToken !== false // 默认需要 token
-  console.log('interceptors.response------------>isNeedToken:', config.custom, config.custom?.isToken, config.custom?.isToken !== false)
   if (isNeedToken) {
     const tokenStore = useTokenStore()
     const token = tokenStore.updateNowTime().validToken
@@ -92,7 +103,6 @@ http.interceptors.request.use((config) => {
 http.interceptors.response.use((response) => {
   const { data, config, statusCode } = response
   let respData = data
-  console.log('interceptors.response------------>response:', response)
 
   // 1. 响应解密
   const respHeader = response.header || {}
@@ -123,7 +133,6 @@ http.interceptors.response.use((response) => {
 
   return Promise.resolve(respData)
 }, (error) => {
-  console.log('luch=----->响应拦截 error', error)
   // 处理 HTTP 状态码错误
   const statusCode = error.statusCode
   if (statusCode === 401) {
@@ -150,22 +159,22 @@ async function createHttp<T = any, R extends 'data' | 'body' = 'data'>(config: H
 
 // 导出兼容对象，支持 request.get({ url, data }) 写法
 export const request = {
-  get<T>(config: HttpRequestConfig) {
+  get<T>(config: CustomRequestOptions) {
     return createHttp<T>({ ...config, method: 'GET' })
   },
-  post<T>(config: HttpRequestConfig) {
+  post<T>(config: CustomRequestOptions) {
     return createHttp<T>({ ...config, method: 'POST' })
   },
-  put<T>(config: HttpRequestConfig) {
+  put<T>(config: CustomRequestOptions) {
     return createHttp<T>({ ...config, method: 'PUT' })
   },
-  delete<T>(config: HttpRequestConfig) {
+  delete<T>(config: CustomRequestOptions) {
     return createHttp<T>({ ...config, method: 'DELETE' })
   },
-  upload<T>(config: HttpRequestConfig) {
+  upload<T>(config: CustomRequestOptions) {
     return createHttp<T>({ ...config, method: 'UPLOAD' })
   },
-  download<T>(config: HttpRequestConfig) {
+  download<T>(config: CustomRequestOptions) {
     return createHttp<T>({ ...config, method: 'DOWNLOAD' })
   },
 }
