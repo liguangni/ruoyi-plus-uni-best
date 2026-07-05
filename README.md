@@ -148,52 +148,38 @@ pnpm dev:app       # App
 
 ## 项目运行截图
 
-<table align="center">
+
+<table>
   <tr>
-    <td align="center" style="padding: 10px;">
-      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/login.png" alt="登录页" width="180" style="border: 1px solid #ddd; border-radius: 8px;" />
-      <br />
-      <b align="center">登录页</b>
+    <td align="center" >
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/login.png" alt="登录页" width="180"   />
+    </td>
+    <td align="center">
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/index.png" alt="首页" width="180"  />
+    </td>
+    <td align="center">
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/work.png" alt="工作台" width="180"  />
     </td>
     <td align="center" style="padding: 10px;">
-      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/index.png" alt="首页" width="180" style="border: 1px solid #ddd; border-radius: 8px;" />
-      <br />
-      <b align="center">首页</b>
-    </td>
-    <td align="center" style="padding: 10px;">
-      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/work.png" alt="工作台" width="180" style="border: 1px solid #ddd; border-radius: 8px;" />
-      <br />
-      <b align="center">工作台</b>
-    </td>
-    <td align="center" style="padding: 10px;">
-      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/me.png" alt="我的" width="180" style="border: 1px solid #ddd; border-radius: 8px;" />
-      <br />
-      <b align="center">我的</b>
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/me.png" alt="我的" width="180"  />
     </td>
   </tr>
   <tr>
     <td align="center" style="padding: 10px;">
-      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/profile.png" alt="个人信息" width="180" style="border: 1px solid #ddd; border-radius: 8px;" />
-      <br />
-      <b align="center">个人信息</b>
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/profile.png" alt="个人信息" width="180" />
     </td>
     <td align="center" style="padding: 10px;">
-      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/setting.png" alt="应用设置" width="180" style="border: 1px solid #ddd; border-radius: 8px;" />
-      <br />
-      <b align="center">应用设置</b>
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/setting.png" alt="应用设置" width="180"  />
     </td>
     <td align="center" style="padding: 10px;">
-      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/about.png" alt="关于" width="180" style="border: 1px solid #ddd; border-radius: 8px;" />
-      <br />
-      <b align="center">关于</b>
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/about.png" alt="关于" width="180" />
     </td>
     <td align="center" style="padding: 10px;">
-      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/help.png" alt="帮助中心" width="180" style="border: 1px solid #ddd; border-radius: 8px;" />
-      <br />
-      <b align="center">帮助中心</b>
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/help.png" alt="帮助中心" width="180" />
     </td>
   </tr>
 </table>
+
 
 ---
 
