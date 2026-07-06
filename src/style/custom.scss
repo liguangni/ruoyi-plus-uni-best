@@ -81,6 +81,9 @@ $h5-nav-height: 44px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  // height: calc(100% - var(--window-bottom));
+  // height: calc(100% - constant(safe-area-inset-bottom));
+  // height: calc(100% - env(safe-area-inset-bottom));
 
   // 顶部导航padding（仅顶部，底部无padding）
   /* #ifndef H5 */
@@ -110,6 +113,9 @@ $h5-nav-height: 44px;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     // padding: 20rpx;
+    padding-bottom: 0;
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
   }
 }
 
@@ -129,3 +135,12 @@ $h5-nav-height: 44px;
   height: calc(100% - #{$tabbar-height});
 }
 /* #endif */
+
+.fixed-bottom-safe-area {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
