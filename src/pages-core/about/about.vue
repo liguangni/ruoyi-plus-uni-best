@@ -8,13 +8,17 @@ definePage({
   },
 })
 
-const version = ref('')
+const appName = import.meta.env.VITE_APP_TITLE
+const version = ref('0.0.1')
 const phoneNumber = '400-888-8888'
 
 onLoad(() => {
-  const info = uni.getAppBaseInfo()
-  version.value = info?.appVersion ?? ''
+  getVersion()
 })
+
+function getVersion() {
+  version.value = import.meta.env.VITE_APP_VERSION
+}
 
 function canMakePhoneCall(): boolean {
   // #ifdef APP-PLUS || MP
@@ -36,7 +40,8 @@ function handleCall() {
           uni.makePhoneCall({
             phoneNumber,
             fail: () => {
-              uni.showToast({ title: '拨打电话失败', icon: 'none' })
+              // 拨打失败，复制到剪贴板
+              copyToClipboard()
             },
           })
         }
@@ -44,56 +49,62 @@ function handleCall() {
     })
   }
   else {
-    uni.setClipboardData({
-      data: phoneNumber,
-      success: () => {
-        uni.showToast({ title: '电话号码已复制', icon: 'success' })
-      },
-    })
+    copyToClipboard()
   }
+}
+
+function copyToClipboard() {
+  uni.setClipboardData({
+    data: phoneNumber,
+    success: () => {
+      uni.showToast({ title: '联系方式已复制', icon: 'success' })
+    },
+  })
 }
 </script>
 
 <template>
   <view class="page-container">
-    <view class="header-section">
-      <image class="logo" src="@/static/logo.svg" mode="widthFix" />
-      <text class="title mt-2 text-2xl">Ruoyi-Plus-Uni-Best</text>
-      <text class="subtitle mt-2">{{ version }}</text>
-    </view>
+    <view class="page-content">
+      <view class="header-section">
+        <image class="logo" src="@/static/logo.svg" mode="widthFix" />
+        <text class="title mt-2 text-2xl">Ruoyi-Plus-Uni-Best</text>
+        <text class="subtitle mt-2">{{ version }}</text>
+      </view>
 
-    <view class="content-section mt-3">
-      <view class="menu-list">
-        <view class="list-cell list-cell-arrow" @click="toUserAgreementPage">
-          <view class="menu-item-box">
-            <text>用户协议</text>
-            <view class="text-right">
-              <view class="i-carbon-chevron-right" />
+      <view class="content-section mt-3">
+        <view class="menu-list">
+          <view class="list-cell list-cell-arrow" @click="toUserAgreementPage">
+            <view class="menu-item-box">
+              <text>用户协议</text>
+              <view class="text-right">
+                <view class="i-carbon-chevron-right" />
+              </view>
             </view>
           </view>
-        </view>
-        <view class="list-cell list-cell-arrow" @click="toPrivacyPage">
-          <view class="menu-item-box">
-            <text>隐私政策</text>
-            <view class="text-right">
-              <view class="i-carbon-chevron-right" />
+          <view class="list-cell list-cell-arrow" @click="toPrivacyPage">
+            <view class="menu-item-box">
+              <text>隐私政策</text>
+              <view class="text-right">
+                <view class="i-carbon-chevron-right" />
+              </view>
             </view>
           </view>
-        </view>
-        <view class="list-cell list-cell-arrow" @click="handleCall">
-          <view class="menu-item-box">
-            <text>联系我们</text>
-            <view class="text-right">
-              <text class="phone-text">{{ phoneNumber }}</text>
-              <view class="i-carbon-chevron-right" />
+          <view class="list-cell list-cell-arrow" @click="handleCall">
+            <view class="menu-item-box">
+              <text>联系我们</text>
+              <view class="text-right">
+                <text class="phone-text">{{ phoneNumber }}</text>
+                <view class="i-carbon-chevron-right" />
+              </view>
             </view>
           </view>
         </view>
       </view>
-    </view>
-    <view class="copyright pos-fixed bottom-10 left-0 right-0">
-      <view>Copyright &copy; 2026 Ruoyi-Plus-Uni-Best</view>
-      <view>All Rights Reserved.</view>
+      <view class="copyright fixed-bottom-safe-area">
+        <view>Copyright &copy; 2026 Ruoyi-Plus-Uni-Best</view>
+        <view>All Rights Reserved.</view>
+      </view>
     </view>
   </view>
 </template>
@@ -168,9 +179,8 @@ function handleCall() {
 }
 
 .copyright {
-  margin-top: 50rpx;
   text-align: center;
-  line-height: 60rpx;
+  line-height: 40rpx;
   color: #999;
   font-size: 24rpx;
 }

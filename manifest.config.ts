@@ -15,6 +15,8 @@ const env = loadEnv(getMode(), path.resolve(process.cwd(), 'env'))
 const {
   VITE_APP_TITLE,
   VITE_UNI_APPID,
+  VITE_APP_VERSION,
+  VITE_APP_VERSION_CODE,
   VITE_WX_APPID,
   VITE_APP_PUBLIC_BASE,
   VITE_FALLBACK_LOCALE,
@@ -25,8 +27,8 @@ export default defineManifestConfig({
   'name': VITE_APP_TITLE,
   'appid': VITE_UNI_APPID,
   'description': '',
-  'versionName': '1.0.0',
-  'versionCode': '100',
+  'versionName': VITE_APP_VERSION,
+  'versionCode': VITE_APP_VERSION_CODE,
   'transformPx': false,
   'locale': VITE_FALLBACK_LOCALE, // 'zh-Hans'
   'h5': {
