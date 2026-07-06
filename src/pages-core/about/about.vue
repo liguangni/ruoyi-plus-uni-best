@@ -9,11 +9,49 @@ definePage({
 })
 
 const version = ref('')
+const phoneNumber = '400-888-8888'
 
 onLoad(() => {
   const info = uni.getAppBaseInfo()
   version.value = info?.appVersion ?? ''
 })
+
+function canMakePhoneCall(): boolean {
+  // #ifdef APP-PLUS || MP
+  return true
+  // #endif
+  // #ifndef APP-PLUS || MP
+  return false
+  // #endif
+}
+
+function handleCall() {
+  if (canMakePhoneCall()) {
+    uni.showModal({
+      title: '拨打客服电话',
+      content: phoneNumber,
+      confirmText: '拨打',
+      success: (res) => {
+        if (res.confirm) {
+          uni.makePhoneCall({
+            phoneNumber,
+            fail: () => {
+              uni.showToast({ title: '拨打电话失败', icon: 'none' })
+            },
+          })
+        }
+      },
+    })
+  }
+  else {
+    uni.setClipboardData({
+      data: phoneNumber,
+      success: () => {
+        uni.showToast({ title: '电话号码已复制', icon: 'success' })
+      },
+    })
+  }
+}
 </script>
 
 <template>
@@ -42,10 +80,11 @@ onLoad(() => {
             </view>
           </view>
         </view>
-        <view class="list-cell list-cell-arrow">
+        <view class="list-cell list-cell-arrow" @click="handleCall">
           <view class="menu-item-box">
             <text>联系我们</text>
             <view class="text-right">
+              <text class="phone-text">{{ phoneNumber }}</text>
               <view class="i-carbon-chevron-right" />
             </view>
           </view>
@@ -115,6 +154,11 @@ onLoad(() => {
     align-items: center;
     color: #999;
     font-size: 28rpx;
+
+    .phone-text {
+      margin-right: 10rpx;
+      color: #667eea;
+    }
 
     .arrow {
       margin-left: 10rpx;

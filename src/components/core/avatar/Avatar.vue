@@ -1,5 +1,5 @@
 <template>
-  <view class="core-avatar" :style="wrapperStyle">
+  <view class="core-avatar" :class="{ 'is-round': round }" :style="wrapperStyle">
     <image
       class="core-avatar__img"
       :src="finalSrc"
@@ -39,12 +39,9 @@ const finalSrc = computed(() => {
 const wrapperStyle = computed(() => ({
   width: toSize(props.width),
   height: toSize(props.height),
-  borderRadius: props.round ? '50%' : '0',
 }))
 
-const imgStyle = computed(() => ({
-  borderRadius: props.round ? '50%' : '0',
-}))
+const imgStyle = computed(() => ({}))
 
 function toSize(val: string | number) {
   return typeof val === 'number' ? `${val}rpx` : val
@@ -55,11 +52,17 @@ function toSize(val: string | number) {
 .core-avatar {
   overflow: hidden;
   flex-shrink: 0;
+  border-radius: 0;
+
+  &.is-round {
+    border-radius: 50%;
+  }
 
   &__img {
     width: 100%;
     height: 100%;
     display: block;
+    border-radius: inherit;
   }
 }
 </style>
