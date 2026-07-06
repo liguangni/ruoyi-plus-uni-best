@@ -223,6 +223,8 @@ $list-margin: 20rpx;
     .avatar-img {
       border: solid 6rpx #fff;
       background-color: #f5f5f5;
+      border-radius: 50%;
+      overflow: hidden;
     }
     .uer-name {
       height: 60rpx;
