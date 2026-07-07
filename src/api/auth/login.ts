@@ -1,5 +1,5 @@
 import request from '@/http/luch-request'
-import type { IAuthLoginRes, IDoubleTokenRes, ILoginForm, IUserInfoRes, loginInfo } from '@/api/auth/types/login'
+import type { IAuthLoginRes, ICaptcha, IDoubleTokenRes, ILoginForm, IUserInfoRes, loginInfo } from '@/api/auth/types/login'
 
 /**
  * 用户登录
@@ -23,7 +23,7 @@ export function login(loginForm: ILoginForm) {
  * 获取验证码图片
  */
 export function getCodeImg() {
-  return request.get<any>({
+  return request.get<ICaptcha>({
     url: '/auth/code',
     custom: {
       isToken: false,

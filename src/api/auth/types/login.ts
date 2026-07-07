@@ -49,7 +49,7 @@ export interface AuthStorage {
 export interface ICaptcha {
   captchaEnabled: boolean
   uuid: string
-  image: string
+  img: string
 }
 /**
  * 上传成功的信息
