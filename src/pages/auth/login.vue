@@ -29,8 +29,9 @@ onLoad((options) => {
   //   redirectUrl.value = ensureDecodeURIComponent(options.redirect)
   // }
   // else {
-  redirectUrl.value = tabbarList[0].pagePath
+  // redirectUrl.value = tabbarList[0].pagePath
   // }
+  redirectUrl.value = tabbarList[0].pagePath
 })
 
 const loginForm = ref({

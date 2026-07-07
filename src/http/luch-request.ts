@@ -12,16 +12,20 @@ const encryptHeader = 'encrypt-key'
 const clientId = import.meta.env.VITE_APP_CLIENT_ID
 const appEncrypt = Boolean(import.meta.env.VITE_APP_ENCRYPT)
 
-export type CustomRequestOptions = HttpRequestConfig & {
-  /** 出错时是否隐藏错误提示 */
+// 1. 定义项目的 Custom 类型
+export interface MyCustomParams {
+  /** 是否在请求头中添加token 默认是 */
+  isToken?: boolean
+  /** 请求是否需要加密 默认否 */
+  isEncrypt?: boolean
+  /** 是否显示加载中 */
+  showLoading?: boolean
+  /** 是否隐藏错误提示 */
   hideErrorToast?: boolean
-  custom?: {
-    /** 是否在请求头中添加token 默认是 */
-    isToken?: boolean
-    /** 请求是否需要加密 默认否 */
-    isEncrypt?: boolean
-  }
-  baseUrl?: string
+}
+
+export interface CustomRequestOptions extends Omit<HttpRequestConfig, 'custom'> {
+  custom?: MyCustomParams
 }
 
 const http = new Request({
@@ -47,7 +51,7 @@ http.interceptors.request.use((config) => {
 //     config.params = undefined
 //   }
 
-  if (config.custom.loading) {
+  if (config.custom.showLoading) {
     uni.showLoading()
   }
 
@@ -115,6 +119,11 @@ http.interceptors.response.use((response) => {
     console.log('响应解密------------>respData:', respData)
   }
 
+  // 关闭加载中
+  if (config.custom?.showLoading) {
+    uni.hideLoading()
+  }
+
   // 2. 业务状态码拦截
   const { code, msg, message } = respData || {}
   if (code !== ResultEnum.Success200) {
@@ -131,11 +140,11 @@ http.interceptors.response.use((response) => {
     return Promise.reject(new Error(errorMsg))
   }
 
-  return Promise.resolve(respData)
+  return respData
 }, (error) => {
   // 处理 HTTP 状态码错误
   const statusCode = error.statusCode
-  if (statusCode === 401) {
+  if (statusCode === ResultEnum.Unauthorized) {
     // Token 过期或无权限，清除缓存并跳转登录页
     useTokenStore().logout().then(() => {
       toLoginPage()
@@ -147,8 +156,6 @@ http.interceptors.response.use((response) => {
   return Promise.reject(error)
 })
 
-// 导出封装好的工具类
-
 /** 请求函数 */
 async function createHttp<T = any, R extends 'data' | 'body' = 'data'>(config: HttpRequestConfig): Promise<T> {
   const res = await http.middleware<T>({
@@ -157,7 +164,7 @@ async function createHttp<T = any, R extends 'data' | 'body' = 'data'>(config: H
   return res.data
 }
 
-// 导出兼容对象，支持 request.get({ url, data }) 写法
+// 导出封装好的工具类
 export const request = {
   get<T>(config: CustomRequestOptions) {
     return createHttp<T>({ ...config, method: 'GET' })

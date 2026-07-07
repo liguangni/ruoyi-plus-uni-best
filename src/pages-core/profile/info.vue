@@ -103,9 +103,9 @@ onUnload(() => {
 
 // 获取用户信息
 function getUserInfo() {
-  uni.showLoading({
-    title: '加载中...',
-  })
+  // uni.showLoading({
+  //   title: '加载中...',
+  // })
   getUserProfile().then((data) => {
     userProfile.value = data
     if (!userProfile.value.user.avatarUrl)

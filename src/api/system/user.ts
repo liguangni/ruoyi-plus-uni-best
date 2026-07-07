@@ -5,6 +5,9 @@ import request from '@/http/luch-request'
 export function getUserProfile() {
   return request.get<UserProfile>({
     url: '/system/user/profile',
+    custom: {
+      showLoading: true,
+    },
   })
 }
 
