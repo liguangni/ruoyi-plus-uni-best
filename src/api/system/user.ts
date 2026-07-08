@@ -1,5 +1,5 @@
 import type { UserProfile, UserProfileForm } from '@/api/system/types/user'
-import request from '@/http/luch-request'
+import request from '@/http/request'
 
 // 查询用户个人信息
 export function getUserProfile() {

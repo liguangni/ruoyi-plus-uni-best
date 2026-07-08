@@ -1,4 +1,4 @@
-import request from '@/http/luch-request'
+import request from '@/http/request'
 import type { IAuthLoginRes, ICaptcha, IDoubleTokenRes, ILoginForm, IUserInfoRes, loginInfo } from '@/api/auth/types/login'
 
 /**

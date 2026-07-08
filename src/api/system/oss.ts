@@ -1,4 +1,4 @@
-import request from '@/http/luch-request'
+import request from '@/http/request'
 import type { SysOssUploadVo } from '@/api/system/types/oss'
 
 // 上传OSS对象存储
@@ -8,7 +8,7 @@ export function uploadOss({ filePath, name }: { filePath: string, name?: string 
     filePath,
     name,
     custom: {
-      isEcrypt: true,
+      isEncrypt: true,
     },
   })
 }

@@ -9,70 +9,49 @@ import { ResultEnum } from './tools/enum'
 
 // 请求基准地址
 const baseUrl = getEnvBaseUrl()
+const defaultTimeout = 60000
 const encryptHeader = 'encrypt-key'
 const clientId = import.meta.env.VITE_APP_CLIENT_ID
 const appEncrypt = Boolean(import.meta.env.VITE_APP_ENCRYPT)
 
-// 拦截器配置
 const httpInterceptor = {
-  // 拦截前触发
   invoke(options: CustomRequestOptions) {
-    // 如果您使用了alova，则请把下面的代码放开注释
-    // alova 执行流程：alova beforeRequest --> 本拦截器 --> alova responded
-    // return options
-
-    // 非 alova 请求，正常执行
+    // 显示加载中
+    if (options?.custom?.showLoading === true) {
+      uni.showLoading({
+        title: '加载中...',
+      })
+    }
     // 接口请求支持通过 query 参数配置 queryString
     if (options.query) {
       const queryStr = stringifyQuery(options.query)
-      if (options.url.includes('?')) {
-        options.url += `&${queryStr}`
-      }
-      else {
-        options.url += `?${queryStr}`
-      }
+      options.url += options.url.includes('?') ? `&${queryStr}` : `?${queryStr}`
     }
     // 非 http 开头需拼接地址
     if (!options.url.startsWith('http')) {
       // #ifdef H5
       if (JSON.parse(import.meta.env.VITE_APP_PROXY_ENABLE)) {
-        // 自动拼接代理前缀
         options.url = import.meta.env.VITE_APP_PROXY_PREFIX + options.url
       }
       else {
         options.url = baseUrl + options.url
       }
       // #endif
-      // 非H5正常拼接
       // #ifndef H5
       options.url = baseUrl + options.url
       // #endif
-      // TIPS: 如果需要对接多个后端服务，也可以在这里处理，拼接成所需要的地址
     }
-    // 1. 请求超时
-    options.timeout = 60000 // 60s
-    // 2. （可选）添加小程序端请求头标识
-    options.header = {
-      ...options.header,
-    }
-    // 3. 添加 token 请求头标识
-    const isNeedToken = options?.custom?.isToken || true
-    if (isNeedToken) {
+    options.header = { ...options.header }
+    // 添加 token 请求头标识
+    if (options?.custom?.isToken !== false) {
       const tokenStore = useTokenStore()
       const token = tokenStore.updateNowTime().validToken
       options.header.Authorization = `Bearer ${token}`
       options.header.clientId = clientId
     }
-
-    // 是否需要加密
-    let isNeedEncrypt = false
-    if (appEncrypt) {
-      isNeedEncrypt = options?.custom?.isEncrypt === true
-    }
-    if (isNeedEncrypt) {
-      // 当开启参数加密
+    // 处理加密接口请求数据
+    if (appEncrypt && options?.custom?.isEncrypt === true) {
       if (options.method === 'POST' || options.method === 'PUT') {
-        // 生成一个 AES 密钥
         const aesKey = generateAesKey()
         options.header[encryptHeader] = encrypt(encryptBase64(aesKey))
         options.data = typeof options.data === 'object' ? encryptWithAes(JSON.stringify(options.data), aesKey) : encryptWithAes(options.data, aesKey)
@@ -81,55 +60,41 @@ const httpInterceptor = {
     return options
   },
   success(args) {
-    // 如果您使用了alova，则请把下面的代码放开注释
-    // alova 执行流程：alova beforeRequest --> 本拦截器 --> alova responded
-    // return
-
-    const respHeader = { [encryptHeader]: '', ...(args.header ?? {}) }
-    // 加密后的 AES 秘钥
-    const keyStr = respHeader[encryptHeader] || ''
-    // 加密
-    if (keyStr !== '') {
-      const data = args.data
-
-      // 请求体 AES 解密
-      const base64Str = decrypt(keyStr)
-      // base64 解码 得到请求头的 AES 秘钥
-      const aesKey = decryptBase64(base64Str.toString())
-      // aesKey 解码 data
-      const decryptData = decryptWithAes(data as string, aesKey)
-      // 将结果 (得到的是 JSON 字符串) 转为 JSON
-      args.data = JSON.parse(decryptData)
+    // 解密接口响应数据
+    const keyStr = args.header?.[encryptHeader] || ''
+    if (keyStr) {
+      const aesKey = decryptBase64(decrypt(keyStr).toString())
+      args.data = JSON.parse(decryptWithAes(args.data as string, aesKey))
     }
-
-    // 2. 业务状态码拦截
+    // 业务码
     const responseData = typeof args.data === 'string' ? JSON.parse(args.data) : args.data
     const { code } = responseData || {}
-
-    // 3. 处理 401 未授权
     if (args.statusCode === ResultEnum.Unauthorized || code === ResultEnum.Unauthorized) {
-      useTokenStore().logout().then(() => {
-        toLoginPage()
-      })
+      useTokenStore().logout().then(() => toLoginPage())
       return Promise.reject(new Error('无效的会话，或者会话已过期，请重新登录。'))
     }
     if (code !== ResultEnum.Success200) {
-    // 4. 处理其他业务错误
-      const msg = responseData?.msg || responseData?.message || getErrorMsg(code)
-      // 支持静默模式：如果调用方传了 showError: false，则不弹 Toast
-      if (args.config?.showError !== false) {
+      const msg = responseData?.message || responseData?.msg || getErrorMsg(code)
+      if (!args.config?.hideErrorToast)
         showToastMsg(msg)
-      }
       return Promise.reject(new Error(msg))
+    }
+  },
+  fail(err) {
+    console.log('interceptor-fail', err)
+  },
+  complete(res) {
+    console.log('interceptor-complete', res)
+    // 隐藏加载中
+    if (res.config?.custom?.showLoading === true) {
+      uni.hideLoading()
     }
   },
 }
 
 export const requestInterceptor = {
   install() {
-    // 拦截 request 请求
-    // uni.addInterceptor('request', httpInterceptor)
-    // 拦截 uploadFile 文件上传
-    // uni.addInterceptor('uploadFile', httpInterceptor)
+    uni.addInterceptor('request', httpInterceptor)
+    uni.addInterceptor('uploadFile', httpInterceptor)
   },
 }
