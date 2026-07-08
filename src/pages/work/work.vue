@@ -53,50 +53,47 @@ function getDisplayItems(groupKey: string, children: any[]) {
 <template>
   <view class="page-container pc-tabbar bg-light">
     <view class="page-content">
-      <view class="bg">
-        <view class="user-header">
-          <Avatar class="user-avatar" width="64rpx" height="64rpx" round />
-          <text class="nickname">{{ userStore.userInfo.user.nickName || '用户' }}</text>
-        </view>
-        <view class="swiper-container">
-          <swiper class="swiper" circular :indicator-dots="false" :autoplay="true" :interval="4000" :duration="500">
-            <swiper-item>
-              <view class="banner">
-                <image src="@/static/work/work.png" mode="widthFix" />
-              </view>
-            </swiper-item>
-            <swiper-item>
-              <view class="banner">
-                <image src="@/static/work/work.png" mode="widthFix" />
-              </view>
-            </swiper-item>
-            <swiper-item>
-              <view class="banner">
-                <image src="@/static/work/work.png" mode="widthFix" />
-              </view>
-            </swiper-item>
-          </swiper>
-        </view>
-      </view>
-
-      <view class="quick-entrances">
-        <view
-          v-for="item in quickEntrances"
-          :key="item.name"
-          class="entrance-card"
-          @click="handleQuickClick(item)"
-        >
-          <view class="entrance-icon">
-            <view :class="[item.icon]" :style="{ color: item.iconColor }" />
+      <view class="page-top">
+        <view class="m-2 h-auto p-1">
+          <view class="swiper-container">
+            <swiper class="swiper" circular :indicator-dots="false" :autoplay="true" :interval="4000" :duration="500">
+              <swiper-item>
+                <view class="banner">
+                  <image src="@/static/work/work.png" mode="widthFix" />
+                </view>
+              </swiper-item>
+              <swiper-item>
+                <view class="banner">
+                  <image src="@/static/work/work.png" mode="widthFix" />
+                </view>
+              </swiper-item>
+              <swiper-item>
+                <view class="banner">
+                  <image src="@/static/work/work.png" mode="widthFix" />
+                </view>
+              </swiper-item>
+            </swiper>
           </view>
-          <view class="entrance-info">
-            <text class="entrance-name">{{ item.name }}</text>
-            <text class="entrance-subtitle">{{ item.subtitle }}</text>
+        </view>
+        <view class="quick-entrances px-4">
+          <view
+            v-for="item in quickEntrances"
+            :key="item.name"
+            class="entrance-card"
+            @click="handleQuickClick(item)"
+          >
+            <view class="entrance-icon">
+              <view :class="[item.icon]" :style="{ color: item.iconColor }" />
+            </view>
+            <view class="entrance-info">
+              <text class="entrance-name">{{ item.name }}</text>
+              <text class="entrance-subtitle">{{ item.subtitle }}</text>
+            </view>
           </view>
         </view>
       </view>
 
-      <view class="menu-section mb-2">
+      <view class="menu-section p-4">
         <view
           v-for="group in menuGroups"
           :key="group.key"
@@ -152,14 +149,17 @@ $text-light: #999999;
   padding-bottom: calc(50px + env(safe-area-inset-bottom));
 }
 
-.bg {
+.page-top {
   background-image: linear-gradient($head-color, #4194fc);
-  min-height: 500rpx;
+  // min-height: 400rpx;
+  padding-bottom: 80rpx;
+  margin-bottom: 80rpx;
   border-bottom-left-radius: 20%;
   border-bottom-right-radius: 20%;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  position: relative;
 
   .user-header {
     display: flex;
@@ -196,19 +196,23 @@ $text-light: #999999;
       border-radius: 20rpx;
     }
   }
-}
 
-.swiper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  .swiper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
-
 .quick-entrances {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
   display: flex;
   gap: 24rpx;
-  padding: 30rpx 32rpx;
-  margin-top: -110rpx;
+  transform: translateY(50%);
+  height: 150rpx;
 }
 
 .entrance-card {
@@ -219,6 +223,8 @@ $text-light: #999999;
   display: flex;
   align-items: center;
   gap: 20rpx;
+  height: 144rpx;
+  box-sizing: border-box;
   box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.08);
 }
 
@@ -250,11 +256,10 @@ $text-light: #999999;
 }
 
 .menu-section {
-  padding: 0 32rpx;
   display: flex;
   flex-direction: column;
   gap: 24rpx;
-  margin-top: 24rpx;
+  // margin-top: 130rpx;
 }
 
 .menu-group {
