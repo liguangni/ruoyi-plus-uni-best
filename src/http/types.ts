@@ -2,7 +2,6 @@
  * 在 uniapp 的 RequestOptions 和 IUniUploadFileOptions 基础上，添加自定义参数
  */
 // 添加uni.uploadFile参数类型
-
 export type CustomRequestOptions = UniApp.RequestOptions & {
   query?: Record<string, any>
   /** 出错时是否隐藏错误提示 */
@@ -12,6 +11,10 @@ export type CustomRequestOptions = UniApp.RequestOptions & {
     isToken?: boolean
     /** 请求是否需要加密 默认否 */
     isEncrypt?: boolean
+    /** 是否显示加载中 */
+    showLoading?: boolean
+    /** 是否隐藏错误提示 */
+    hideErrorToast?: boolean
   }
   baseUrl?: string
 } & IUniUploadFileOptions
