@@ -38,13 +38,20 @@
             </view>
           </view>
         </view>
+        <!-- 上传遮罩 -->
+        <view v-if="isUploading" class="upload-overlay">
+          <text class="upload-overlay-pct">{{ uploadProgress }}%</text>
+          <view class="upload-overlay-bar">
+            <view class="upload-overlay-fill" :style="{ width: `${uploadProgress}%` }" />
+          </view>
+        </view>
       </view>
 
       <view class="cropper-config">
-        <button type="primary" style="margin-top: 30rpx" @click="getImage">
+        <button type="primary" style="margin-top: 30rpx" :disabled="isUploading" @click="getImage">
           选择头像
         </button>
-        <button type="warn" style="margin-top: 30rpx" @click="getImageInfo">
+        <button type="warn" style="margin-top: 30rpx" :disabled="isUploading" @click="getImageInfo">
           提交
         </button>
       </view>
@@ -130,6 +137,8 @@ const cutB = ref(SCREEN_WIDTH)
 const cutR = ref(SCREEN_WIDTH)
 const qualityWidth = ref(DRAW_IMAGE_W)
 const innerAspectRadio = ref(DRAFG_MOVE_RATIO)
+const uploadProgress = ref(0)
+const isUploading = ref(false)
 
 // ==================== 方法 ====================
 
@@ -340,7 +349,14 @@ async function getImageInfo() {
       success: async (res) => {
         uni.hideLoading()
         try {
-          const data = await uploadOss({ filePath: res.tempFilePath, name: 'file' })
+          uploadProgress.value = 0
+          isUploading.value = true
+          const oss = uploadOss({ filePath: res.tempFilePath, name: 'file' })
+          oss.uploadTask.onProgressUpdate((e) => {
+            uploadProgress.value = e.progress
+          })
+          const data = await oss
+          uploadProgress.value = 100
           await updateUserProfile({ avatar: data.ossId })
           userStore.setUserAvatar(data.url)
           uni.$emit('refreshUserInfo')
@@ -348,12 +364,15 @@ async function getImageInfo() {
           uni.navigateBack()
         }
         catch (error) {
-          uni.showToast({ title: '上传失败', icon: 'none' })
+          showToastMsg('上传失败')
+        }
+        finally {
+          isUploading.value = false
         }
       },
       fail: () => {
         uni.hideLoading()
-        uni.showToast({ title: '生成图片失败', icon: 'none' })
+        showToastMsg('生成图片失败')
       },
     })
   })
@@ -372,6 +391,7 @@ onLoad(async () => {
 }
 
 .cropper-content {
+  position: relative;
   min-height: 750rpx;
   width: 100%;
 }
@@ -648,5 +668,40 @@ onLoad(async () => {
 .uni-cropper-viewer image {
   position: absolute;
   z-index: 2;
+}
+
+.upload-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.upload-overlay-pct {
+  font-size: 50rpx;
+  font-weight: bold;
+  color: #fff;
+}
+.upload-overlay-bar {
+  width: 300rpx;
+  height: 10rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5rpx;
+  overflow: hidden;
+  margin-top: 24rpx;
+}
+.upload-overlay-fill {
+  height: 100%;
+  background: #409eff;
+  border-radius: 5rpx;
+  transition: width 0.3s;
+}
+.upload-overlay-label {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 16rpx;
 }
 </style>
