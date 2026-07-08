@@ -4,19 +4,19 @@
       <view class="cropper-content">
         <view
           v-if="isShowImg"
-          class="uni-corpper"
+          class="uni-cropper"
           :style="{ width: `${cropperInitW}px`, height: `${cropperInitH}px`, background: '#000' }"
         >
           <view
-            class="uni-corpper-content"
+            class="uni-cropper-content"
             :style="{ width: `${cropperW}px`, height: `${cropperH}px`, left: `${cropperL}px`, top: `${cropperT}px` }"
           >
             <image :src="imageSrc" :style="{ width: `${cropperW}px`, height: `${cropperH}px` }" />
             <view
-              class="uni-corpper-crop-box"
+              class="uni-cropper-crop-box"
               :style="{ left: `${cutL}px`, top: `${cutT}px`, right: `${cutR}px`, bottom: `${cutB}px` }"
               @touchstart.stop="contentStartMove"
-              @touchmove.stop="contentMoveing"
+              @touchmove.stop="contentMoving"
               @touchend.stop="contentTouchEnd"
             >
               <view class="uni-cropper-view-box">
@@ -107,7 +107,7 @@ let CUT_H //  初始化拖拽元素的高度
 let IMG_RATIO // 图片比例
 let IMG_REAL_W // 图片实际的宽度
 let IMG_REAL_H // 图片实际的高度
-const DRAFG_MOVE_RATIO = 1 // 移动时候的比例,
+const DRAG_MOVE_RATIO = 1 // 移动时候的比例,
 let INIT_DRAG_POSITION = 100 // 初始化屏幕宽度和裁剪区域的宽度之差，用于设置初始化裁剪的宽度
 const DRAW_IMAGE_W = SCREEN_WIDTH // 设置生成的图片宽度
 
@@ -136,7 +136,7 @@ const cutT = ref(0)
 const cutB = ref(SCREEN_WIDTH)
 const cutR = ref(SCREEN_WIDTH)
 const qualityWidth = ref(DRAW_IMAGE_W)
-const innerAspectRadio = ref(DRAFG_MOVE_RATIO)
+const innerAspectRadio = ref(DRAG_MOVE_RATIO)
 const uploadProgress = ref(0)
 const isUploading = ref(false)
 
@@ -229,9 +229,9 @@ function contentStartMove(e: any) {
   PAGE_Y = e.touches[0].pageY
 }
 
-function contentMoveing(e: any) {
-  let dragLengthX = (PAGE_X - e.touches[0].pageX) * DRAFG_MOVE_RATIO
-  let dragLengthY = (PAGE_Y - e.touches[0].pageY) * DRAFG_MOVE_RATIO
+function contentMoving(e: any) {
+  let dragLengthX = (PAGE_X - e.touches[0].pageX) * DRAG_MOVE_RATIO
+  let dragLengthY = (PAGE_Y - e.touches[0].pageY) * DRAG_MOVE_RATIO
 
   if (dragLengthX > 0) {
     if (cutL.value - dragLengthX < 0)
@@ -278,14 +278,14 @@ function dragMove(e: any) {
 
   switch (dragType) {
     case 'right':{
-      let dragLength = (T_PAGE_X - e.touches[0].pageX) * DRAFG_MOVE_RATIO
+      let dragLength = (T_PAGE_X - e.touches[0].pageX) * DRAG_MOVE_RATIO
       if (CUT_R + dragLength < 0)
         dragLength = -CUT_R
       cutR.value = CUT_R + dragLength
       break
     }
     case 'left':{
-      let dragLength = (T_PAGE_X - e.touches[0].pageX) * DRAFG_MOVE_RATIO
+      let dragLength = (T_PAGE_X - e.touches[0].pageX) * DRAG_MOVE_RATIO
       if (CUT_L - dragLength < 0)
         dragLength = CUT_L
       if ((CUT_L - dragLength) > (cropperW.value - cutR.value))
@@ -293,7 +293,7 @@ function dragMove(e: any) {
       cutL.value = CUT_L - dragLength
       break }
     case 'top': {
-      let dragLength = (T_PAGE_Y - e.touches[0].pageY) * DRAFG_MOVE_RATIO
+      let dragLength = (T_PAGE_Y - e.touches[0].pageY) * DRAG_MOVE_RATIO
       if (CUT_T - dragLength < 0)
         dragLength = CUT_T
       if ((CUT_T - dragLength) > (cropperH.value - cutB.value))
@@ -302,15 +302,15 @@ function dragMove(e: any) {
       break
     }
     case 'bottom': {
-      let dragLength = (T_PAGE_Y - e.touches[0].pageY) * DRAFG_MOVE_RATIO
+      let dragLength = (T_PAGE_Y - e.touches[0].pageY) * DRAG_MOVE_RATIO
       if (CUT_B + dragLength < 0)
         dragLength = -CUT_B
       cutB.value = CUT_B + dragLength
       break
     }
     case 'rightBottom': {
-      let dragLengthX = (T_PAGE_X - e.touches[0].pageX) * DRAFG_MOVE_RATIO
-      let dragLengthY = (T_PAGE_Y - e.touches[0].pageY) * DRAFG_MOVE_RATIO
+      let dragLengthX = (T_PAGE_X - e.touches[0].pageX) * DRAG_MOVE_RATIO
+      let dragLengthY = (T_PAGE_Y - e.touches[0].pageY) * DRAG_MOVE_RATIO
 
       if (CUT_B + dragLengthY < 0)
         dragLengthY = -CUT_B
@@ -396,7 +396,7 @@ onLoad(async () => {
   width: 100%;
 }
 
-.uni-corpper {
+.uni-cropper {
   position: relative;
   overflow: hidden;
   -webkit-user-select: none;
@@ -408,11 +408,11 @@ onLoad(async () => {
   box-sizing: border-box;
 }
 
-.uni-corpper-content {
+.uni-cropper-content {
   position: relative;
 }
 
-.uni-corpper-content image {
+.uni-cropper-content image {
   display: block;
   width: 100%;
   min-width: 0 !important;
@@ -437,13 +437,13 @@ onLoad(async () => {
 }
 
 /* 内部的信息 */
-.uni-corpper-crop-box {
+.uni-cropper-crop-box {
   position: absolute;
   background: rgba(255, 255, 255, 0.3);
   z-index: 2;
 }
 
-.uni-corpper-crop-box .uni-cropper-view-box {
+.uni-cropper-crop-box .uni-cropper-view-box {
   position: relative;
   display: block;
   width: 100%;
