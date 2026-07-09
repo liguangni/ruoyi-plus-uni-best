@@ -5,9 +5,6 @@ import request from '@/http/request'
 export function getUserProfile() {
   return request.get<UserProfile>({
     url: '/system/user/profile',
-    custom: {
-      showLoading: true,
-    },
   })
 }
 

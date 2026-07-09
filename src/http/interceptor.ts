@@ -9,12 +9,6 @@ const clientId = import.meta.env.VITE_APP_CLIENT_ID
 
 const httpInterceptor = {
   invoke(options: CustomRequestOptions) {
-    // 显示加载中
-    if (options?.custom?.showLoading === true) {
-      uni.showLoading({
-        title: '加载中...',
-      })
-    }
     // 接口请求支持通过 query 参数配置 queryString
     if (options.query) {
       const queryStr = stringifyQuery(options.query)
@@ -45,10 +39,7 @@ const httpInterceptor = {
     return options
   },
   success(args) {
-    // 隐藏加载中
-    if (args.config?.custom?.showLoading === true) {
-      uni.hideLoading()
-    }
+    console.log('响应拦截器---->success', args)
   },
   fail(err) {
     console.log('响应拦截器---->fail', err)
@@ -60,9 +51,7 @@ const httpInterceptor = {
   },
   complete(res) {
     // 隐藏加载中
-    if (res.config?.custom?.showLoading === true) {
-      uni.hideLoading()
-    }
+    console.log('响应拦截器---->complete', res)
   },
 }
 

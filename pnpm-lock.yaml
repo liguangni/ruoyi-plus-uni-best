@@ -78,9 +78,6 @@ importers:
       jsencrypt:
         specifier: ^3.5.4
         version: 3.5.4
-      luch-request:
-        specifier: ^3.1.1
-        version: 3.1.1
       pinia:
         specifier: 2.0.36
         version: 2.0.36(typescript@5.8.3)(vue@3.4.21(typescript@5.8.3))
@@ -1787,9 +1784,6 @@ packages:
   '@csstools/css-tokenizer@4.0.0':
     resolution: {integrity: sha512-QxULHAm7cNu72w97JUNCBFODFaXpbDg+dP8b/oWFAZ2MTRppA3U00Y2L1HqaS4J6yBqxwa/Y3nMBaxVKbB/NsA==}
     engines: {node: '>=20.19.0'}
-
-  '@dcloudio/types@2.6.12':
-    resolution: {integrity: sha512-mrCMwcINy1IFjU9VUqLeWBkj404yWs5paLDttBcA+eqUjanuUQbBcTVPqlrGgkyzLXDcV2oDDZRSNxNpXi4kMQ==}
 
   '@dcloudio/types@3.4.19':
     resolution: {integrity: sha512-1foayOFEAQ+jnQLt3ACsovCNjer3/fXn1I2VBpmDOzs2nk/n4UHwRLAxZV/RpxRqaGOPEvKrO/Pq+VI6sAmuRw==}
@@ -6989,9 +6983,6 @@ packages:
   lru-queue@0.1.0:
     resolution: {integrity: sha512-BpdYkt9EvGl8OfWHDQPISVpcl5xZthb+XPsbELj5AQXxIC8IriDZIQYjBJPEm5rS420sjZ0TLEzRcq5KdBhYrQ==}
 
-  luch-request@3.1.1:
-    resolution: {integrity: sha512-p7+mlcEtgRcd0OfXC4XZbyiwSr1XgCeqNT7LlVUjnk7InYl/8d5Rk7BUqAYNA2WRafI1wRIUQWRWZRpeUwWR0w==}
-
   magic-string@0.30.18:
     resolution: {integrity: sha512-yi8swmWbO17qHhwIBNeeZxTceJMeBvWJaId6dyvTSOwTipqeHhMhOrz6513r1sOKnpvQ7zkhlG8tPrpilwTxHQ==}
 
@@ -12122,8 +12113,6 @@ snapshots:
       css-tree: 3.2.1
 
   '@csstools/css-tokenizer@4.0.0': {}
-
-  '@dcloudio/types@2.6.12': {}
 
   '@dcloudio/types@3.4.19': {}
 
@@ -19093,10 +19082,6 @@ snapshots:
   lru-queue@0.1.0:
     dependencies:
       es5-ext: 0.10.64
-
-  luch-request@3.1.1:
-    dependencies:
-      '@dcloudio/types': 2.6.12
 
   magic-string@0.30.18:
     dependencies:

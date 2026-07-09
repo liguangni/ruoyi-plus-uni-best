@@ -203,10 +203,6 @@ export default defineConfig(({ command, mode }) => {
     esbuild: {
       drop: VITE_DELETE_CONSOLE === 'true' ? ['console', 'debugger'] : [],
     },
-    // 核心配置：将 luch-request 加入 Vite 的预构建依赖
-    optimizeDeps: {
-      include: ['luch-request'],
-    },
     build: {
       sourcemap: false,
       // 方便非h5端调试

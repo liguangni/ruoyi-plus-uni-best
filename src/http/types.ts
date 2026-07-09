@@ -11,8 +11,6 @@ export type CustomRequestOptions = UniApp.RequestOptions & {
     isToken?: boolean
     /** 请求是否需要加密 默认否 */
     isEncrypt?: boolean
-    /** 是否显示加载中 */
-    showLoading?: boolean
     /** 是否隐藏错误提示 */
     hideErrorToast?: boolean
   }
