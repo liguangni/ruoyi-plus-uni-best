@@ -3,7 +3,7 @@
     <view class="custom-list">
       <view class="custom-list-item avatar-item">
         <view class="my-4 center">
-          <view class="avatar-wrapper" hover-class="none" @click="toAvatarPage">
+          <view class="avatar-wrapper" hover-class="none" :hover-start-time="0" :hover-stay-time="0" @click="toAvatarPage">
             <Avatar :src="userProfile.user.avatarUrl" width="180rpx" height="180rpx" round />
           </view>
         </view>
@@ -159,6 +159,7 @@ function toAvatarPage() {
       background-color: #f0f0f0;
       border: 2rpx solid #e0e0e0;
       cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .item-label {
