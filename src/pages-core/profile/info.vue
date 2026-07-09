@@ -1,10 +1,9 @@
 <template>
   <view class="container">
-    <!-- <full-loading :loading="loading" text="加载中..." /> -->
     <view class="custom-list">
       <view class="custom-list-item avatar-item">
         <view class="my-4 center">
-          <view class="avatar-wrapper" @click="toAvatarPage">
+          <view class="avatar-wrapper" hover-class="none" @click="toAvatarPage">
             <Avatar :src="userProfile.user.avatarUrl" width="180rpx" height="180rpx" round />
           </view>
         </view>
@@ -81,8 +80,6 @@ definePage({
   },
 })
 
-const loading = ref <boolean>(true)
-
 const userProfile = ref<UserProfile>({
   user: {} as IUserInfo,
   roleGroup: '',
@@ -103,9 +100,9 @@ onUnload(() => {
 
 // 获取用户信息
 function getUserInfo() {
-  // uni.showLoading({
-  //   title: '加载中...',
-  // })
+  uni.showLoading({
+    title: '加载中...',
+  })
   getUserProfile().then((data) => {
     userProfile.value = data
     if (!userProfile.value.user.avatarUrl)
@@ -116,7 +113,6 @@ function getUserInfo() {
       user: userProfile.value.user,
     })
   }).finally(() => {
-    loading.value = false
     uni.hideLoading()
   })
 };
@@ -135,9 +131,6 @@ function toAvatarPage() {
 </script>
 
 <style lang="scss" scoped>
-.container {
-}
-
 .custom-list {
   background-color: #fff;
   border-radius: 12rpx;
@@ -166,16 +159,6 @@ function toAvatarPage() {
       background-color: #f0f0f0;
       border: 2rpx solid #e0e0e0;
       cursor: pointer;
-    }
-
-    .avatar-button {
-      width: 180rpx;
-      height: 180rpx;
-      padding: 0;
-      overflow: hidden;
-      border-radius: 50%;
-      background-color: #f0f0f0;
-      border: 2rpx solid #e0e0e0;
     }
 
     .item-label {
