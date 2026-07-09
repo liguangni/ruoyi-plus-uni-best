@@ -136,6 +136,8 @@ export default defineManifestConfig({
     // styleIsolation: 'shared',
     usingComponents: true,
     // __usePrivacyCheck__: true,
+    // 开启小程序按需注入特性
+    lazyCodeLoading: 'requiredComponents',
   },
   'mp-alipay': {
     usingComponents: true,
