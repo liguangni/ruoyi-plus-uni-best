@@ -103,6 +103,8 @@ export default defineConfig({
     'i-carbon-thumbs-up',
     'i-carbon-close',
     'i-carbon-user-feedback',
+    'i-carbon-document-multiple-02',
+    'i-carbon-earth-southeast-asia',
   ],
   rules: [
     [

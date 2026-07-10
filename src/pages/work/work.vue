@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { onPullDownRefresh } from '@dcloudio/uni-app'
+import { reactive, ref } from 'vue'
 import { getMenuGroups, getQuickEntrances } from './work'
 import { useUserStore } from '@/store/user'
 import type { MenuGroupChildItem, QuickEntranceItem } from './work'
@@ -7,17 +8,35 @@ import type { MenuGroupChildItem, QuickEntranceItem } from './work'
 definePage({
   style: {
     navigationBarTitleText: '工作台',
+    enablePullDownRefresh: true,
   },
 })
 
 const userStore = useUserStore()
 const quickEntrances = getQuickEntrances()
-const menuGroups = getMenuGroups()
+const menuGroups = ref(getMenuGroups())
 const expandedGroups = reactive<Record<string, boolean>>({})
-const maxMenuItems = 4
+const maxMenuItems = 8
+const menuLoading = ref(false)
 
-menuGroups.forEach((group) => {
-  expandedGroups[group.key] = false
+function loadMenuGroups() {
+  menuGroups.value = getMenuGroups()
+  menuGroups.value.forEach((group) => {
+    if (expandedGroups[group.key] === undefined) {
+      expandedGroups[group.key] = false
+    }
+  })
+}
+
+loadMenuGroups()
+
+onPullDownRefresh(() => {
+  menuLoading.value = true
+  setTimeout(() => {
+    loadMenuGroups()
+    menuLoading.value = false
+    uni.stopPullDownRefresh()
+  }, 800)
 })
 
 function toggleGroup(groupKey: string) {
@@ -94,8 +113,13 @@ function getDisplayItems(groupKey: string, children: any[]) {
       </view>
 
       <view class="menu-section p-4">
+        <view v-if="menuLoading" class="menu-loading">
+          <view class="loading-spinner" />
+          <text class="loading-text">加载中...</text>
+        </view>
         <view
           v-for="group in menuGroups"
+          v-show="!menuLoading"
           :key="group.key"
           class="menu-group"
         >
@@ -260,6 +284,35 @@ $text-light: #999999;
   flex-direction: column;
   gap: 24rpx;
   // margin-top: 130rpx;
+}
+
+.menu-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20rpx;
+  padding: 60rpx 0;
+
+  .loading-spinner {
+    width: 60rpx;
+    height: 60rpx;
+    border: 6rpx solid #e0e0e0;
+    border-top-color: $head-color;
+    border-radius: 50%;
+    animation: menu-spin 0.8s linear infinite;
+  }
+
+  .loading-text {
+    font-size: 26rpx;
+    color: $text-light;
+  }
+}
+
+@keyframes menu-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .menu-group {
