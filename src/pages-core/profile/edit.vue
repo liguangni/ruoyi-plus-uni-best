@@ -31,7 +31,7 @@
         </view>
         <view class="form-control">
           <radio-group class="gender-radio-group" @change="handleGenderChange">
-            <label v-for="item in genderColumns" :key="item.value" class="radio-item">
+            <label v-for="item in sys_user_gender" :key="item.value" class="radio-item">
               <radio :value="item.value" :checked="userProfile.gender === item.value" color="#2979ff" />
               <text class="radio-text">{{ item.label }}</text>
             </label>
@@ -51,6 +51,7 @@
 import { ref } from 'vue'
 import { getUserProfile, updateUserProfile } from '@/api/system/user'
 import { showToastMsg } from '@/utils/common'
+import { useDict } from '@/composables/useDict'
 import type { UserProfileForm } from '@/api/system/user/types'
 
 definePage({
@@ -59,7 +60,7 @@ definePage({
   },
 })
 
-const genderColumns = ref([{ label: '男', value: '0' }, { label: '女', value: '1' }])
+const { sys_user_gender } = useDict('sys_user_gender')
 
 const userProfile = ref<UserProfileForm>({
   nickName: '',
