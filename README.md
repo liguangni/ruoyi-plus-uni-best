@@ -166,35 +166,35 @@ pnpm dev:app       # App
     <td align="center">
       <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/work.png" alt="工作台" width="200"  />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/me.png" alt="我的" width="200"  />
     </td>
   </tr>
   <tr>
-    <td align="center" style="padding: 10px;" >登录页</td>
-    <td align="center" style="padding: 10px;" >首页</td>
-    <td align="center" style="padding: 10px;" >工作台</td>
-    <td align="center" style="padding: 10px;" >我的</td>
+    <td align="center">登录页</td>
+    <td align="center">首页</td>
+    <td align="center">工作台</td>
+    <td align="center">我的</td>
   </tr>
   <tr>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/profile.png" alt="个人信息" width="200" />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/setting.png" alt="应用设置" width="200"  />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/about.png" alt="关于" width="200" />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/help.png" alt="帮助中心" width="200" />
     </td>
   </tr>
   <tr>
-    <td align="center" style="padding: 10px;" >个人信息</td>
-    <td align="center" style="padding: 10px;" >应用设置</td>
-    <td align="center" style="padding: 10px;" >关于</td>
-    <td align="center" style="padding: 10px;" >帮助中心</td>
+    <td align="center">个人信息</td>
+    <td align="center">应用设置</td>
+    <td align="center">关于</td>
+    <td align="center">帮助中心</td>
   </tr>
 </table>
 
@@ -210,47 +210,53 @@ pnpm dev:app       # App
     <td align="center">
       <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-detail-history.png" alt="审批详情-审批记录" width="200"  />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-detail-flowchart.png" alt="流程详情-流程图" width="200"  />
     </td>
   </tr>
   <tr>
-    <td align="center" style="padding: 10px;" >审批列表</td>
-    <td align="center" style="padding: 10px;" >审批详情-表单</td>
-    <td align="center" style="padding: 10px;" >审批详情-审批记录</td>
-    <td align="center" style="padding: 10px;" >流程详情-流程图</td>
+    <td align="center">审批列表</td>
+    <td align="center">审批详情-表单</td>
+    <td align="center">审批详情-审批记录</td>
+    <td align="center">流程详情-流程图</td>
   </tr>
   <tr>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-process.png" alt="流程办理-通过" width="200" />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-revoke.png" alt="流程办理-驳回" width="200"  />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-def-select.png" alt="选择流程定义" width="200" />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-user-select.png" alt="选择审批人" width="200" />
     </td>
   </tr>
   <tr>
-    <td align="center" style="padding: 10px;" >流程办理-通过</td>
-    <td align="center" style="padding: 10px;" >流程办理-驳回</td>
-    <td align="center" style="padding: 10px;" >选择流程定义</td>
-    <td align="center" style="padding: 10px;" >选择审批人</td>
+    <td align="center">流程办理-通过</td>
+    <td align="center">流程办理-驳回</td>
+    <td align="center">选择流程定义</td>
+    <td align="center">选择审批人</td>
   </tr>
   <tr>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-start.png" alt="流程发起-弹窗" width="200" />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-start-flow.png" alt="流程发起-请假" width="200"  />
+    </td>
+    <td align="center">
+    </td>
+    <td align="center">
     </td>
   </tr>
   <tr>
-    <td align="center" style="padding: 10px;" >流程发起-弹窗</td>
-    <td align="center" style="padding: 10px;" >流程发起-请假</td>
+    <td align="center">流程发起-弹窗</td>
+    <td align="center">流程发起-请假</td>
+    <td align="center"></td>
+    <td align="center"></td>
   </tr>
 </table>
 

@@ -18,6 +18,14 @@
       </view>
       <view class="custom-list-item">
         <view class="item-label">
+          性别
+        </view>
+        <view class="item-value">
+          {{ genderLabel }}
+        </view>
+      </view>
+      <view class="custom-list-item">
+        <view class="item-label">
           手机号码
         </view>
         <view class="item-value">
@@ -67,10 +75,12 @@
 </template>
 
 <script lang="ts" setup>
+import { computed, ref } from 'vue'
 import type { UserProfile, UserVO } from '@/api/system/user/types'
 import { getUserProfile } from '@/api/system/user'
 import DEFAULT_AVATAR from '@/static/images/avatar.png'
 import { useUserStore } from '@/store/user'
+import { useDict } from '@/composables/useDict'
 
 const userStore = useUserStore()
 
@@ -84,6 +94,15 @@ const userProfile = ref<UserProfile>({
   user: {} as UserVO,
   roleGroup: '',
   postGroup: '',
+})
+
+// 性别展示：用 sys_user_gender 字典把存储值映射为中文标签
+const { sys_user_gender } = useDict('sys_user_gender')
+const genderLabel = computed(() => {
+  const val = userProfile.value.user?.gender
+  if (!val)
+    return ''
+  return sys_user_gender.value.find(item => item.value === val)?.label || val
 })
 
 onLoad((options) => {
