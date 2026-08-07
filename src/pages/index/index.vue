@@ -15,7 +15,7 @@ onLoad(() => {
 </script>
 
 <template>
-  <view class="page-container pc-tabbar bg-white">
+  <view class="page-container pg-tabbar bg-white">
     <view class="page-content p-2">
       <view class="mt-10 block">
         <image src="/static/logo.svg" alt="" class="mx-auto block h-28 w-28" />
@@ -27,9 +27,15 @@ onLoad(() => {
         最好用的 uniapp 开发模板
       </view>
 
-      <view class="m-auto mb-2 max-w-100 text-justify indent text-4">
+      <view class="m-auto mb-2 max-w-100 text-center text-justify indent text-4">
         <p style="line-height: 2;">
-          基于unibest构建，适配Ruoyi-Vue-Plus/Ruoyi-Cloud-Plus的uniapp快速开发模板。
+          基于unibest构建
+        </p>
+        <p style="line-height: 2;">
+          适配Ruoyi-Vue-Plus/Ruoyi-Cloud-Plus
+        </p>
+        <p style="line-height: 2;">
+          支持工作流发起和审批
         </p>
       </view>
     </view>

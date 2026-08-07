@@ -1,4 +1,4 @@
-import type { IAuthLoginRes, ILoginForm } from '@/api/auth/types/login'
+import type { IAuthLoginRes, ILoginForm } from '@/api/auth/login/types'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue' // 修复：导入 computed
 import {
@@ -7,10 +7,13 @@ import {
   refreshToken as _refreshToken,
   wxLogin as _wxLogin,
   getWxCode,
-} from '@/api/auth/login'
-import { isDoubleTokenRes, isSingleTokenRes } from '@/api/auth/types/login'
+} from '@/api/auth/login/login'
+import { isDoubleTokenRes, isSingleTokenRes } from '@/api/auth/login/types'
 import { isDoubleTokenMode } from '@/utils'
 import { useUserStore } from './user'
+
+/** token 滑动过期：空闲超过该时长即视为失效（毫秒），需与后端"N 分钟未活跃即过期"对齐 */
+export const TOKEN_IDLE_TIMEOUT_MS = 30 * 60 * 1000
 
 // 初始化状态
 const tokenInfoState = isDoubleTokenMode
@@ -44,6 +47,15 @@ export const useTokenStore = defineStore(
       return useTokenStore()
     }
 
+    /**
+     * 记录一次成功的鉴权请求，刷新"最后活跃时间"
+     * 后端按"最后请求时间"计算滑动过期，前端以最后一次成功请求时间为代理，用于主动推算 token 是否已因空闲失效
+     */
+    const setLastActiveTime = () => {
+      nowTime.value = Date.now()
+      uni.setStorageSync('lastActiveTime', nowTime.value)
+    }
+
     // 设置用户信息
     const setTokenInfo = (val: IAuthLoginRes) => {
       updateNowTime()
@@ -63,6 +75,8 @@ export const useTokenStore = defineStore(
         uni.setStorageSync('accessTokenExpireTime', accessExpireTime)
         uni.setStorageSync('refreshTokenExpireTime', refreshExpireTime)
       }
+      // 登录时刻记为首次活跃时间，作为滑动过期窗口起点
+      uni.setStorageSync('lastActiveTime', now)
     }
 
     /**
@@ -74,11 +88,18 @@ export const useTokenStore = defineStore(
       }
 
       const now = nowTime.value
-      const expireTime = uni.getStorageSync('accessTokenExpireTime')
-
-      if (!expireTime)
+      const absoluteExpire = uni.getStorageSync('accessTokenExpireTime')
+      if (!absoluteExpire) {
         return true
-      return now >= expireTime
+      }
+
+      // 真实过期时刻 = min(登录后绝对时效, 最后活跃时间 + 滑动空闲阈值)
+      const lastActive = uni.getStorageSync('lastActiveTime')
+      const idleExpire = typeof lastActive === 'number' && lastActive > 0
+        ? lastActive + TOKEN_IDLE_TIMEOUT_MS
+        : absoluteExpire
+      const effectiveExpire = Math.min(absoluteExpire, idleExpire)
+      return now >= effectiveExpire
     })
 
     /**
@@ -180,6 +201,7 @@ export const useTokenStore = defineStore(
         // 清除存储的过期时间
         uni.removeStorageSync('accessTokenExpireTime')
         uni.removeStorageSync('refreshTokenExpireTime')
+        uni.removeStorageSync('lastActiveTime')
         console.log('退出登录-清除用户信息')
         tokenInfo.value = { ...tokenInfoState }
         uni.removeStorageSync('token')
@@ -299,6 +321,9 @@ export const useTokenStore = defineStore(
       tokenInfo,
       setTokenInfo,
       updateNowTime,
+      setLastActiveTime,
+      isTokenExpired,
+      hasLoginInfo,
     }
   },
   {

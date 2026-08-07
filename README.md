@@ -10,7 +10,7 @@
 <div align="center">
 基于 <a href="https://unibest.tech/" target="_blank">unibest</a> 构建，深度适配 <a href="https://gitee.com/dromara/RuoYi-Cloud-Plus" target="_blank">RuoYi-Cloud-Plus</a> / <a href="https://gitee.com/dromara/RuoYi-Vue-Plus" target="_blank">RuoYi-Vue-Plus</a> 的 UniApp 快速开发模板
 </div>
-<p></p>
+<p align="center">支持工作流管理功能</p>
 <p align="center">
   <strong>🚀 开箱即用 · 📱 多端兼容 · 🎨 灵活扩展 · ⚡ 高性能</strong>
 </p>
@@ -39,7 +39,8 @@
 
 | 本项目分支 | Plus 后台分支 | 分支说明                                           |
 | :--------: | :-----------: | -------------------------------------------------- |
-|   6.X    |     6.X    | 基础功能版本（首页、登录页、个人中心、工作台框架） |
+|   6.X    |     6.X    | 基础功能版本（首页、登录页、个人中心、工作台等） |
+|   6.X-workflow    |     6.X    | 工作流版本（包含基础功能+工作流模块） |
 
 > 注意: 其他分支(如dev、master、feature等) 为开发测试分支,代码可能未完全测试, 不建议在生产环境中使用。
 
@@ -52,11 +53,13 @@
 
    旨在最大程度地降低UI耦合度，保持代码的纯净与轻量，方便后续的快速迁移与定制化开发。
 
-2. **默认集成：Wot UI V2**
+2. **默认集成：Sard Uniapp**
 
-   项目已默认集成 Wot UI V2 组件库，但当前处于未使用状态。
+   项目已默认集成 Sard Uniapp 组件库，但当前处于未使用状态。
 
-   预留能力：该库作为底层能力储备，可用于后续的复杂业务场景（如工作流?系统管理?）。
+   预留能力：该库作为底层能力储备，可用于后续的复杂业务场景（如~~工作流~~?系统管理?）。
+
+   > update 2026-08-01: 工作流模块功能已基本搭建完成, 全部页面均采用原生组件实现, 未使用第三方组件库。
 
 3. **灵活扩展：支持自定义替换**
 
@@ -140,46 +143,114 @@ pnpm dev:app       # App
 如果这个项目对您有帮助，欢迎请作者喝杯咖啡 ☕
 
 <p align="center">
-  <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/wechat.jpg" alt="WeChat Pay" width="280" style="margin: 10px; border: 1px solid #eee; border-radius: 8px;">
-  <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/alipay.jpg" alt="Alipay" width="280" style="margin: 10px; border: 1px solid #eee; border-radius: 8px;">
+  <strong>感谢您的支持与鼓励！🙏</strong>
+</p>
+<p align="center">
+  <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/wechat.jpg" alt="WeChat Pay" width="250"  />
+  <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/alipay.jpg" alt="Alipay" width="250"  />
 </p>
 
-<p align="center">
-  <strong>感谢您的支持与鼓励！🙏</strong>
-</
 
 
 ## 项目运行截图
 
-
+### 基础功能
 <table>
   <tr>
     <td align="center" >
-      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/login.png" alt="登录页" width="180"   />
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/login.png" alt="登录页" width="200"   />
     </td>
     <td align="center">
-      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/index.png" alt="首页" width="180"  />
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/index.png" alt="首页" width="200"  />
     </td>
     <td align="center">
-      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/work.png" alt="工作台" width="180"  />
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/work.png" alt="工作台" width="200"  />
     </td>
     <td align="center" style="padding: 10px;">
-      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/me.png" alt="我的" width="180"  />
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/me.png" alt="我的" width="200"  />
     </td>
   </tr>
   <tr>
+    <td align="center" style="padding: 10px;" >登录页</td>
+    <td align="center" style="padding: 10px;" >首页</td>
+    <td align="center" style="padding: 10px;" >工作台</td>
+    <td align="center" style="padding: 10px;" >我的</td>
+  </tr>
+  <tr>
     <td align="center" style="padding: 10px;">
-      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/profile.png" alt="个人信息" width="180" />
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/profile.png" alt="个人信息" width="200" />
     </td>
     <td align="center" style="padding: 10px;">
-      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/setting.png" alt="应用设置" width="180"  />
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/setting.png" alt="应用设置" width="200"  />
     </td>
     <td align="center" style="padding: 10px;">
-      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/about.png" alt="关于" width="180" />
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/about.png" alt="关于" width="200" />
     </td>
     <td align="center" style="padding: 10px;">
-      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/help.png" alt="帮助中心" width="180" />
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/help.png" alt="帮助中心" width="200" />
     </td>
+  </tr>
+  <tr>
+    <td align="center" style="padding: 10px;" >个人信息</td>
+    <td align="center" style="padding: 10px;" >应用设置</td>
+    <td align="center" style="padding: 10px;" >关于</td>
+    <td align="center" style="padding: 10px;" >帮助中心</td>
+  </tr>
+</table>
+
+### 工作流功能
+<table>
+  <tr>
+    <td align="center" >
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-list.png" alt="审批列表" width="200"   />
+    </td>
+    <td align="center">
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-detail-form.png" alt="审批详情-表单" width="200"  />
+    </td>
+    <td align="center">
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-detail-history.png" alt="审批详情-审批记录" width="200"  />
+    </td>
+    <td align="center" style="padding: 10px;">
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-detail-flowchart.png" alt="流程详情-流程图" width="200"  />
+    </td>
+  </tr>
+  <tr>
+    <td align="center" style="padding: 10px;" >审批列表</td>
+    <td align="center" style="padding: 10px;" >审批详情-表单</td>
+    <td align="center" style="padding: 10px;" >审批详情-审批记录</td>
+    <td align="center" style="padding: 10px;" >流程详情-流程图</td>
+  </tr>
+  <tr>
+    <td align="center" style="padding: 10px;">
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-process.png" alt="流程办理-通过" width="200" />
+    </td>
+    <td align="center" style="padding: 10px;">
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-revoke.png" alt="流程办理-驳回" width="200"  />
+    </td>
+    <td align="center" style="padding: 10px;">
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-def-select.png" alt="选择流程定义" width="200" />
+    </td>
+    <td align="center" style="padding: 10px;">
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-user-select.png" alt="选择审批人" width="200" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center" style="padding: 10px;" >流程办理-通过</td>
+    <td align="center" style="padding: 10px;" >流程办理-驳回</td>
+    <td align="center" style="padding: 10px;" >选择流程定义</td>
+    <td align="center" style="padding: 10px;" >选择审批人</td>
+  </tr>
+  <tr>
+    <td align="center" style="padding: 10px;">
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-start.png" alt="流程发起-弹窗" width="200" />
+    </td>
+    <td align="center" style="padding: 10px;">
+      <img src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/screenshot/workflow-start-flow.png" alt="流程发起-请假" width="200"  />
+    </td>
+  </tr>
+  <tr>
+    <td align="center" style="padding: 10px;" >流程发起-弹窗</td>
+    <td align="center" style="padding: 10px;" >流程发起-请假</td>
   </tr>
 </table>
 

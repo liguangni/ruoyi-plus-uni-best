@@ -14,11 +14,19 @@ export function stringifyQuery(obj: Record<string, any>): string {
       // 对键进行编码
       const encodedKey = encodeURIComponent(key)
 
-      // 处理数组类型
+      // 处理数组类型（对齐PC端 tansParams：createByIds[0]=xxx）
       if (Array.isArray(value)) {
         return value
           .filter(item => item !== undefined && item !== null)
-          .map(item => `${encodedKey}=${encodeURIComponent(item)}`)
+          .map((item, index) => `${encodeURIComponent(`${key}[${index}]`)}=${encodeURIComponent(item)}`)
+          .join('&')
+      }
+
+      // 处理对象类型
+      if (typeof value === 'object') {
+        return Object.entries(value)
+          .filter(([_, v]) => v !== undefined && v !== null && v !== '')
+          .map(([k, v]) => `${encodeURIComponent(`${key}[${k}]`)}=${encodeURIComponent(v as string)}`)
           .join('&')
       }
 

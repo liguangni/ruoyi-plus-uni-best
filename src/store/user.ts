@@ -1,27 +1,12 @@
-import type { IUserInfo } from '@/api/system/types/user'
-import type { IUserInfoRes } from '@/api/auth/types/login'
+import type { IUserInfoRes } from '@/api/auth/login/types'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import {
   getUserInfo,
-} from '@/api/auth/login'
+} from '@/api/auth/login/login'
 
-// 初始化状态
-const defaultUserInfo: IUserInfo = {
-  userId: -1,
-  deptId: -1,
-  deptName: '',
-  userName: '',
-  nickName: '',
-  gender: '',
-  userType: '',
-  email: '',
-  phoneNumber: '',
-  avatar: '',
-  avatarUrl: '',
-}
 const userInfoState: IUserInfoRes = {
-  user: { ...defaultUserInfo },
+  user: null,
   roles: [],
   permissions: [],
 }
@@ -47,7 +32,7 @@ export const useUserStore = defineStore(
     }
     // 删除用户信息
     const clearUserInfo = () => {
-      userInfoState.user = { ...defaultUserInfo }
+      userInfoState.user = null
       userInfo.value = JSON.parse(JSON.stringify(userInfoState))
       uni.removeStorageSync('user')
     }

@@ -5,6 +5,9 @@ import { useTokenStore } from '@/store'
 import { toLoginPage } from '@/utils/toLoginPage'
 import { decrypt, decryptBase64, decryptWithAes, encrypt, encryptBase64, encryptWithAes, generateAesKey } from '@/utils/api-encrypt'
 
+// 防止 401 → logout → /auth/logout 自身又 401 形成递归调用
+let handlingUnauthorized = false
+
 const defaultTimeout = 60000
 const encryptHeader = 'encrypt-key'
 const appEncrypt = Boolean(import.meta.env.VITE_APP_ENCRYPT)
@@ -13,6 +16,9 @@ export function request<T>(config: CustomRequestOptions): Promise<T> & { request
   let requestTask: UniApp.RequestTask
   const opts = { ...config }
   encryptRequest(opts)
+  if (config.custom?.showLoading) {
+    uni.showLoading({ title: config.custom?.loadingText || '加载中...' })
+  }
   const promise = new Promise<T>((resolve, reject) => {
     requestTask = uni.request({
       timeout: defaultTimeout,
@@ -34,12 +40,18 @@ export function request<T>(config: CustomRequestOptions): Promise<T> & { request
       fail: (error) => {
         reject(error)
       },
+      complete: () => {
+        if (config.custom?.showLoading) {
+          uni.hideLoading()
+        }
+      },
     })
   })
   return Object.assign(promise, { requestTask })
 }
 
 export function upload<T>(config: CustomRequestOptions): Promise<T> & { uploadTask: UniApp.UploadTask } {
+  console.log('上传文件参数:', config)
   let uploadTask: UniApp.UploadTask
   const opts = { ...config }
   const promise = new Promise<T>((resolve, reject) => {
@@ -72,7 +84,13 @@ function handleResponse<T>(responseData: IResponse<T>, config: CustomRequestOpti
   const { code } = responseData
 
   if (code === ResultEnum.Unauthorized) {
-    useTokenStore().logout().then(() => toLoginPage())
+    if (!handlingUnauthorized) {
+      handlingUnauthorized = true
+      useTokenStore().logout().finally(() => {
+        handlingUnauthorized = false
+      })
+    }
+    toLoginPage()
     throw new Error('无效的会话，或者会话已过期，请重新登录。')
   }
 
@@ -82,6 +100,11 @@ function handleResponse<T>(responseData: IResponse<T>, config: CustomRequestOpti
       showToastMsg(msg)
     }
     throw new Error(msg)
+  }
+
+  // 记录一次成功的鉴权请求，用于推算滑动过期（后端按最后请求时间计算空闲失效）
+  if (config.custom?.isToken !== false) {
+    useTokenStore().setLastActiveTime()
   }
 
   return responseData.data

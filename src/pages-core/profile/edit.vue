@@ -51,7 +51,7 @@
 import { ref } from 'vue'
 import { getUserProfile, updateUserProfile } from '@/api/system/user'
 import { showToastMsg } from '@/utils/common'
-import type { UserProfileForm } from '@/api/system/types/user'
+import type { UserProfileForm } from '@/api/system/user/types'
 
 definePage({
   style: {

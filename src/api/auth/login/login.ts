@@ -1,5 +1,5 @@
 import request from '@/http/request'
-import type { IAuthLoginRes, ICaptcha, IDoubleTokenRes, ILoginForm, IUserInfoRes, loginInfo } from '@/api/auth/types/login'
+import type { IAuthLoginRes, ICaptcha, IDoubleTokenRes, ILoginForm, IUserInfoRes, loginInfo } from '@/api/auth/login/types'
 
 /**
  * 用户登录

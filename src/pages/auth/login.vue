@@ -2,7 +2,7 @@
 import { tabbarList } from '@/tabbar/config'
 import { isPageTabbar } from '@/tabbar/store'
 // import { ensureDecodeURIComponent } from '@/utils'
-import { getCodeImg } from '@/api/auth/login'
+import { getCodeImg } from '@/api/auth/login/login'
 import { useTokenStore } from '@/store/token'
 import { showToastMsg } from '@/utils/common'
 import { parseUrlToObj } from '@/utils/index'

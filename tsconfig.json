@@ -27,7 +27,7 @@
       "./src/types/async-component.d.ts",
       "./src/types/async-import.d.ts",
       "./src/typings.d.ts",
-      "@wot-ui/ui/global"
+      "sard-uniapp/global"
     ],
     "allowJs": true,
     "noImplicitThis": true,

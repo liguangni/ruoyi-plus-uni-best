@@ -74,6 +74,15 @@ export function showAlert(content: string): Promise<any> {
 }
 
 /**
+ * 根据文件路径获取文件名称
+ * @param filePath 文件路径
+ * @returns 文件名称
+ */
+export function getFileNameByPath(filePath: string) {
+  return filePath.split('/').pop() || ''
+}
+
+/**
  * 参数处理
  * @param params 参数
  */

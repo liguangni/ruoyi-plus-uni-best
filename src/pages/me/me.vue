@@ -79,14 +79,14 @@ function toAboutPage() {
 </script>
 
 <template>
-  <view class="page-container pc-tabbar bg-light">
+  <view class="page-container pg-tabbar bg-light">
     <view class="page-content">
       <view class="profile-container">
         <!-- 用户信息区域 -->
         <view class="bg">
           <view class="bg-radius" />
           <view class="user-info-container">
-            <Avatar class="avatar-img" width="140rpx" height="140rpx" round />
+            <UserAvatar class="avatar-img" width="140rpx" height="140rpx" round />
             <text class="uer-name">{{ userInfo.user.nickName }}</text>
           </view>
           <view class="header-bottom position-relative center">

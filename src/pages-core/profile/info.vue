@@ -4,7 +4,7 @@
       <view class="custom-list-item avatar-item">
         <view class="my-4 center">
           <view class="avatar-wrapper" hover-class="none" :hover-start-time="0" :hover-stay-time="0" @click="toAvatarPage">
-            <Avatar :src="userProfile.user.avatarUrl" width="180rpx" height="180rpx" round />
+            <UserAvatar :src="userProfile.user.avatarUrl" width="180rpx" height="180rpx" round />
           </view>
         </view>
       </view>
@@ -67,7 +67,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { IUserInfo, UserProfile } from '@/api/system/types/user'
+import type { UserProfile, UserVO } from '@/api/system/user/types'
 import { getUserProfile } from '@/api/system/user'
 import DEFAULT_AVATAR from '@/static/images/avatar.png'
 import { useUserStore } from '@/store/user'
@@ -81,7 +81,7 @@ definePage({
 })
 
 const userProfile = ref<UserProfile>({
-  user: {} as IUserInfo,
+  user: {} as UserVO,
   roleGroup: '',
   postGroup: '',
 })

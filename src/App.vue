@@ -4,6 +4,8 @@ import { getCurrentInstance, onMounted, onUnmounted } from 'vue'
 import { navigateToInterceptor } from '@/router/interceptor'
 import { tabbarStore } from '@/tabbar/store'
 import { permission } from '@/router/permission'
+import { useTokenStore } from '@/store/token'
+import { toLoginPage } from '@/utils/toLoginPage'
 
 const { proxy } = (getCurrentInstance() || {}) as any
 const router = proxy?.$router
@@ -22,6 +24,12 @@ onShow((options) => {
   }
   else {
     navigateToInterceptor.invoke({ url: '/' })
+  }
+
+  // 切回前台时提前校验 token 滑动过期：若已失效，提前跳登录
+  const tokenStore = useTokenStore().updateNowTime()
+  if (tokenStore.hasLoginInfo && tokenStore.isTokenExpired) {
+    toLoginPage()
   }
 })
 onHide(() => {
@@ -48,6 +56,7 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss">
+@import 'sard-uniapp/index.scss';
 page,
 body,
 html {

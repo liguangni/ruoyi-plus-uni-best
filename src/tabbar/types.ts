@@ -1,5 +1,5 @@
 import type { TabBar } from '@uni-helper/vite-plugin-uni-pages'
-import type { UserRole } from '@/api/auth/types/login'
+import type { UserRole } from '@/api/auth/login/types'
 import type { RemoveLeadingSlashFromUnion } from '@/typings'
 
 /**
@@ -20,7 +20,7 @@ export interface CustomTabBarItem {
   iconType: 'uiLib' | 'unocss' | 'iconfont' | 'image'
   /**
    * icon 的路径
-   * - uiLib: wot-design-uni 图标的 icon prop
+   * - uiLib: 三方 UI 库图标的 icon prop
    * - unocss: unocss 图标的类名
    * - iconfont: iconfont 图标的类名
    * - image: 图片的路径

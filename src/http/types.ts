@@ -13,6 +13,10 @@ export type CustomRequestOptions = UniApp.RequestOptions & {
     isEncrypt?: boolean
     /** 是否隐藏错误提示 */
     hideErrorToast?: boolean
+    /** 是否显示加载中 */
+    showLoading?: boolean
+    /** 加载中提示 */
+    loadingText?: string
   }
   baseUrl?: string
 } & IUniUploadFileOptions
@@ -38,17 +42,29 @@ export type IResponse<T = any> = {
   [key: string]: any // 允许额外属性
 }
 
-// 分页请求参数
-export interface PageParams {
-  page: number
+/**
+ * 分页查询参数
+ */
+export interface PageQuery {
+  pageNum: number
   pageSize: number
-  [key: string]: any
 }
 
 // 分页响应数据
 export interface PageResult<T> {
-  list: T[]
   total: number
+  rows: T[]
   page: number
   pageSize: number
+}
+
+/**
+ * 基础实体（审计字段：createBy/createTime 等）
+ */
+export interface BaseEntity {
+  createBy?: any
+  createDept?: any
+  createTime?: string
+  updateBy?: any
+  updateTime?: any
 }

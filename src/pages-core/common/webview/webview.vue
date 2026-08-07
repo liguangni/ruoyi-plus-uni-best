@@ -27,11 +27,13 @@ const webviewStyles = ref({
 // 3. 使用 uni-app 的页面生命周期钩子
 onLoad((event) => {
   if (event) {
-    params.value = event // 注意：在 script 中访问 ref 需要 .value
+    params.value = { ...event }
+    if (event.url) {
+      // uni-app onLoad 不会自动解码 query，需手动 decode
+      params.value.url = decodeURIComponent(event.url)
+    }
     if (event.title) {
-      uni.setNavigationBarTitle({
-        title: event.title,
-      })
+      uni.setNavigationBarTitle({ title: event.title })
     }
   }
 })

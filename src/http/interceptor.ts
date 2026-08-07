@@ -39,7 +39,7 @@ const httpInterceptor = {
     return options
   },
   success(args) {
-    console.log('响应拦截器---->success', args)
+    // console.log('响应拦截器---->success', args)
   },
   fail(err) {
     console.log('响应拦截器---->fail', err)
@@ -51,7 +51,7 @@ const httpInterceptor = {
   },
   complete(res) {
     // 隐藏加载中
-    console.log('响应拦截器---->complete', res)
+    // console.log('响应拦截器---->complete', res)
   },
 }
 
