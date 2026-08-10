@@ -1,10 +1,10 @@
 <p align="center">
-  <a href="https://gitee.com/liguangni/ruoyi-plus-uni-best">
+  <a href="https://gitee.com/ry-group/ruoyi-plus-uni-best">
     <img width="160" src="https://mp-cbb96997-5877-4954-8574-e31ffe51ad81.cdn.bspapp.com/site/ruoyi-plus-uni-best/logo.png">
   </a>
 </p>
 <h1 align="center">
-  <a href="https://gitee.com/liguangni/ruoyi-plus-uni-best" target="_blank" style='color: red'>Ruoyi-Plus-Uni-Best</a>
+  <a href="https://gitee.com/ry-group/ruoyi-plus-uni-best" target="_blank" style='color: red'>Ruoyi-Plus-Uni-Best</a>
 </h1>
 
 <div align="center">
@@ -43,8 +43,8 @@
 
 
 > 注意: 
-1. 其他分支(如dev、master、feature等) 为开发测试分支,代码可能未完全测试, 不建议在生产环境中使用。
-2. 如需精简工作流等模块,请参考 [项目 WIKI](https://gitee.com/ry-group/ruoyi-plus-uni-best/wikis/Home)
+> 1. 其他分支(如dev、master、feature等) 为开发测试分支,代码可能未完全测试, 不建议在生产环境中使用。
+> 2. 如需精简工作流等模块,请参考 [项目 WIKI](https://gitee.com/ry-group/ruoyi-plus-uni-best/wikis/Home)
 
 
 
@@ -111,7 +111,7 @@
 1️⃣ 克隆bash
 ```bash
 # 克隆项目到本地
-git clone https://gitee.com/liguangni/ruoyi-plus-uni-best.git
+git clone https://gitee.com/ry-group/ruoyi-plus-uni-best.git
 
 # 进入项目目录
 cd ruoyi-plus-uni-best
@@ -282,7 +282,7 @@ pnpm dev:app       # App
 </p>
 
 <p align="center">
-  <a href="https://gitee.com/liguangni/ruoyi-plus-uni-best/issues">报告 Bug</a>
+  <a href="https://gitee.com/ry-group/ruoyi-plus-uni-best/issues">报告 Bug</a>
   ·
-  <a href="https://gitee.com/liguangni/ruoyi-plus-uni-best/issues">请求特性</a>
+  <a href="https://gitee.com/ry-group/ruoyi-plus-uni-best/issues">请求特性</a>
 </p
