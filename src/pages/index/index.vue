@@ -27,7 +27,7 @@ onLoad(() => {
         最好用的 uniapp 开发模板
       </view>
 
-      <view class="m-auto mb-2 max-w-100 text-center text-justify indent text-4">
+      <view class="m-auto mb-2 max-w-100 text-center indent text-4">
         <p style="line-height: 2;">
           基于unibest构建
         </p>
