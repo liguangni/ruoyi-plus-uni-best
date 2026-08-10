@@ -39,11 +39,25 @@
 
 | 本项目分支 | Plus 后台分支 | 分支说明                                           |
 | :--------: | :-----------: | -------------------------------------------------- |
-|   6.X    |     6.X    | 基础功能版本（首页、登录页、个人中心、工作台等） |
-|   6.X-workflow    |     6.X    | 工作流版本（包含基础功能+工作流模块） |
+|   6.X    |     6.X    | 默认分支, 包含基础功能 + 工作流模块 |
 
-> 注意: 其他分支(如dev、master、feature等) 为开发测试分支,代码可能未完全测试, 不建议在生产环境中使用。
 
+> 注意: 
+1. 其他分支(如dev、master、feature等) 为开发测试分支,代码可能未完全测试, 不建议在生产环境中使用。
+2. 如需精简工作流等模块,请参考 [项目 WIKI](https://gitee.com/ry-group/ruoyi-plus-uni-best/wikis/Home)
+
+
+
+## 📚 项目文档
+
+  本项目基于 [unibest](https://unibest.tech/) 构建，并运行在 [uni-app](https://uniapp.dcloud.net.cn/) 框架之上。
+  开发过程中遇到脚手架、构建配置、路由等通用问题，**请优先查阅官方文档**，以获取最权威、最及时的说明
+
+  - **unibest 官方文档**：<https://unibest.tech/>
+  - **uni-app 官方文档**：<https://uniapp.dcloud.net.cn/>
+  - **项目 WIKI**：<https://gitee.com/ry-group/ruoyi-plus-uni-best/wikis/Home>
+
+  如有任何问题或建议，欢迎提交 Pull Request 或 提交 Issue。我会尽快回复并解决。
 
 
 ## 🎨 UI 框架选型说明
