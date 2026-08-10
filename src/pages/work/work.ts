@@ -74,7 +74,7 @@ const quickEntrances: QuickEntranceItem[] = [
   {
     name: '流程审批',
     subtitle: '办事 / 审批',
-    path: '',
+    path: '/pages-workflow/task/index',
     icon: 'i-carbon-follow-up-work-order',
     iconColor: '#e05252',
   },
