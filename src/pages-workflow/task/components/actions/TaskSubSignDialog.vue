@@ -112,16 +112,14 @@ async function remove(row: any) {
   font-size: 24rpx;
   color: #e05252;
   background: rgba(224, 82, 82, 0.08);
-
-  &:active {
-    background: rgba(224, 82, 82, 0.16);
-  }
 }
-
 .wf-user-empty {
   text-align: center;
   color: #bbb;
   font-size: 26rpx;
   padding: 80rpx 0;
+}
+.wf-subsign__del:active {
+  background: rgba(224, 82, 82, 0.16);
 }
 </style>

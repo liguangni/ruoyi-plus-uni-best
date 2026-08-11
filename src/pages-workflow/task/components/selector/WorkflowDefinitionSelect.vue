@@ -187,7 +187,7 @@ onUnmounted(() => {
 
 <template>
   <view v-if="show" class="def-sheet">
-    <view class="def-sheet__mask" @click="onClose" />
+    <view class="def-sheet__mask" @click.stop="onClose" />
     <view class="def-sheet__panel" @click.stop>
       <view class="def-sheet__header">
         <text class="def-sheet__title">选择流程定义</text>
@@ -337,14 +337,12 @@ onUnmounted(() => {
   position: fixed;
   inset: 0;
   z-index: 1000;
-
-  &__mask {
+  .def-sheet__mask {
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
   }
-
-  &__panel {
+  .def-sheet__panel {
     position: absolute;
     left: 0;
     right: 0;
@@ -357,8 +355,7 @@ onUnmounted(() => {
     overflow: hidden;
     animation: sheetUp 0.25s ease;
   }
-
-  &__header {
+  .def-sheet__header {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -367,21 +364,18 @@ onUnmounted(() => {
     border-bottom: 1rpx solid #f0f0f0;
     flex-shrink: 0;
   }
-
-  &__title {
+  .def-sheet__title {
     font-size: 32rpx;
     font-weight: 600;
     color: #333;
   }
-
-  &__close {
+  .def-sheet__close {
     position: absolute;
     right: 32rpx;
     padding: 8rpx;
     color: #999;
   }
-
-  &__filter {
+  .def-sheet__filter {
     display: flex;
     align-items: center;
     gap: 16rpx;
@@ -389,8 +383,7 @@ onUnmounted(() => {
     border-bottom: 1rpx solid #f0f0f0;
     flex-shrink: 0;
   }
-
-  &__search-wrap {
+  .def-sheet__search-wrap {
     flex: 1;
     min-width: 0;
     display: flex;
@@ -400,8 +393,7 @@ onUnmounted(() => {
     background: #f5f7fa;
     border-radius: 10rpx;
   }
-
-  &__search-input {
+  .def-sheet__search-input {
     flex: 1;
     min-width: 0;
     font-size: 26rpx;
@@ -409,26 +401,22 @@ onUnmounted(() => {
     height: 40rpx;
     line-height: 40rpx;
   }
-
-  &__search-icon {
+  .def-sheet__search-icon {
     font-size: 26rpx;
     color: #999;
     flex-shrink: 0;
   }
-
-  &__search-clear {
+  .def-sheet__search-clear {
     color: #bbb;
     font-size: 24rpx;
     flex-shrink: 0;
     padding: 4rpx;
   }
-
-  &__placeholder {
+  .def-sheet__placeholder {
     color: #bbb;
     font-size: 26rpx;
   }
-
-  &__toolbar {
+  .def-sheet__toolbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -436,63 +424,40 @@ onUnmounted(() => {
     border-bottom: 1rpx solid #f5f5f5;
     flex-shrink: 0;
   }
-
-  &__toolbar-left {
+  .def-sheet__toolbar-left {
     display: flex;
     align-items: center;
     gap: 16rpx;
   }
-
-  &__toolbar-btn {
+  .def-sheet__toolbar-btn {
     display: flex;
     align-items: center;
     gap: 6rpx;
     padding: 8rpx 4rpx;
     color: #018d71;
     font-size: 24rpx;
-
-    &:active {
-      opacity: 0.7;
-    }
-
-    &.is-disabled {
-      opacity: 0.4;
-    }
   }
-
-  &__toolbar-icon {
+  .def-sheet__toolbar-icon {
     font-size: 24rpx;
   }
-
-  &__list {
+  .def-sheet__list {
     flex: 1;
     min-height: 0;
   }
-
-  &__item {
+  .def-sheet__item {
     display: flex;
     align-items: center;
     padding: 24rpx;
     border-bottom: 1rpx solid #f5f5f5;
-
-    &:active {
-      background: #f5f7fa;
-    }
-
-    &.is-selected {
-      background: rgba(1, 141, 113, 0.04);
-    }
   }
-
-  &__item-main {
+  .def-sheet__item-main {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 8rpx;
     min-width: 0;
   }
-
-  &__item-name {
+  .def-sheet__item-name {
     font-size: 28rpx;
     color: #333;
     font-weight: 500;
@@ -500,21 +465,18 @@ onUnmounted(() => {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
-  &__item-meta {
+  .def-sheet__item-meta {
     font-size: 22rpx;
     color: #999;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
-  &__item-right {
+  .def-sheet__item-right {
     flex-shrink: 0;
     margin-left: 16rpx;
   }
-
-  &__checkbox {
+  .def-sheet__checkbox {
     width: 36rpx;
     height: 36rpx;
     border: 2rpx solid #ddd;
@@ -525,39 +487,16 @@ onUnmounted(() => {
     font-size: 22rpx;
     color: #fff;
     transition: all 0.2s;
-
-    &.is-checked {
-      background: #018d71;
-      border-color: #018d71;
-    }
   }
-
-  &__radio {
+  .def-sheet__radio {
     width: 36rpx;
     height: 36rpx;
     border: 2rpx solid #ddd;
     border-radius: 50%;
     position: relative;
     transition: all 0.2s;
-
-    &.is-checked {
-      border-color: #018d71;
-
-      &::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 18rpx;
-        height: 18rpx;
-        background: #018d71;
-        border-radius: 50%;
-      }
-    }
   }
-
-  &__footer {
+  .def-sheet__footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -566,37 +505,28 @@ onUnmounted(() => {
     flex-shrink: 0;
     background: #fff;
   }
-
-  &__count {
+  .def-sheet__count {
     font-size: 26rpx;
     color: #666;
   }
-
-  &__footer-left {
+  .def-sheet__footer-left {
     display: flex;
     align-items: center;
     gap: 16rpx;
   }
-
-  &__footer-right {
+  .def-sheet__footer-right {
     display: flex;
     align-items: center;
   }
-
-  &__confirm-btn {
+  .def-sheet__confirm-btn {
     padding: 10rpx 32rpx;
     font-size: 26rpx;
     color: #fff;
     background: #018d71;
     border-radius: 8rpx;
     transition: opacity 0.2s;
-
-    &:active {
-      opacity: 0.7;
-    }
   }
-
-  &__preview-btn {
+  .def-sheet__preview-btn {
     display: flex;
     align-items: center;
     gap: 4rpx;
@@ -604,12 +534,10 @@ onUnmounted(() => {
     color: #018d71;
     padding: 0 8rpx;
   }
-
-  &__preview-icon {
+  .def-sheet__preview-icon {
     font-size: 24rpx;
   }
-
-  &__tip {
+  .def-sheet__tip {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -618,8 +546,7 @@ onUnmounted(() => {
     font-size: 24rpx;
     color: #999;
   }
-
-  &__empty {
+  .def-sheet__empty {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -627,18 +554,15 @@ onUnmounted(() => {
     padding: 80rpx 0;
     gap: 16rpx;
   }
-
-  &__empty-icon {
+  .def-sheet__empty-icon {
     font-size: 64rpx;
     color: #ccc;
   }
-
-  &__empty-text {
+  .def-sheet__empty-text {
     font-size: 26rpx;
     color: #bbb;
   }
 }
-
 .def-preview-overlay {
   position: fixed;
   inset: 0;
@@ -648,7 +572,6 @@ onUnmounted(() => {
   flex-direction: column;
   justify-content: flex-end;
 }
-
 .def-preview-popup {
   width: 100%;
   height: 50vh;
@@ -658,8 +581,7 @@ onUnmounted(() => {
   flex-direction: column;
   overflow: hidden;
   animation: defPreviewUp 0.25s ease;
-
-  &__header {
+  .def-preview-popup__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -667,20 +589,17 @@ onUnmounted(() => {
     border-bottom: 1rpx solid #f0f0f0;
     flex-shrink: 0;
   }
-
-  &__title {
+  .def-preview-popup__title {
     font-size: 30rpx;
     font-weight: 600;
     color: #333;
   }
-
-  &__close {
+  .def-preview-popup__close {
     font-size: 26rpx;
     color: #999;
     padding: 8rpx;
   }
-
-  &__toolbar {
+  .def-preview-popup__toolbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -689,64 +608,55 @@ onUnmounted(() => {
     flex-shrink: 0;
     background: #fff;
   }
-
-  &__toolbar-count {
+  .def-preview-popup__toolbar-count {
     font-size: 26rpx;
     color: #666;
   }
-
-  &__clear {
+  .def-preview-popup__clear {
     display: flex;
     align-items: center;
     gap: 6rpx;
     color: #999;
     font-size: 24rpx;
   }
-
-  &__body {
+  .def-preview-popup__body {
     flex: 1;
     min-height: 0;
   }
-
-  &__item {
+  .def-preview-popup__item {
     display: flex;
     align-items: center;
     padding: 24rpx;
     border-bottom: 1rpx solid #f5f5f5;
   }
-
-  &__item-main {
+  .def-preview-popup__item-main {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 6rpx;
     min-width: 0;
   }
-
-  &__item-name {
+  .def-preview-popup__item-name {
     font-size: 28rpx;
     color: #333;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
-  &__item-meta {
+  .def-preview-popup__item-meta {
     font-size: 22rpx;
     color: #999;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
-  &__remove {
+  .def-preview-popup__remove {
     font-size: 28rpx;
     color: #999;
     padding: 8rpx;
     flex-shrink: 0;
   }
-
-  &__empty {
+  .def-preview-popup__empty {
     display: flex;
     justify-content: center;
     padding: 80rpx 0;
@@ -754,7 +664,6 @@ onUnmounted(() => {
     font-size: 26rpx;
   }
 }
-
 @keyframes defPreviewUp {
   from {
     transform: translateY(100%);
@@ -763,7 +672,6 @@ onUnmounted(() => {
     transform: translateY(0);
   }
 }
-
 @keyframes sheetUp {
   from {
     transform: translateY(100%);
@@ -772,7 +680,6 @@ onUnmounted(() => {
     transform: translateY(0);
   }
 }
-
 @keyframes defSpin {
   from {
     transform: rotate(0deg);
@@ -780,5 +687,38 @@ onUnmounted(() => {
   to {
     transform: rotate(360deg);
   }
+}
+.def-sheet__toolbar-btn:active {
+  opacity: 0.7;
+}
+.def-sheet__toolbar-btn.is-disabled {
+  opacity: 0.4;
+}
+.def-sheet__item:active {
+  background: #f5f7fa;
+}
+.def-sheet__item.is-selected {
+  background: rgba(1, 141, 113, 0.04);
+}
+.def-sheet__checkbox.is-checked {
+  background: #018d71;
+  border-color: #018d71;
+}
+.def-sheet__radio.is-checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 18rpx;
+  height: 18rpx;
+  background: #018d71;
+  border-radius: 50%;
+}
+.def-sheet__radio.is-checked {
+  border-color: #018d71;
+}
+.def-sheet__confirm-btn:active {
+  opacity: 0.7;
 }
 </style>

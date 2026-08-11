@@ -207,7 +207,7 @@ async function submit() {
       await backProcess({
         taskId: taskId.value,
         nodeCode: form.nodeCode,
-        message: form.message,
+        message: form.message.trim(),
         messageType: form.messageType,
         fileId: form.fileId,
       })
@@ -236,7 +236,7 @@ async function submit() {
   try {
     await completeTask({
       taskId: taskId.value,
-      message: form.message,
+      message: form.message.trim(),
       messageType: form.messageType,
       assigneeMap: showNextApprover.value && nestNodeList.value.length ? form.assigneeMap : {},
       variables: {},
@@ -390,12 +390,10 @@ async function submit() {
   display: flex;
   gap: 16rpx;
   flex-wrap: wrap;
-
   :deep(checkbox) {
     transform: scale(0.75);
   }
-
-  &-item {
+  .wf-msg-item {
     display: flex;
     align-items: center;
     gap: 12rpx;
@@ -404,14 +402,8 @@ async function submit() {
     background: transparent;
     font-size: 26rpx;
     color: #333;
-
-    &.is-active {
-      color: #018d71;
-      background: transparent;
-    }
   }
 }
-
 .wf-reject-picker {
   display: flex;
   align-items: center;
@@ -422,15 +414,17 @@ async function submit() {
   border-radius: 12rpx;
   min-height: 88rpx;
   box-sizing: border-box;
-
-  &__text {
+  .wf-reject-picker__text {
     font-size: 28rpx;
     color: #333;
   }
-
-  &__arrow {
+  .wf-reject-picker__arrow {
     font-size: 24rpx;
     color: #999;
   }
+}
+.wf-msg-item.is-active {
+  color: #018d71;
+  background: transparent;
 }
 </style>

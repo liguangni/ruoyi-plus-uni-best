@@ -142,7 +142,7 @@ watch(showPicker, async (val) => {
     <text v-if="label" class="i-carbon-close cat-select__clear" @click.stop="clearAll" />
   </view>
 
-  <view v-if="showPicker" class="cat-popup-overlay" @click="showPicker = false">
+  <view v-if="showPicker" class="cat-popup-overlay" @click.stop="showPicker = false">
     <view class="cat-popup" @click.stop>
       <view class="cat-popup__header">
         <text class="i-carbon-close cat-popup__close" @click="showPicker = false">关闭</text>
@@ -195,36 +195,24 @@ watch(showPicker, async (val) => {
   font-size: 24rpx;
   color: #666;
   max-width: 220rpx;
-
-  &:active {
-    opacity: 0.7;
-  }
-
-  &__icon {
+  .cat-select__icon {
     font-size: 24rpx;
     flex-shrink: 0;
   }
-
-  &__label {
+  .cat-select__label {
     font-size: 24rpx;
     color: #333;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 140rpx;
-
-    &--placeholder {
-      color: #bbb;
-    }
   }
-
-  &__clear {
+  .cat-select__clear {
     font-size: 20rpx;
     color: #999;
     flex-shrink: 0;
   }
 }
-
 .cat-popup-overlay {
   position: fixed;
   inset: 0;
@@ -234,7 +222,6 @@ watch(showPicker, async (val) => {
   flex-direction: column;
   justify-content: flex-end;
 }
-
 .cat-popup {
   width: 100%;
   height: 60vh;
@@ -244,92 +231,58 @@ watch(showPicker, async (val) => {
   flex-direction: column;
   overflow: hidden;
   animation: catSlideUp 0.25s ease;
-
-  &__header {
+  .cat-popup__header {
     display: flex;
     align-items: center;
     padding: 20rpx 24rpx;
     border-bottom: 1rpx solid #f0f0f0;
     flex-shrink: 0;
   }
-
-  &__title {
+  .cat-popup__title {
     flex: 1;
     text-align: center;
     font-size: 32rpx;
     font-weight: 600;
     color: #333;
   }
-
-  &__close {
+  .cat-popup__close {
     font-size: 28rpx;
     color: #999;
     padding: 8rpx 12rpx;
   }
-
-  &__confirm-btn {
+  .cat-popup__confirm-btn {
     padding: 10rpx 32rpx;
     font-size: 26rpx;
     color: #fff;
     background: #018d71;
     border-radius: 8rpx;
     transition: opacity 0.2s;
-
-    &:active {
-      opacity: 0.7;
-    }
   }
-
-  &__body {
+  .cat-popup__body {
     flex: 1;
     min-height: 0;
   }
-
-  &__item {
+  .cat-popup__item {
     display: flex;
     align-items: center;
     height: 88rpx;
     padding-right: 24rpx;
     border-bottom: 1rpx solid #f5f5f5;
-
-    &:active {
-      background: #f5f7fa;
-    }
-
-    &.is-active {
-      background: rgba(1, 141, 113, 0.04);
-
-      .cat-popup__item-label {
-        color: #018d71;
-        font-weight: 500;
-      }
-    }
   }
-
-  &__expand {
+  .cat-popup__expand {
     width: 64rpx;
     height: 88rpx;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-
-    &--placeholder {
-      visibility: hidden;
-    }
   }
-
-  &__expand-icon {
+  .cat-popup__expand-icon {
     font-size: 28rpx;
     color: #999;
     transition: transform 0.2s;
-
-    &.is-expanded {
-      transform: rotate(180deg);
-    }
   }
-
-  &__item-label {
+  .cat-popup__item-label {
     flex: 1;
     font-size: 28rpx;
     color: #333;
@@ -337,8 +290,7 @@ watch(showPicker, async (val) => {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
-  &__empty {
+  .cat-popup__empty {
     display: flex;
     justify-content: center;
     padding: 80rpx 0;
@@ -346,7 +298,6 @@ watch(showPicker, async (val) => {
     font-size: 26rpx;
   }
 }
-
 @keyframes catSlideUp {
   from {
     transform: translateY(100%);
@@ -354,5 +305,30 @@ watch(showPicker, async (val) => {
   to {
     transform: translateY(0);
   }
+}
+.cat-select:active {
+  opacity: 0.7;
+}
+.cat-select__label--placeholder {
+  color: #bbb;
+}
+.cat-popup__confirm-btn:active {
+  opacity: 0.7;
+}
+.cat-popup__item:active {
+  background: #f5f7fa;
+}
+.cat-popup__item.is-active {
+  background: rgba(1, 141, 113, 0.04);
+  .cat-popup__item-label {
+    color: #018d71;
+    font-weight: 500;
+  }
+}
+.cat-popup__expand--placeholder {
+  visibility: hidden;
+}
+.cat-popup__expand-icon.is-expanded {
+  transform: rotate(180deg);
 }
 </style>

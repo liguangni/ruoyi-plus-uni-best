@@ -74,7 +74,11 @@ async function load() {
     }))
 
     // 反转：审批记录按时间正序展示（最早的节点在顶部，最新的在底部）
-    history.value = [...list].reverse()
+    // 去除审批意见前后空格，避免历史记录展示出现多余空白
+    history.value = [...list].reverse().map(item => ({
+      ...item,
+      message: item.message?.trim(),
+    }))
   }
   catch (error) {
     console.error('加载审批记录失败:', error)
@@ -263,62 +267,85 @@ function openFlowChart() {
 .wf-history {
   padding: 16rpx 8rpx;
 
-  &__header {
+  .wf-history__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0rpx 0rpx 50rpx;
-  }
 
-  &__title {
-    display: flex;
-    align-items: center;
-    gap: 12rpx;
-  }
+    .wf-history__title {
+      display: flex;
+      align-items: center;
+      gap: 12rpx;
 
-  &__bar {
-    width: 6rpx;
-    height: 32rpx;
-    border-radius: 3rpx;
-    background: #4a90e2;
-  }
+      .wf-history__bar {
+        width: 6rpx;
+        height: 32rpx;
+        border-radius: 3rpx;
+        background: #4a90e2;
+      }
 
-  &__text {
-    font-size: 34rpx;
-    font-weight: 600;
-    color: #1a1a1a;
-  }
+      .wf-history__text {
+        font-size: 34rpx;
+        font-weight: 600;
+        color: #1a1a1a;
+      }
+    }
 
-  &__link {
-    font-size: 26rpx;
-    color: #4a90e2;
-
-    &:active {
-      opacity: 0.6;
+    .wf-history__link {
+      font-size: 26rpx;
+      color: #4a90e2;
     }
   }
+}
+
+// 同体状态，扁平避免后代误匹配
+.wf-history__link:active {
+  opacity: 0.6;
 }
 
 .approve-title {
   display: flex;
   align-items: center;
   gap: 16rpx;
-}
 
-.approve-name {
-  font-size: 30rpx;
-  font-weight: 600;
-  color: #1a1a1a;
+  .approve-name {
+    font-size: 30rpx;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
 }
 
 .approve-body {
   margin-top: 12rpx;
-}
 
-.approve-time {
-  font-size: 24rpx;
-  color: #999;
-  line-height: 1.6;
+  .approve-time {
+    font-size: 24rpx;
+    color: #999;
+    line-height: 1.6;
+
+    .approve-time__val {
+      color: #999;
+      flex-shrink: 0;
+      margin-left: 12rpx;
+    }
+
+    .approve-approver {
+      display: flex;
+      align-items: center;
+      gap: 8rpx;
+      min-width: 0;
+
+      .approve-approver__text {
+        color: #999;
+      }
+
+      .approve-approver__more {
+        color: #4a90e2;
+        flex-shrink: 0;
+      }
+    }
+  }
 }
 
 .approve-duration {
@@ -326,30 +353,9 @@ function openFlowChart() {
   color: #bbb;
 }
 
-.approve-approver {
-  display: flex;
-  align-items: center;
-  gap: 8rpx;
-  min-width: 0;
-
-  &__text {
-    color: #999;
-  }
-
-  &__more {
-    color: #4a90e2;
-    flex-shrink: 0;
-
-    &:active {
-      opacity: 0.6;
-    }
-  }
-}
-
-.approve-time__val {
-  color: #999;
-  flex-shrink: 0;
-  margin-left: 12rpx;
+// 同体状态，扁平
+.approve-approver__more:active {
+  opacity: 0.6;
 }
 
 .approve-card {
@@ -361,11 +367,12 @@ function openFlowChart() {
   border-radius: 10rpx;
   line-height: 1.6;
 
-  &__label {
+  .approve-card__label {
     color: #999;
   }
 }
 
+// 同体修饰符，扁平
 .approve-msg {
   word-break: break-all;
 }
@@ -375,98 +382,100 @@ function openFlowChart() {
   align-items: center;
   justify-content: space-between;
 
-  &__info {
+  .approve-attach__info {
     color: #555;
   }
 
-  &__btn {
+  .approve-attach__btn {
     color: #4a90e2;
     padding: 4rpx;
     flex-shrink: 0;
     margin-left: 12rpx;
-
-    &:active {
-      opacity: 0.6;
-    }
   }
+}
+
+// 同体状态，扁平
+.approve-attach__btn:active {
+  opacity: 0.6;
 }
 
 .wf-attach-body {
   max-height: 62vh;
   box-sizing: border-box;
+
+  .attach-row {
+    display: flex;
+    align-items: center;
+    gap: 16rpx;
+    padding: 24rpx 20rpx;
+    border-radius: 12rpx;
+
+    .attach-row__icon {
+      font-size: 40rpx;
+      color: #4a90e2;
+      flex-shrink: 0;
+    }
+
+    .attach-row__main {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4rpx;
+
+      .attach-row__name {
+        font-size: 28rpx;
+        color: #1a1a1a;
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .attach-row__sub {
+        font-size: 22rpx;
+        color: #bbb;
+      }
+    }
+
+    .attach-row__dl {
+      flex-shrink: 0;
+      margin-left: 12rpx;
+      padding: 12rpx 16rpx 12rpx 12rpx;
+      font-size: 36rpx;
+      color: #4a90e2;
+    }
+  }
+}
+
+// 同体/相邻关系，扁平
+.attach-row + .attach-row {
+  border-top: 1rpx solid #f2f3f5;
+}
+
+.attach-row:active {
+  background: #f7f8fa;
+}
+
+.attach-row__dl:active {
+  opacity: 0.6;
 }
 
 .wf-approver-body {
   padding: 0;
   max-height: 62vh;
   box-sizing: border-box;
-}
 
-.wf-approver-item {
-  font-size: 28rpx;
-  color: #333;
-  padding: 24rpx;
-  text-align: center;
-
-  & + & {
-    border-top: 1rpx solid #f2f3f5;
-  }
-}
-
-.attach-row {
-  display: flex;
-  align-items: center;
-  gap: 16rpx;
-  padding: 24rpx 20rpx;
-  border-radius: 12rpx;
-
-  & + & {
-    border-top: 1rpx solid #f2f3f5;
-  }
-
-  &:active {
-    background: #f7f8fa;
-  }
-
-  &__icon {
-    font-size: 40rpx;
-    color: #4a90e2;
-    flex-shrink: 0;
-  }
-
-  &__main {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 4rpx;
-  }
-
-  &__name {
+  .wf-approver-item {
     font-size: 28rpx;
-    color: #1a1a1a;
-    font-weight: 500;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    color: #333;
+    padding: 24rpx;
+    text-align: center;
   }
+}
 
-  &__sub {
-    font-size: 22rpx;
-    color: #bbb;
-  }
-
-  &__dl {
-    flex-shrink: 0;
-    margin-left: 12rpx;
-    padding: 12rpx 16rpx 12rpx 12rpx;
-    font-size: 36rpx;
-    color: #4a90e2;
-
-    &:active {
-      opacity: 0.6;
-    }
-  }
+.wf-approver-item + .wf-approver-item {
+  border-top: 1rpx solid #f2f3f5;
 }
 
 .detail-empty {

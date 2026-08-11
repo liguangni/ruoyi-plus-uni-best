@@ -240,14 +240,12 @@ function preview(item: AttachmentFile) {
 <style lang="scss" scoped>
 .wf-attach {
   margin-bottom: 16rpx;
-
-  &__actions {
+  .wf-attach__actions {
     display: flex;
     flex-wrap: wrap;
     gap: 16rpx;
   }
-
-  &__btn {
+  .wf-attach__btn {
     display: inline-flex;
     align-items: center;
     gap: 8rpx;
@@ -257,17 +255,11 @@ function preview(item: AttachmentFile) {
     color: #018d71;
     font-size: 26rpx;
     background: rgba(1, 141, 113, 0.04);
-
-    &:active {
-      opacity: 0.7;
-    }
   }
-
-  &__btn-icon {
+  .wf-attach__btn-icon {
     font-size: 30rpx;
   }
-
-  &__item {
+  .wf-attach__item {
     display: flex;
     align-items: center;
     gap: 16rpx;
@@ -276,45 +268,42 @@ function preview(item: AttachmentFile) {
     background: #f8f9fa;
     margin-top: 16rpx;
   }
-
-  &__icon {
+  .wf-attach__icon {
     font-size: 36rpx;
     color: #018d71;
     flex-shrink: 0;
   }
-
-  &__info {
+  .wf-attach__info {
     flex: 1;
     min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 4rpx;
   }
-
-  &__name {
+  .wf-attach__name {
     font-size: 26rpx;
     color: #333;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
-  &__status {
+  .wf-attach__status {
     font-size: 22rpx;
     color: #999;
   }
-
-  &__del {
+  .wf-attach__del {
     font-size: 32rpx;
     color: #e05252;
     padding: 8rpx;
     flex-shrink: 0;
   }
-
-  &__tip {
+  .wf-attach__tip {
     font-size: 22rpx;
     color: #e05252;
     margin-top: 16rpx;
   }
+}
+.wf-attach__btn:active {
+  opacity: 0.7;
 }
 </style>

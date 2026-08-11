@@ -75,17 +75,14 @@ const inactiveColor = '#9ca3af'
   border-top: 1px solid #eee;
   box-shadow: 0 -4rpx 24rpx rgba(0, 0, 0, 0.1);
 }
-
 .wf-tabbar__content {
   display: flex;
   align-items: center;
   height: 100rpx;
 }
-
 .wf-tabbar__safe {
   height: env(safe-area-inset-bottom);
 }
-
 .wf-tabbar__item {
   flex: 1;
   display: flex;
@@ -94,20 +91,17 @@ const inactiveColor = '#9ca3af'
   justify-content: center;
   position: relative;
 }
-
 .wf-tabbar__icon {
   display: flex;
   align-items: center;
   justify-content: center;
   transition: color 0.2s ease;
 }
-
 .wf-tabbar__text {
   margin-top: 2px;
   font-size: 24rpx;
   transition: color 0.2s ease;
 }
-
 .wf-tabbar__bulge-btn {
   margin-top: -44rpx;
   width: 96rpx;
@@ -121,10 +115,9 @@ const inactiveColor = '#9ca3af'
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
-
-  &:active {
-    transform: scale(0.92);
-    box-shadow: 0 4rpx 12rpx rgba(1, 141, 113, 0.3);
-  }
+}
+.wf-tabbar__bulge-btn:active {
+  transform: scale(0.92);
+  box-shadow: 0 4rpx 12rpx rgba(1, 141, 113, 0.3);
 }
 </style>

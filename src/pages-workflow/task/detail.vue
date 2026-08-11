@@ -154,7 +154,7 @@ const buttonPermissions = computed(() => {
         <view class="detail-header__info">
           <view v-if="taskInfo?.businessId" class="detail-header__info-item">
             <text class="detail-header__info-label">编号：</text>
-            <text class="detail-header__info-value">{{ taskInfo.businessId }}</text>
+            <text class="detail-header__info-value">{{ taskInfo.id }}</text>
           </view>
           <view class="detail-header__info-item">
             <text class="detail-header__info-label">申请人：</text>
@@ -208,73 +208,73 @@ const buttonPermissions = computed(() => {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-}
 
-.detail-loading {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  .detail-loading {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .detail-header {
   background: #fff;
   padding: 32rpx;
 
-  &__top {
+  .detail-header__top {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 16rpx;
     margin-bottom: 24rpx;
+
+    .detail-header__title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8rpx;
+      flex: 1;
+      min-width: 0;
+
+      .detail-header__title {
+        font-size: 34rpx;
+        font-weight: 600;
+        color: #1a1a1a;
+        line-height: 1.4;
+      }
+    }
   }
 
-  &__title-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 8rpx;
-    flex: 1;
-    min-width: 0;
-  }
-
-  &__title {
-    font-size: 34rpx;
-    font-weight: 600;
-    color: #1a1a1a;
-    line-height: 1.4;
-  }
-
-  &__code {
+  .detail-header__code {
     font-size: 24rpx;
     color: #999;
   }
 
-  &__info {
+  .detail-header__info {
     display: flex;
     flex-direction: column;
     gap: 16rpx;
     padding-top: 24rpx;
     border-top: 1rpx solid #f5f5f5;
-  }
 
-  &__info-item {
-    display: flex;
-    align-items: center;
-    gap: 8rpx;
-    min-width: 0;
-    font-size: 24rpx;
-  }
+    .detail-header__info-item {
+      display: flex;
+      align-items: center;
+      gap: 8rpx;
+      min-width: 0;
+      font-size: 24rpx;
 
-  &__info-label {
-    color: #999;
-    flex-shrink: 0;
-  }
+      .detail-header__info-label {
+        color: #999;
+        flex-shrink: 0;
+      }
 
-  &__info-value {
-    color: #333;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+      .detail-header__info-value {
+        color: #333;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
   }
 }
 
@@ -283,7 +283,7 @@ const buttonPermissions = computed(() => {
   background: #fff;
   border-bottom: 1rpx solid #f5f5f5;
 
-  &__item {
+  .detail-tabs__item {
     flex: 1;
     padding: 28rpx 0;
     text-align: center;
@@ -291,23 +291,6 @@ const buttonPermissions = computed(() => {
     color: #666;
     position: relative;
     transition: color 0.2s;
-
-    &.is-active {
-      color: #018d71;
-      font-weight: 600;
-
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 48rpx;
-        height: 6rpx;
-        background: #018d71;
-        border-radius: 3rpx;
-      }
-    }
   }
 }
 
@@ -316,23 +299,41 @@ const buttonPermissions = computed(() => {
   min-height: 0;
   //padding: 24rpx;
   box-sizing: border-box;
-}
 
-.detail-panel {
-  min-height: 100%;
-  box-sizing: border-box;
-  background: #fff;
-  border-radius: 16rpx;
-  padding: 28rpx;
-}
+  .detail-panel {
+    min-height: 100%;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 16rpx;
+    padding: 28rpx;
 
-.task-form-panel__form {
-  padding: 0 28rpx 32rpx;
+    .task-form-panel__form {
+      padding: 0 28rpx 32rpx;
+    }
+  }
 }
 
 .detail-footer {
   flex-shrink: 0;
   background: #fff;
   box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+// 同体修饰符 + 伪元素，保持扁平避免后代误匹配（否则会被 .detail-tabs .detail-tabs__item 的特异性盖过）
+.detail-tabs__item.is-active {
+  color: #018d71;
+  font-weight: 600;
+}
+
+.detail-tabs__item.is-active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48rpx;
+  height: 6rpx;
+  background: #018d71;
+  border-radius: 3rpx;
 }
 </style>

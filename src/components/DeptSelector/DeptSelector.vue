@@ -242,7 +242,7 @@ function toggleSelectAll() {
 </script>
 
 <template>
-  <view v-if="visible" class="dept-select-overlay" @click="onClose">
+  <view v-if="visible" class="dept-select-overlay" @click.stop="onClose">
     <view class="dept-select" @click.stop>
       <!-- 顶部 -->
       <view class="dept-select__header">

@@ -132,14 +132,14 @@ function openApplicant() {
   background: #fff;
   border-bottom: 1rpx solid #f0f0f0;
 
-  &__tabs {
+  .search-bar__tabs {
     flex: 1;
     min-width: 0;
     display: flex;
     align-items: stretch;
   }
 
-  &__tab {
+  .search-bar__tab {
     flex: 1;
     min-width: 0;
     display: flex;
@@ -150,44 +150,46 @@ function openApplicant() {
     font-size: 28rpx;
     color: #333;
 
-    & + & {
-      border-left: 1rpx solid #f0f0f0;
-    }
-
-    &:not(.is-disabled):active {
-      background: #f5f7fa;
-    }
-
-    &.is-active {
-      color: #018d71;
-    }
-
-    &.is-disabled {
-      color: #bbb;
-      background: none;
-      pointer-events: none;
-
-      .search-bar__tab-arrow {
-        color: #bbb;
-      }
+    .search-bar__tab-text {
+      max-width: 280rpx;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 
-  &__tab-text {
-    max-width: 280rpx;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  &__tab-arrow {
+  // 箭头基础态置于 search-bar 下（与原始特异性一致），禁用态覆盖见下方扁平规则
+  .search-bar__tab-arrow {
     font-size: 22rpx;
     color: #999;
     transition: transform 0.2s;
-
-    &.is-up {
-      transform: rotate(180deg);
-    }
   }
+}
+
+// 同体/相邻关系，扁平避免后代误匹配（嵌套过深会使基类高于修饰符而失效）
+.search-bar__tab + .search-bar__tab {
+  border-left: 1rpx solid #f0f0f0;
+}
+
+.search-bar__tab:not(.is-disabled):active {
+  background: #f5f7fa;
+}
+
+.search-bar__tab.is-active {
+  color: #018d71;
+}
+
+.search-bar__tab.is-disabled {
+  color: #bbb;
+  background: none;
+  pointer-events: none;
+
+  .search-bar__tab-arrow {
+    color: #bbb;
+  }
+}
+
+.search-bar__tab-arrow.is-up {
+  transform: rotate(180deg);
 }
 </style>

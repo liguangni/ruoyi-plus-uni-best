@@ -121,10 +121,6 @@ function handleRowClick(row: FlowTaskItemInfo) {
               <text class="wf-card__row-label">当前任务</text>
               <text class="wf-card__row-value">{{ row.nodeName || '-' }}</text>
             </view>
-            <view v-if="tabType === 'finish'" class="wf-card__row">
-              <text class="wf-card__row-label">任务状态</text>
-              <DictTag :options="wf_business_status" :value="row.flowStatus" />
-            </view>
           </view>
         </view>
       </z-paging>
@@ -192,7 +188,7 @@ function handleRowClick(row: FlowTaskItemInfo) {
 .wf-card {
   background: #fff;
   border-radius: 16rpx;
-  padding: 28rpx 32rpx;
+  padding: 0;
   margin: 20rpx 24rpx;
   box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
 
@@ -205,7 +201,8 @@ function handleRowClick(row: FlowTaskItemInfo) {
     align-items: center;
     justify-content: space-between;
     gap: 16rpx;
-    margin-bottom: 28rpx;
+    padding: 28rpx 32rpx 24rpx;
+    border-bottom: 1rpx solid #e5e5e5;
   }
 
   &__title {
@@ -222,16 +219,13 @@ function handleRowClick(row: FlowTaskItemInfo) {
   &__rows {
     display: flex;
     flex-direction: column;
+    padding: 24rpx 32rpx 28rpx;
   }
 
   &__row {
     display: flex;
     align-items: center;
     padding: 14rpx 0;
-
-    & + & {
-      border-top: 1rpx solid #f0f0f0;
-    }
   }
 
   &__row-label {

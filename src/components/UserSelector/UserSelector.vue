@@ -211,7 +211,7 @@ watch(visible, (val) => {
 </script>
 
 <template>
-  <view v-if="visible" class="user-select-overlay" @click="onClose">
+  <view v-if="visible" class="user-select-overlay" @click.stop="onClose">
     <view class="user-select" @click.stop>
       <!-- 顶部 -->
       <view class="user-select__header">

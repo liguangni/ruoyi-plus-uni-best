@@ -66,7 +66,7 @@ async function submit() {
   try {
     const bo: Record<string, any> = {
       taskId: taskId.value,
-      message: message.value,
+      message: message.value.trim(),
       messageType: ['1'],
     }
     if (props.mode === 'single')

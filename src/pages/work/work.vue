@@ -14,7 +14,7 @@ const userStore = useUserStore()
 const quickEntrances = getQuickEntrances()
 const menuGroups = getMenuGroups()
 const expandedGroups = reactive<Record<string, boolean>>({})
-const maxMenuItems = 4
+const maxMenuItems = 8
 
 menuGroups.forEach((group) => {
   expandedGroups[group.key] = false

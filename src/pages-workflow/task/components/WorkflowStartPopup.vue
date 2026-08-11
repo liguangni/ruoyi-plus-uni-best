@@ -67,7 +67,6 @@ function onSelect(key: string) {
   grid-template-columns: repeat(4, 1fr);
   border-top: 1rpx solid #f0f0f0;
 }
-
 .start-grid__item {
   display: flex;
   flex-direction: column;
@@ -77,16 +76,7 @@ function onSelect(key: string) {
   border-bottom: 1rpx solid #f0f0f0;
   border-right: 1rpx solid #f0f0f0;
   transition: background 0.2s;
-
-  &:nth-child(4n) {
-    border-right: none;
-  }
-
-  &:active {
-    background: #f5f5f5;
-  }
 }
-
 .start-grid__icon {
   width: 96rpx;
   height: 96rpx;
@@ -100,11 +90,16 @@ function onSelect(key: string) {
   margin-bottom: 12rpx;
   transition: transform 0.2s ease;
 }
-
 .start-grid__text {
   font-size: 24rpx;
   color: #333;
   text-align: center;
   line-height: 1.4;
+}
+.start-grid__item:nth-child(4n) {
+  border-right: none;
+}
+.start-grid__item:active {
+  background: #f5f5f5;
 }
 </style>

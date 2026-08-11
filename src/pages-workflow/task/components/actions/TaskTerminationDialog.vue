@@ -46,7 +46,7 @@ async function submit() {
     return
   submitting.value = true
   try {
-    await terminationTask({ taskId: taskId.value, comment: comment.value })
+    await terminationTask({ taskId: taskId.value, comment: comment.value.trim() })
     close()
     uni.showToast({ title: '操作成功', icon: 'success' })
     emit('success')

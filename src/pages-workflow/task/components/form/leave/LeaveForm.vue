@@ -338,86 +338,7 @@ defineExpose({ onSubmit, onSaveDraft })
 
 <style lang="scss" scoped>
 .leave-form {
-  &__field {
-    display: flex;
-    align-items: flex-start;
-    padding: 18rpx 0;
-  }
-
-  &__loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 80rpx 0;
-  }
-
-  &__value {
-    flex: 1;
-    min-width: 0;
-    margin-left: 16rpx;
-    font-size: 28rpx;
-    color: #333;
-    line-height: 64rpx;
-    word-break: break-all;
-  }
-
-  &__remark {
-    font-size: 28rpx;
-    line-height: 1.6;
-  }
-
-  &__label {
-    flex-shrink: 0;
-    width: 160rpx;
-    font-size: 26rpx;
-    color: #999;
-    line-height: 64rpx;
-  }
-
-  &__control {
-    flex: 1;
-    min-width: 0;
-    // margin-left: 16rpx;
-  }
-
-  &__picker {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 64rpx;
-    padding: 10rpx 16rpx;
-    background: #f8f9fa;
-    border-radius: 12rpx;
-    font-size: 28rpx;
-    box-sizing: border-box;
-
-    &--disabled {
-      // background: #f0f1f3;
-    }
-  }
-
-  &__arrow {
-    font-size: 28rpx;
-    color: #bbb;
-    flex-shrink: 0;
-  }
-
-  &__textarea {
-    flex: 1;
-    min-width: 0;
-    min-height: 130rpx;
-    padding: 16rpx 16rpx;
-    background: #f8f9fa;
-    border-radius: 12rpx;
-    font-size: 28rpx;
-    color: #333;
-    box-sizing: border-box;
-  }
-
-  &__placeholder {
-    color: #bbb;
-  }
-
+  // 表单内的占位 / 已填状态文本
   .is-placeholder {
     color: #bbb;
   }
@@ -425,5 +346,88 @@ defineExpose({ onSubmit, onSaveDraft })
   .is-filled {
     color: #333;
   }
+
+  // 字段行：标签 + 控件 / 值
+  .leave-form__field {
+    display: flex;
+    align-items: flex-start;
+    padding: 18rpx 0;
+
+    .leave-form__label {
+      flex-shrink: 0;
+      width: 160rpx;
+      font-size: 26rpx;
+      color: #999;
+      line-height: 64rpx;
+    }
+
+    .leave-form__control {
+      flex: 1;
+      min-width: 0;
+      // margin-left: 16rpx;
+    }
+
+    .leave-form__value {
+      flex: 1;
+      min-width: 0;
+      margin-left: 16rpx;
+      font-size: 28rpx;
+      color: #333;
+      line-height: 64rpx;
+      word-break: break-all;
+    }
+
+    .leave-form__textarea {
+      flex: 1;
+      min-width: 0;
+      min-height: 130rpx;
+      padding: 16rpx 16rpx;
+      background: #f8f9fa;
+      border-radius: 12rpx;
+      font-size: 28rpx;
+      color: #333;
+      box-sizing: border-box;
+    }
+  }
+
+  .leave-form__loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80rpx 0;
+  }
+}
+
+// 选择器控件（箭头为其内部元素，可嵌套；控件本体与修饰符同体，保持扁平）
+.leave-form__picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64rpx;
+  padding: 10rpx 16rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+
+  .leave-form__arrow {
+    font-size: 28rpx;
+    color: #bbb;
+    flex-shrink: 0;
+  }
+}
+
+// 修饰符 / 原生占位符类：与元素同体，保持扁平避免后代误匹配
+.leave-form__picker--disabled {
+  // background: #f0f1f3;
+}
+
+.leave-form__placeholder {
+  color: #bbb;
+}
+
+.leave-form__remark {
+  font-size: 28rpx;
+  line-height: 1.6;
 }
 </style>

@@ -293,7 +293,7 @@ async function deleteInstance() {
   gap: 24rpx;
   padding: 8rpx 0;
 
-  &__item {
+  .wf-more-actions__item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -302,26 +302,27 @@ async function deleteInstance() {
     border-radius: 16rpx;
     background: #f8f9fa;
 
-    &:active {
-      background: #eef0f3;
+    .wf-more-actions__icon {
+      width: 64rpx;
+      height: 64rpx;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32rpx;
+    }
+
+    .wf-more-actions__label {
+      font-size: 24rpx;
+      color: #333;
+      font-weight: 500;
     }
   }
+}
 
-  &__icon {
-    width: 64rpx;
-    height: 64rpx;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32rpx;
-  }
-
-  &__label {
-    font-size: 24rpx;
-    color: #333;
-    font-weight: 500;
-  }
+// 同体状态，扁平避免后代误匹配
+.wf-more-actions__item:active {
+  background: #eef0f3;
 }
 
 .wf-btn {
@@ -336,64 +337,65 @@ async function deleteInstance() {
   font-weight: 500;
   transition: opacity 0.2s;
 
-  &:active {
-    opacity: 0.7;
-  }
-
-  &--block {
-    flex: 1;
-  }
-
-  &--grow {
-    flex: 1;
-  }
-
-  &--right {
-    margin-left: auto;
-    flex-shrink: 0;
-  }
-
-  &__icon {
+  .wf-btn__icon {
     font-size: 32rpx;
   }
 
-  &.is-disabled {
-    opacity: 0.5;
-    pointer-events: none;
-  }
-
-  &__label {
+  .wf-btn__label {
     font-size: 28rpx;
   }
+}
 
-  &--success {
-    border-color: #52c41a;
-    color: #52c41a;
-    background: rgba(82, 196, 26, 0.06);
-  }
+// 同体状态/修饰符，扁平避免后代误匹配
+.wf-btn:active {
+  opacity: 0.7;
+}
 
-  &--warning {
-    border-color: #ff9f43;
-    color: #ff9f43;
-    background: rgba(255, 159, 67, 0.06);
-  }
+.wf-btn.is-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
 
-  &--danger {
-    border-color: #e05252;
-    color: #e05252;
-    background: rgba(224, 82, 82, 0.06);
-  }
+.wf-btn--block {
+  flex: 1;
+}
 
-  &--primary {
-    border-color: #4a90e2;
-    color: #4a90e2;
-    background: rgba(74, 144, 226, 0.06);
-  }
+.wf-btn--grow {
+  flex: 1;
+}
 
-  &--more {
-    border-color: #d9d9d9;
-    color: #666;
-    background: #fafafa;
-  }
+.wf-btn--right {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.wf-btn--success {
+  border-color: #52c41a;
+  color: #52c41a;
+  background: rgba(82, 196, 26, 0.06);
+}
+
+.wf-btn--warning {
+  border-color: #ff9f43;
+  color: #ff9f43;
+  background: rgba(255, 159, 67, 0.06);
+}
+
+.wf-btn--danger {
+  border-color: #e05252;
+  color: #e05252;
+  background: rgba(224, 82, 82, 0.06);
+}
+
+.wf-btn--primary {
+  border-color: #4a90e2;
+  color: #4a90e2;
+  background: rgba(74, 144, 226, 0.06);
+}
+
+.wf-btn--more {
+  border-color: #d9d9d9;
+  color: #666;
+  background: #fafafa;
 }
 </style>
