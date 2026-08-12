@@ -142,10 +142,19 @@ async function handleFiles(files: { path: string, name: string, size: number }[]
   if (!files.length)
     return
   uni.showLoading({ title: '上传中...', mask: true })
+  // 循环内可能连续多个 toast；loading 只需关闭一次，否则多次 hideLoading 也会触发配对警告
+  let loadingClosed = false
+  const closeLoading = () => {
+    if (!loadingClosed) {
+      loadingClosed = true
+      uni.hideLoading()
+    }
+  }
   try {
     for (const f of files) {
       const err = validate(f.name, f.size)
       if (err) {
+        closeLoading()
         uni.showToast({ title: err, icon: 'none' })
         continue
       }
@@ -165,13 +174,16 @@ async function handleFiles(files: { path: string, name: string, size: number }[]
       }
       catch {
         fileList.value = fileList.value.filter(x => x.uid !== uid)
+        // uploadOss 失败由 request 拦截器统一弹错误 toast（已顶掉 loading）；
+        // 仅标记 loading 已关闭，不在此 uni.hideLoading，否则触发"showLoading 与 hideLoading 必须配对"警告
+        loadingClosed = true
         uni.showToast({ title: `上传失败：${f.name}`, icon: 'none' })
       }
     }
     updateModel()
   }
   finally {
-    uni.hideLoading()
+    closeLoading()
   }
 }
 

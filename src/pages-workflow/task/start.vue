@@ -76,6 +76,7 @@ async function handleFormAction(action: SubmitAction, payload: FormSubmitPayload
       }
       uni.showLoading({ title: '提交中...', mask: true })
       await cfg.submitApi(payload.form)
+      uni.hideLoading()
       uni.showToast({ title: '发起成功', icon: 'success' })
       jumpToApprovalList('document')
     }
@@ -99,6 +100,7 @@ async function handleFormAction(action: SubmitAction, payload: FormSubmitPayload
         variables: payload.variables,
         bizExt,
       })
+      uni.hideLoading()
       if (action === 'submit') {
         startTaskId.value = startRes.taskId
         showStartDialog.value = true
@@ -109,8 +111,9 @@ async function handleFormAction(action: SubmitAction, payload: FormSubmitPayload
       }
     }
   }
-  finally {
-    uni.hideLoading()
+  catch (error) {
+    // 失败：request 拦截器已弹错误 toast 顶掉 loading，此处不再 hideLoading，否则多余关闭触发"必须配对"警告
+    throw error
   }
 }
 

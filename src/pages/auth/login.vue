@@ -63,15 +63,20 @@ async function pwdLogin() {
       title: '登录中...',
     })
     await tokenStore.login(loginForm.value)
+    // 先关闭 loading，再让 loginSuccess 弹成功 toast
+    // （uni.showToast 会顶掉正在显示的 showLoading，若此处不先关，
+    // 紧接着多余的 hideLoading 会触发"必须配对"警告）
+    uni.hideLoading()
     loginSuccess()
   }
   catch (error) {
+    // 登录失败时 HTTP 拦截器（request.ts handleResponse）会弹错误 toast，
+    // 该 toast 会顶掉上面的 showLoading，loading 已被关闭；此处不再调用
+    // hideLoading，否则会变成"多余的关闭"触发"showLoading 与 hideLoading
+    // 必须配对使用"警告。错误提示由拦截器统一负责。
     if (captchaEnabled.value) {
       getCode()
     }
-  }
-  finally {
-    uni.hideLoading()
   }
 }
 
