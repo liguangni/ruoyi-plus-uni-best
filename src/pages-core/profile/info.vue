@@ -78,7 +78,7 @@
 import { computed, ref } from 'vue'
 import type { UserProfile, UserVO } from '@/api/system/user/types'
 import { getUserProfile } from '@/api/system/user'
-import DEFAULT_AVATAR from '@/static/images/avatar.png'
+import DEFAULT_AVATAR from '@/static/images/default-avatar.png'
 import { useUserStore } from '@/store/user'
 import { useDict } from '@/composables/useDict'
 
