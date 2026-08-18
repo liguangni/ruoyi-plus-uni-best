@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import LeaveForm from '@/pages-workflow/task/components/form/leave/LeaveForm.vue'
+import EmptyState from '@/components/EmptyState/EmptyState.vue'
 import { resolveFlowTypeByFormPath } from '@/pages-workflow/task/utils/start-registry'
 
 const props = withDefaults(
@@ -60,19 +61,8 @@ defineExpose({
     @save-draft="(p) => emit('saveDraft', p)"
   />
   <!-- 未匹配到流程类型（如后端 formPath 无对应配置）时的空态 -->
-  <view v-else class="ffr-empty">
-    <text class="i-carbon-document-blank mb-4 text-6xl text-gray-300" />
-    <text>暂无表单数据</text>
-  </view>
+  <EmptyState v-else icon="no-box" text="暂无表单数据" :size="200" />
 </template>
 
 <style lang="scss" scoped>
-.ffr-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 80rpx 0;
-  color: #bbb;
-  font-size: 28rpx;
-}
 </style>

@@ -4,6 +4,7 @@ import { useDict } from '@/composables/useDict'
 import { navigateToDetail } from '../utils/workflow'
 import type { ApprovalTabbarType, FlowTaskItemInfo, WfListQuery } from '../utils/workflow'
 import WorkflowSearchBar from './WorkflowSearchBar.vue'
+import EmptyState from '@/components/EmptyState/EmptyState.vue'
 
 const props = defineProps<{
   tabType: ApprovalTabbarType
@@ -78,10 +79,7 @@ function handleRowClick(row: FlowTaskItemInfo) {
         @query="onQuery"
       >
         <template #empty>
-          <view class="wf-list__empty">
-            <view class="i-carbon-document-blank wf-list__empty-icon" />
-            <text>暂无数据</text>
-          </view>
+          <EmptyState icon="no-list" text="暂无数据" />
         </template>
 
         <view
@@ -168,20 +166,6 @@ function handleRowClick(row: FlowTaskItemInfo) {
     border-top-color: #018d71;
     border-radius: 50%;
     animation: spin 0.6s linear infinite;
-  }
-
-  &__empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16rpx;
-    padding: 120rpx 0;
-    color: #bbb;
-    font-size: 26rpx;
-
-    &-icon {
-      font-size: 96rpx;
-    }
   }
 }
 

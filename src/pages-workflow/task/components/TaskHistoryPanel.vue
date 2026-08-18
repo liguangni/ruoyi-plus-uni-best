@@ -7,6 +7,7 @@ import { getEnvBaseUrl } from '@/utils'
 import { useTokenStore } from '@/store'
 import WorkflowSteps from './WorkflowSteps.vue'
 import WorkflowPopup from '@/pages-workflow/task/components/popup/WorkflowPopup.vue'
+import EmptyState from '@/components/EmptyState/EmptyState.vue'
 import { flowHisTaskList } from '@/api/workflow/instance'
 
 interface HistoryItem {
@@ -257,10 +258,7 @@ function openFlowChart() {
       </scroll-view>
     </WorkflowPopup>
   </view>
-  <view v-else class="detail-empty">
-    <text class="i-carbon-time mb-4 text-6xl text-gray-300" />
-    <text>暂无审批记录</text>
-  </view>
+  <EmptyState v-else icon="no-list" text="暂无审批记录" :size="200" />
 </template>
 
 <style lang="scss" scoped>
@@ -476,14 +474,5 @@ function openFlowChart() {
 
 .wf-approver-item + .wf-approver-item {
   border-top: 1rpx solid #f2f3f5;
-}
-
-.detail-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 80rpx 0;
-  color: #bbb;
-  font-size: 28rpx;
 }
 </style>
