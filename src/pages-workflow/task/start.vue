@@ -70,12 +70,12 @@ async function handleFormAction(action: SubmitAction, payload: FormSubmitPayload
 
   // 设置后端发起和不等于草稿状态 直接走流程发起
   if (action === 'submit' && config.value.mode === 'backend') {
-    if (!config.value.submitApi) {
+    if (!config.value.submitAndFlowStartApi) {
       uni.showToast({ title: '未配置发起接口', icon: 'none' })
       return
     }
     uni.showLoading({ title: '提交中...', mask: true })
-    await config.value.submitApi(payload.form)
+    await config.value.submitAndFlowStartApi(payload.form)
     uni.hideLoading()
     uni.showToast({ title: '发起成功', icon: 'success' })
     jumpToApprovalList('document')
@@ -102,14 +102,8 @@ async function handleFormAction(action: SubmitAction, payload: FormSubmitPayload
     })
     if (action === 'submit') {
       startTaskId.value = startRes.taskId
-      // 拉取首任务按钮权限，统一由父组件传给 TaskVerifyDialog（弹窗不再自拉取）
-      try {
-        const taskInfo = await getTask(startRes.taskId)
-        startButtonPermissions.value = buttonListToRecord(taskInfo?.buttonList)
-      }
-      catch {
-        startButtonPermissions.value = {}
-      }
+      const taskInfo = await getTask(startRes.taskId)
+      startButtonPermissions.value = buttonListToRecord(taskInfo?.buttonList)
       uni.hideLoading()
       showStartDialog.value = true
     }

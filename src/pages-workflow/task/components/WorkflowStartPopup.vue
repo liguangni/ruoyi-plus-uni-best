@@ -24,12 +24,12 @@ const items = Object.entries(START_REGISTRY).map(([key, cfg]) => ({
 
 /**
  * 选完业务类型后直接跳转对应发起页。
- * 后台直发起（mode==='backend'）必须配置 submitApi，否则提示「未配置发起接口」并不跳转，避免跳到发起页后无法提交。
+ * 后台直发起（mode==='backend'）必须配置 submitAndFlowStartApi，否则提示「未配置发起接口」并不跳转，避免跳到发起页后无法提交。
  */
 function onSelect(key: string) {
   close()
   const cfg = START_REGISTRY[key]
-  if (cfg?.mode === 'backend' && !cfg.submitApi) {
+  if (cfg?.mode === 'backend' && !cfg.submitAndFlowStartApi) {
     uni.showToast({ title: '未配置发起接口', icon: 'none' })
     return
   }

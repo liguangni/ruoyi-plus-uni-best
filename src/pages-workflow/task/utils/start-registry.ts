@@ -8,7 +8,7 @@ import { addLeave, submitAndFlowStart, updateLeave } from '@/api/workflow/leave'
  *
  * 新增一种审批 =
  * ①写 XxxForm 表单组件（defineExpose onSubmit / onSaveDraft；variables / bizExt 随 submit / saveDraft 事件抛出）,并在 FlowFormRenderer 内加一个 v-else-if 分支
- * ②在此加一条注册（填 name / icon / mode；后端直发起还需 submitApi）。发起弹窗网格由本表自动派生，无需额外维护。
+ * ②在此加一条注册（填 name / icon / mode；后端直发起还需 submitAndFlowStartApi）。发起弹窗网格由本表自动派生，无需额外维护。
  */
 
 /** 发起模式：对齐 PC 的 mode 标识，用字符串枚举更清晰 */
@@ -35,7 +35,7 @@ export interface FlowStartConfig<BizForm = any, BizVO = any> {
    * 后端直发起接口（mode==='backend' 时必填）：不同业务的后端发起入口不同，
    * 由各类型自行提供（如请假为 submitAndFlowStart）。mode==='frontend' 时无需配置。
    */
-  submitApi?: (form: Record<string, any>) => Promise<any>
+  submitAndFlowStartApi?: (form: Record<string, any>) => Promise<any>
 }
 
 export const START_REGISTRY: Record<string, FlowStartConfig> = {
@@ -47,7 +47,7 @@ export const START_REGISTRY: Record<string, FlowStartConfig> = {
     formPath: '/workflow/leaveEdit/index',
     // 默认前端发起（与 PC 的 :mode="false" 对齐）
     mode: 'frontend',
-    submitApi: submitAndFlowStart,
+    submitAndFlowStartApi: submitAndFlowStart,
   },
 }
 
