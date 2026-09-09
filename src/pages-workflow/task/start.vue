@@ -67,16 +67,15 @@ interface FormSubmitPayload {
 async function handleFormAction(action: SubmitAction, payload: FormSubmitPayload) {
   if (!config.value)
     return
-  const cfg = config.value
 
   // 设置后端发起和不等于草稿状态 直接走流程发起
-  if (action === 'submit' && cfg.mode === 'backend') {
-    if (!cfg.submitApi) {
+  if (action === 'submit' && config.value.mode === 'backend') {
+    if (!config.value.submitApi) {
       uni.showToast({ title: '未配置发起接口', icon: 'none' })
       return
     }
     uni.showLoading({ title: '提交中...', mask: true })
-    await cfg.submitApi(payload.form)
+    await config.value.submitApi(payload.form)
     uni.hideLoading()
     uni.showToast({ title: '发起成功', icon: 'success' })
     jumpToApprovalList('document')
