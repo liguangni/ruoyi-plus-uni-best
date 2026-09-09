@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, reactive, ref, watch } from 'vue'
 import type { UserVO } from '@/api/system/user/types'
-import { backProcess, completeTask, getBackTaskNode, getNextNodeList, getTask } from '@/api/workflow/task'
+import { backProcess, completeTask, getBackTaskNode, getNextNodeList } from '@/api/workflow/task'
 import WorkflowPopup from '@/pages-workflow/task/components/popup/WorkflowPopup.vue'
 import AttachmentUpload from '@/pages-workflow/task/components/AttachmentUpload/AttachmentUpload.vue'
 
@@ -27,18 +27,12 @@ const emit = defineEmits<{
 
 const taskId = computed(() => props.taskId)
 /**
- * 按钮权限
+ * 按钮权限：统一由父组件通过 buttonPermissions 传入
  */
-const localButtonObj = ref<Record<string, boolean>>({})
-const buttonPermissions = computed(() => {
-  const p = props.buttonPermissions
-  if (p && Object.keys(p).length > 0)
-    return p
-  return localButtonObj.value
-})
+const buttonPermissions = computed(() => props.buttonPermissions ?? {})
 
 const submitting = ref(false)
-const isReject = computed(() => props.mode === 'reject')
+const isRejectMode = computed(() => props.mode === 'reject')
 
 // 驳回节点列表（仅 reject 模式）
 const taskNodeList = ref<any[]>([])
@@ -64,8 +58,8 @@ const form = reactive({
  * - pop ：下一步审批人区块（仅「通过/办理」展示，驳回不展示）
  */
 const showAttachment = computed(() => !!buttonPermissions.value.file)
-const showCopyTo = computed(() => !isReject.value && !!buttonPermissions.value.copy)
-const showNextApprover = computed(() => !isReject.value && !!buttonPermissions.value.pop)
+const showCopyTo = computed(() => !isRejectMode.value && !!buttonPermissions.value.copy)
+const showNextApprover = computed(() => !isRejectMode.value && !!buttonPermissions.value.pop)
 
 // 驳回节点原生 picker 数据（仅 reject 模式）
 const rejectNodeNames = computed(() => taskNodeList.value.map(n => n.nodeName))
@@ -113,11 +107,6 @@ function onMsgChange(e: any) {
   form.messageType = selected
 }
 
-/** 父组件是否未传入按钮权限（需弹窗自行拉取解析） */
-const needsLocalPermissions = computed(() =>
-  !props.buttonPermissions || Object.keys(props.buttonPermissions).length === 0,
-)
-
 /** 打开弹窗时重置全部表单与节点状态，避免上次办理残留 */
 function resetDialogState() {
   form.message = ''
@@ -133,29 +122,18 @@ function resetDialogState() {
   popUserVisible.value = false
 }
 
-/** 自行拉取任务详情并解析按钮权限 */
-async function fetchButtonPermissions() {
-  if (!needsLocalPermissions.value)
-    return
-  const res = await getTask(taskId.value as string)
-  const buttonList = res?.buttonList || []
-  const obj: Record<string, boolean> = {}
-  buttonList.forEach((e: any) => {
-    obj[e.code] = e.show
-  })
-  localButtonObj.value = obj
-}
-
 /** 根据模式拉取目标节点：驳回 → 可回退节点；通过 → 下一步审批人节点 */
 async function fetchTargetNodes() {
-  if (isReject.value) {
+  if (isRejectMode.value) {
     const res = await getBackTaskNode(taskId.value as string, props.nodeCode as string)
     taskNodeList.value = res || []
     form.nodeCode = taskNodeList.value[0]?.nodeCode || ''
   }
   else {
-    const res = await getNextNodeList({ taskId: taskId.value, variables: {} })
-    nestNodeList.value = res || []
+    if (showNextApprover.value) {
+      const res = await getNextNodeList({ taskId: taskId.value, variables: {} })
+      nestNodeList.value = res || []
+    }
   }
 }
 
@@ -167,8 +145,8 @@ watch(
     // 打开时重置表单与节点状态
     resetDialogState()
     uni.showLoading({ title: '加载中', mask: true })
-    // 并行拉取按钮权限与目标节点，结束后关闭 loading
-    Promise.all([fetchButtonPermissions(), fetchTargetNodes()])
+    // 拉取目标节点
+    fetchTargetNodes()
       .catch(() => {})
       .finally(() => uni.hideLoading())
   },
@@ -194,7 +172,7 @@ function onPopUser(users: CopyUser[]) {
 }
 
 async function submit() {
-  if (isReject.value) {
+  if (isRejectMode.value) {
     if (!form.nodeCode) {
       uni.showToast({ title: '请选择驳回节点', icon: 'none' })
       return
@@ -256,12 +234,12 @@ async function submit() {
 <template>
   <WorkflowPopup
     :visible="visible"
-    :title="isReject ? '驳回' : '提交审批'"
+    :title="isRejectMode ? '驳回' : '提交审批'"
     max-height="85vh"
     @close="onCancel"
   >
     <!-- 驳回节点（仅驳回） -->
-    <template v-if="isReject">
+    <template v-if="isRejectMode">
       <view class="wf-field__label">
         驳回节点
       </view>
@@ -312,7 +290,7 @@ async function submit() {
     </template>
 
     <!-- 下一步审批人（仅通过） -->
-    <template v-if="showNextApprover && nestNodeList.length">
+    <template v-if="showNextApprover && nestNodeList && nestNodeList.length > 0">
       <view class="wf-field__label">
         下一步审批人
       </view>
@@ -353,21 +331,20 @@ async function submit() {
       <AttachmentUpload v-model="form.fileId" />
     </view>
     <template #footer>
-      <!-- 底部操作栏：固定在滚动区之外（WorkflowPopup 内置滚动，footer 结构在外） -->
       <view class="wf-dialog__footer">
         <view class="wf-btn wf-btn--more wf-btn--grow" @click="onCancel">
           取消
         </view>
         <view class="wf-btn wf-btn--primary-filled wf-btn--grow" @click="submit">
           <text v-if="submitting" class="i-carbon-circle-dash wf-btn__icon is-spinning" />
-          <text class="wf-btn__label">{{ submitting ? '提交中...' : (isReject ? '确认' : '提交') }}</text>
+          <text class="wf-btn__label">{{ submitting ? '提交中...' : (isRejectMode ? '确认' : '提交') }}</text>
         </view>
       </view>
     </template>
 
     <!-- 抄送选人（仅通过） -->
     <UserSelector
-      v-if="!isReject"
+      v-if="!isRejectMode"
       v-model="copyVisible"
       mode="multiple"
       :default-selected="form.copyList"
@@ -375,7 +352,7 @@ async function submit() {
     />
     <!-- 下一步审批人选人（仅通过） -->
     <UserSelector
-      v-if="!isReject"
+      v-if="!isRejectMode"
       v-model="popUserVisible"
       mode="multiple"
       :allow-user-ids="popUserIds"
@@ -385,7 +362,6 @@ async function submit() {
 </template>
 
 <style lang="scss" scoped>
-// 以下为组件独有样式；公共的 .wf-field__label / .wf-textarea / .wf-copy / .wf-option 已抽到全局 custom.scss；滚动容器由 WorkflowPopup 内置
 .wf-msg {
   display: flex;
   gap: 16rpx;

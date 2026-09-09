@@ -4,10 +4,10 @@ import { onLoad } from '@dcloudio/uni-app'
 import type { ComponentPublicInstance } from 'vue'
 import TaskVerifyDialog from '@/pages-workflow/task/components/actions/TaskVerifyDialog.vue'
 import FlowFormRenderer from '@/pages-workflow/task/components/form/FlowFormRenderer.vue'
-import { startWorkFlow } from '@/api/workflow/task'
+import { getTask, startWorkFlow } from '@/api/workflow/task'
 import { START_REGISTRY } from '@/pages-workflow/task/utils/start-registry'
 import type { FlowStartConfig } from '@/pages-workflow/task/utils/start-registry'
-import { jumpToApprovalList } from '@/pages-workflow/task/utils/workflow'
+import { buttonListToRecord, jumpToApprovalList } from '@/pages-workflow/task/utils/workflow'
 
 interface FlowFormExpose {
   onSubmit: () => void
@@ -23,6 +23,8 @@ definePage({
 // 启动确认弹窗状态
 const showStartDialog = ref(false)
 const startTaskId = ref<string | number>('')
+/** 首任务按钮权限：由父组件拉取后传入 TaskVerifyDialog（弹窗不再自拉取） */
+const startButtonPermissions = ref<Record<string, boolean>>({})
 
 // 路由参数
 const type = ref('') // type 业务类型
@@ -67,53 +69,56 @@ async function handleFormAction(action: SubmitAction, payload: FormSubmitPayload
     return
   const cfg = config.value
 
-  try {
-    // 设置后端发起和不等于草稿状态 直接走流程发起
-    if (action === 'submit' && cfg.mode === 'backend') {
-      if (!cfg.submitApi) {
-        uni.showToast({ title: '未配置发起接口', icon: 'none' })
-        return
-      }
-      uni.showLoading({ title: '提交中...', mask: true })
-      await cfg.submitApi(payload.form)
-      uni.hideLoading()
-      uni.showToast({ title: '发起成功', icon: 'success' })
-      jumpToApprovalList('document')
+  // 设置后端发起和不等于草稿状态 直接走流程发起
+  if (action === 'submit' && cfg.mode === 'backend') {
+    if (!cfg.submitApi) {
+      uni.showToast({ title: '未配置发起接口', icon: 'none' })
+      return
+    }
+    uni.showLoading({ title: '提交中...', mask: true })
+    await cfg.submitApi(payload.form)
+    uni.hideLoading()
+    uni.showToast({ title: '发起成功', icon: 'success' })
+    jumpToApprovalList('document')
+  }
+  else {
+    uni.showLoading({ title: '提交中...', mask: true })
+
+    let res: { applyCode: any, id: any }
+    if (payload.form.id) {
+      res = await config.value.updateApi(payload.form)
     }
     else {
-      uni.showLoading({ title: '提交中...', mask: true })
-
-      let res
-      if (payload.form.id) {
-        res = await config.value.updateApi(payload.form)
-      }
-      else {
-        res = await config.value.addApi(payload.form)
-      }
-      const bizExt = {
-        ...(payload.bizExt ?? {}),
-        businessCode: res.applyCode,
-      }
-      const startRes = await startWorkFlow({
-        businessId: res.id,
-        flowCode: payload.flowCode,
-        variables: payload.variables,
-        bizExt,
-      })
-      uni.hideLoading()
-      if (action === 'submit') {
-        startTaskId.value = startRes.taskId
-        showStartDialog.value = true
-      }
-      else {
-        uni.showToast({ title: '操作成功', icon: 'success' })
-        jumpToApprovalList('document')
-      }
+      res = await config.value.addApi(payload.form)
     }
-  }
-  catch (error) {
-    // 失败：request 拦截器已弹错误 toast 顶掉 loading，此处不再 hideLoading，否则多余关闭触发"必须配对"警告
-    throw error
+    const bizExt = {
+      ...(payload.bizExt ?? {}),
+      businessCode: res.applyCode,
+    }
+    const startRes = await startWorkFlow({
+      businessId: res.id,
+      flowCode: payload.flowCode,
+      variables: payload.variables,
+      bizExt,
+    })
+    if (action === 'submit') {
+      startTaskId.value = startRes.taskId
+      // 拉取首任务按钮权限，统一由父组件传给 TaskVerifyDialog（弹窗不再自拉取）
+      try {
+        const taskInfo = await getTask(startRes.taskId)
+        startButtonPermissions.value = buttonListToRecord(taskInfo?.buttonList)
+      }
+      catch {
+        startButtonPermissions.value = {}
+      }
+      uni.hideLoading()
+      showStartDialog.value = true
+    }
+    else {
+      uni.hideLoading()
+      uni.showToast({ title: '操作成功', icon: 'success' })
+      jumpToApprovalList('document')
+    }
   }
 }
 
@@ -168,6 +173,7 @@ async function onSaveDraft(payload: FormSubmitPayload) {
       v-model:visible="showStartDialog"
       mode="pass"
       :task-id="startTaskId"
+      :button-permissions="startButtonPermissions"
       @success="onStartConfirmed"
       @cancel="onStartCancelled"
     />

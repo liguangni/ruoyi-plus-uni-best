@@ -1,4 +1,5 @@
 import type { PageQuery } from '@/http/types'
+import type { ButtonPermissionVo } from '@/api/workflow/task/types'
 
 /**
  * 审批tabbar类型
@@ -110,4 +111,16 @@ export function navigateToStart(type: string, editId?: string | number) {
   uni.navigateTo({
     url: buildUrl(WORKFLOW_START, { type, id: editId }),
   })
+}
+
+/**
+ * 按钮权限列表 → 权限字典（code -> show）
+ */
+export function buttonListToRecord(list?: ButtonPermissionVo[] | null): Record<string, boolean> {
+  const record: Record<string, boolean> = {}
+  if (!list || list.length === 0)
+    return record
+  for (const item of list)
+    record[item.code] = !!item.show
+  return record
 }

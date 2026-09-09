@@ -132,8 +132,8 @@ export function getNextNodeList(data: FlowNextNodeBo) {
 /**
  * 发起流程（前端发起：先存业务表拿 businessId，再调此接口创建流程实例并生成首个任务）
  * @see 后端 FlwTaskController#startWorkFlow，入参 StartProcessBo
- * POST /workflow/task/startWorkFlow → R<{ taskId, ... }>
+ * POST /workflow/task/startWorkFlow → R<{ taskId, processInstanceId }>
  */
 export function startWorkFlow(data: StartProcessBo) {
-  return request.post<{ taskId: string | number }>({ url: '/workflow/task/startWorkFlow', data })
+  return request.post<{ taskId: string | number, processInstanceId: string | number }>({ url: '/workflow/task/startWorkFlow', data })
 }

@@ -8,7 +8,7 @@ import { useDict } from '@/composables/useDict'
 import WorkflowActions from './components/WorkflowActions.vue'
 import FlowFormRenderer from './components/form/FlowFormRenderer.vue'
 import TaskHistoryPanel from './components/TaskHistoryPanel.vue'
-import { isApprovalTabbarType, jumpToApprovalList } from '@/pages-workflow/task/utils/workflow'
+import { buttonListToRecord, isApprovalTabbarType, jumpToApprovalList } from '@/pages-workflow/task/utils/workflow'
 import type { ApprovalTabbarType, FlowTaskItemInfo } from '@/pages-workflow/task/utils/workflow'
 
 const { wf_business_status } = useDict('wf_business_status')
@@ -119,16 +119,8 @@ const showFooter = computed(() => {
   return true
 })
 
-/** 后端按钮权限字典  */
-const buttonPermissions = computed(() => {
-  const record: Record<string, boolean> = {}
-  if (!buttonList.value || buttonList.value.length === 0)
-    return record
-  buttonList.value.forEach((item) => {
-    record[item.code] = !!item.show
-  })
-  return record
-})
+/** 后端按钮权限字典 */
+const buttonPermissions = computed(() => buttonListToRecord(buttonList.value))
 </script>
 
 <template>
