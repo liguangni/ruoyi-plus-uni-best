@@ -1,10 +1,10 @@
 <p align="center">
-  <a href="https://gitee.com/liguangni/ruoyi-plus-uni-best">
+  <a href="https://gitee.com/ry-group/ruoyi-plus-uni-best">
     <img width="160" src=".images/logo.png">
   </a>
 </p>
 <h1 align="center">
-  <a href="https://gitee.com/liguangni/ruoyi-plus-uni-best" target="_blank" style='color: red'>Ruoyi-Plus-Uni-Best</a>
+  <a href="https://gitee.com/ry-group/ruoyi-plus-uni-best" target="_blank" style='color: red'>Ruoyi-Plus-Uni-Best</a>
 </h1>
 
 <div align="center">
@@ -39,11 +39,25 @@
 
 | 本项目分支 | Plus 后台分支 | 分支说明                                           |
 | :--------: | :-----------: | -------------------------------------------------- |
-|   6.X    |     6.X    | 基础功能版本（首页、登录页、个人中心、工作台等） |
-|   6.X-workflow    |     6.X    | 工作流版本（包含基础功能+工作流模块） |
+|   6.X    |     6.X    | 默认分支, 包含基础功能 + 工作流模块 |
 
-> 注意: 其他分支(如dev、master、feature等) 为开发测试分支,代码可能未完全测试, 不建议在生产环境中使用。
 
+> 注意: 
+> 1. 其他分支(如dev、master、feature等) 为开发测试分支,代码可能未完全测试, 不建议在生产环境中使用。
+> 2. 如需精简工作流等模块,请参考 [项目 WIKI](https://gitee.com/ry-group/ruoyi-plus-uni-best/wikis/Home)
+
+
+
+## 📚 项目文档
+
+  本项目基于 [unibest](https://unibest.tech/) 构建，并运行在 [uni-app](https://uniapp.dcloud.net.cn/) 框架之上。
+  开发过程中遇到脚手架、构建配置、路由等通用问题，**请优先查阅官方文档**，以获取最权威、最及时的说明
+
+  - **unibest 官方文档**：<https://unibest.tech/>
+  - **uni-app 官方文档**：<https://uniapp.dcloud.net.cn/>
+  - **项目 WIKI**：<https://gitee.com/ry-group/ruoyi-plus-uni-best/wikis/Home>
+
+  如有任何问题或建议，欢迎提交 Pull Request 或 提交 Issue。我会尽快回复并解决。
 
 
 ## 🎨 UI 框架选型说明
@@ -97,7 +111,7 @@
 1️⃣ 克隆bash
 ```bash
 # 克隆项目到本地
-git clone https://gitee.com/liguangni/ruoyi-plus-uni-best.git
+git clone https://gitee.com/ry-group/ruoyi-plus-uni-best.git
 
 # 进入项目目录
 cd ruoyi-plus-uni-best
@@ -166,35 +180,35 @@ pnpm dev:app       # App
     <td align="center">
       <img src=".images/screenshots/work.png" alt="工作台" width="200"  />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src=".images/screenshots/me.png" alt="我的" width="200"  />
     </td>
   </tr>
   <tr>
-    <td align="center" style="padding: 10px;" >登录页</td>
-    <td align="center" style="padding: 10px;" >首页</td>
-    <td align="center" style="padding: 10px;" >工作台</td>
-    <td align="center" style="padding: 10px;" >我的</td>
+    <td align="center">登录页</td>
+    <td align="center">首页</td>
+    <td align="center">工作台</td>
+    <td align="center">我的</td>
   </tr>
   <tr>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src=".images/screenshots/profile.png" alt="个人信息" width="200" />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src=".images/screenshots/setting.png" alt="应用设置" width="200"  />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src=".images/screenshots/about.png" alt="关于" width="200" />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src=".images/screenshots/help.png" alt="帮助中心" width="200" />
     </td>
   </tr>
   <tr>
-    <td align="center" style="padding: 10px;" >个人信息</td>
-    <td align="center" style="padding: 10px;" >应用设置</td>
-    <td align="center" style="padding: 10px;" >关于</td>
-    <td align="center" style="padding: 10px;" >帮助中心</td>
+    <td align="center">个人信息</td>
+    <td align="center">应用设置</td>
+    <td align="center">关于</td>
+    <td align="center">帮助中心</td>
   </tr>
 </table>
 
@@ -210,47 +224,53 @@ pnpm dev:app       # App
     <td align="center">
       <img src=".images/screenshots/workflow-detail-history.png" alt="审批详情-审批记录" width="200"  />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src=".images/screenshots/workflow-detail-flowchart.png" alt="流程详情-流程图" width="200"  />
     </td>
   </tr>
   <tr>
-    <td align="center" style="padding: 10px;" >审批列表</td>
-    <td align="center" style="padding: 10px;" >审批详情-表单</td>
-    <td align="center" style="padding: 10px;" >审批详情-审批记录</td>
-    <td align="center" style="padding: 10px;" >流程详情-流程图</td>
+    <td align="center">审批列表</td>
+    <td align="center">审批详情-表单</td>
+    <td align="center">审批详情-审批记录</td>
+    <td align="center">流程详情-流程图</td>
   </tr>
   <tr>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src=".images/screenshots/workflow-process.png" alt="流程办理-通过" width="200" />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src=".images/screenshots/workflow-revoke.png" alt="流程办理-驳回" width="200"  />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src=".images/screenshots/workflow-def-select.png" alt="选择流程定义" width="200" />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src=".images/screenshots/workflow-user-select.png" alt="选择审批人" width="200" />
     </td>
   </tr>
   <tr>
-    <td align="center" style="padding: 10px;" >流程办理-通过</td>
-    <td align="center" style="padding: 10px;" >流程办理-驳回</td>
-    <td align="center" style="padding: 10px;" >选择流程定义</td>
-    <td align="center" style="padding: 10px;" >选择审批人</td>
+    <td align="center">流程办理-通过</td>
+    <td align="center">流程办理-驳回</td>
+    <td align="center">选择流程定义</td>
+    <td align="center">选择审批人</td>
   </tr>
   <tr>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src=".images/screenshots/workflow-start.png" alt="流程发起-弹窗" width="200" />
     </td>
-    <td align="center" style="padding: 10px;">
+    <td align="center">
       <img src=".images/screenshots/workflow-start-flow.png" alt="流程发起-请假" width="200"  />
+    </td>
+    <td align="center">
+    </td>
+    <td align="center">
     </td>
   </tr>
   <tr>
-    <td align="center" style="padding: 10px;" >流程发起-弹窗</td>
-    <td align="center" style="padding: 10px;" >流程发起-请假</td>
+    <td align="center">流程发起-弹窗</td>
+    <td align="center">流程发起-请假</td>
+    <td align="center"></td>
+    <td align="center"></td>
   </tr>
 </table>
 
@@ -262,7 +282,7 @@ pnpm dev:app       # App
 </p>
 
 <p align="center">
-  <a href="https://gitee.com/liguangni/ruoyi-plus-uni-best/issues">报告 Bug</a>
+  <a href="https://gitee.com/ry-group/ruoyi-plus-uni-best/issues">报告 Bug</a>
   ·
-  <a href="https://gitee.com/liguangni/ruoyi-plus-uni-best/issues">请求特性</a>
+  <a href="https://gitee.com/ry-group/ruoyi-plus-uni-best/issues">请求特性</a>
 </p

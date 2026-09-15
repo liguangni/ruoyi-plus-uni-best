@@ -63,15 +63,20 @@ async function pwdLogin() {
       title: '登录中...',
     })
     await tokenStore.login(loginForm.value)
+    // 先关闭 loading，再让 loginSuccess 弹成功 toast
+    // （uni.showToast 会顶掉正在显示的 showLoading，若此处不先关，
+    // 紧接着多余的 hideLoading 会触发"必须配对"警告）
+    uni.hideLoading()
     loginSuccess()
   }
   catch (error) {
+    // 登录失败时 HTTP 拦截器（request.ts handleResponse）会弹错误 toast，
+    // 该 toast 会顶掉上面的 showLoading，loading 已被关闭；此处不再调用
+    // hideLoading，否则会变成"多余的关闭"触发"showLoading 与 hideLoading
+    // 必须配对使用"警告。错误提示由拦截器统一负责。
     if (captchaEnabled.value) {
       getCode()
     }
-  }
-  finally {
-    uni.hideLoading()
   }
 }
 
@@ -134,18 +139,18 @@ onLoad(() => {
       <view class="wy-form">
         <view name="username" class="wy-form-item">
           <view class="pre-icon i-carbon-user text-coolgray" />
-          <input v-model="loginForm.username" class="form-input uni-input" placeholder="请输入账号">
+          <input v-model="loginForm.username" confirm-type="next" class="form-input uni-input" placeholder="请输入账号" @confirm="handleLogin">
           <view v-show="loginForm.username" class="pre-icon i-carbon-close text-coolgray" @click="loginForm.username = ''" />
         </view>
         <view name="password" class="wy-form-item">
           <view class="pre-icon i-carbon-password text-coolgray" />
-          <input v-model="loginForm.password" :password="!showPassword" class="form-input uni-input" placeholder="请输入密码">
+          <input v-model="loginForm.password" :password="!showPassword" confirm-type="next" class="form-input uni-input" placeholder="请输入密码" @confirm="handleLogin">
           <text v-show="loginForm.password" class="pre-icon uni-icon text-coolgray" :class="[showPassword ? 'i-carbon-view' : 'i-carbon-view-off']" @click="changePassword" />
         </view>
         <view class="flex gap-3">
           <view name="code" class="wy-form-item">
             <view class="pre-icon i-carbon-security text-coolgray" />
-            <input v-model="loginForm.code" class="form-input uni-input" placeholder="请输入验证码">
+            <input v-model="loginForm.code" confirm-type="done" class="form-input uni-input" placeholder="请输入验证码" @confirm="handleLogin">
           </view>
           <image :src="codeUrl" style="width: 280rpx; height: 70rpx;" @click="getCode" />
         </view>

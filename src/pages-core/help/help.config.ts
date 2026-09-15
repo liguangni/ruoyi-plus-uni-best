@@ -19,9 +19,9 @@ export const faqGroups: FaqGroup[] = [
     bgColor: '#f0f4ff',
     iconColor: '#5b8cff',
     items: [
-      { id: 1, question: '项目开源吗？', answer: '<p>开源。开源地址为: https://gitee.com/liguangni/ruoyi-plus-uni-best</p>' },
+      { id: 1, question: '项目开源吗？', answer: '<p>开源。开源地址为: https://gitee.com/ry-group/ruoyi-plus-uni-best</p>' },
       { id: 2, question: '项目可以商用吗？', answer: '可以' },
-      { id: 3, question: '项目官网地址多少？', answer: 'https://gitee.com/liguangni/ruoyi-plus-uni-best' },
+      { id: 3, question: '项目官网地址多少？', answer: 'https://gitee.com/ry-group/ruoyi-plus-uni-best' },
       {
         id: 4,
         question: '项目文档地址多少？',
